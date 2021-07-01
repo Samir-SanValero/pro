@@ -1,0 +1,8 @@
+{
+    "value": "Pareja de bajo riesgo genético",
+    "_links": {
+        "self": {
+            "href": "http://localhost:8080/api/geneticRisks/report_matching_couple_genetic_risk_low"
+        }
+    }
+}

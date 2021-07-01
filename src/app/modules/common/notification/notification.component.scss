@@ -1,0 +1,17 @@
+.notification-container {
+  display: flex;
+  flex-direction: row;
+
+  align-items: center;
+  justify-content: center;
+
+  background-color: var(--primary-color);
+}
+
+.notification-class {
+  background-color: var(--primary-color);
+}
+
+.notification-class-warn {
+  background-color: var(--warn-color);
+}

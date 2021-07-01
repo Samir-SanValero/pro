@@ -1,0 +1,58 @@
+<div class="">
+    <div class="wrap">
+        <!-- Signatures From DB -->
+        <section *ngIf="signatures.length ">
+
+            <section *ngFor="let signature of signatures; let i = index" class="image-selector-content">
+               
+                <app-images *ngIf="signature" [url]="signature._links['precon:image'].href"></app-images>
+
+                <div>
+                    <span>{{signature.name}}</span>
+                    <span>{{signature.rol}}</span>
+                </div>
+                <div *ngIf="!isViewMode" fxLayout="row" class="actions" fxLayoutGap="5px">
+                    <button mat-mini-fab color="accent" (click)="edit(signature, i,true)">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-mini-fab color="secondary" (click)="delete(signature, i)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </div>
+            </section>
+        </section>
+
+        <!-- Signatures To Upload -->
+        <section *ngIf="signaturesToUpload.length ">
+
+            <section *ngFor="let signature of signaturesToUpload; let i = index" class="image-selector-content">
+                <app-images *ngIf="signature" [file]="signature.image"></app-images>
+       
+                <div>
+                    <span>{{signature.signature.name}}</span>
+                    <span>{{signature.signature.rol}}</span>
+                </div>
+                <div *ngIf="!isViewMode" fxLayout="row" class="actions" fxLayoutGap="5px">
+                    <button mat-mini-fab color="accent" (click)="edit(signature, i, false)">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-mini-fab color="secondary" (click)="delete(signature, i)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </div>
+            </section>
+        </section>
+
+        <div class=" image-selector-content title">
+            <div class="image-selector " fxLayoutAlign="center center">
+                <span>+ {{title}}</span>
+            </div>
+        </div>
+
+        <div *ngIf="!isViewMode" fxLayout="row" class="actions" fxLayoutGap="5px">
+            <button mat-mini-fab color="accent" (click)="create()">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+    </div>
+</div>

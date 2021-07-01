@@ -1,0 +1,59 @@
+{
+    "requestorName": "Me",
+    "department": "UGR",
+    "reportReceiver": "Steve Jobs",
+    "hospital": "Silicon valley hospital",
+    "woman": {
+        "name": "Bill Gates",
+        "idCard": "1111MI",
+        "birthDate": "18/10/1955",
+        "ethnicity": "caucasian",
+        "extRef": "2",
+        "urCode": "UR000000",
+        "entranceDate": "24/03/2021",
+        "country": "usa",
+        "sampleType": "Blood (EDTA)"
+    },
+    "man": {
+        "name": "Steve Jobs",
+        "idCard": "478978AP",
+        "birthDate": "24/02/1955",
+        "ethnicity": "caucasian",
+        "extRef": "1",
+        "urCode": "UR000001",
+        "entranceDate": "24/03/2021",
+        "country": "usa",
+        "sampleType": "Blood (EDTA)"
+    },
+    "resultsRiskResult": "Couple with low genetic risk",
+    "_links": {
+        "self": {
+            "href": "http://localhost:8080/api/couple_match_report_statuses/1"
+        },
+        "precon:language": {
+            "href": "http://localhost:8080/api/couple_match_report_statuses/1/language"
+        },
+        "precon:template": {
+            "href": "http://localhost:8080/api/couple_match_report_statuses/1/template"
+        },
+        "precon:download": {
+            "href": "http://localhost:8080/api/couple_match_report_statuses/1/report"
+        },
+        "precon:accepted-languages": {
+            "href": "http://localhost:8080/api/couple_match_report_statuses/accepted_languages"
+        },
+        "precon:accepted-sample-types": {
+            "href": "http://localhost:8080/api/couple_match_report_statuses/accepted_sample_types?language=en"
+        },
+        "precon:accepted-genetic-risks": {
+            "href": "http://localhost:8080/api/couple_match_report_statuses/accepted_genetic_risks?language=en"
+        },
+        "curies": [
+            {
+                "href": "http://localhost:8080/docs/index.html#{rel}",
+                "name": "precon",
+                "templated": true
+            }
+        ]
+    }
+}

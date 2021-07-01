@@ -1,0 +1,102 @@
+.header-container {
+  height: 100%;
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+
+  background-color: var(--primary-color);
+
+  cursor: default;
+}
+
+.header-logo {
+  width: 8.5%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo-image {
+  width: 90%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header-application {
+  width: 10%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+
+  // TODO THEMING
+  color: white;
+}
+
+.header-user-container {
+  width: 75%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: row-reverse;
+
+  // TODO THEMING
+  color: white;
+}
+
+.header-options-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+}
+
+.header-user {
+  width: 30%;
+  height: 100%;
+
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  gap: 10%;
+
+  cursor: pointer;
+}
+
+.header-options-language {
+  width: 15%;
+  height: 100%;
+  max-width: 15%;
+
+  display: flex;
+  //justify-content: center;
+  align-items: center;
+
+  padding-top: 2%;
+
+  cursor: pointer;
+
+  color: #FFFFFF;
+}
+
+.language-select {
+  color: #FFFFFF;
+  width: 50px;
+}
+
+::ng-deep .mat-select-white .mat-select-value {
+  color: white!important;
+}
+
+//.mat-select-value {
+//  color: white!important;
+//}
+

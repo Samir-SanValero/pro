@@ -1,0 +1,827 @@
+{
+  "footer": {
+    "copyright": "Copyright 2021 Sistemas Genómicos. Todos los derechos reservados.",
+    "copyrightUrl": "Nota legal"
+  },
+
+  "common-elements": {
+    "fields": {
+      "field": "Buscar por",
+      "search": "Introducir criterio"
+    },
+
+    "buttons": {
+      "new": "Nuevo",
+      "new-request": "Nueva solicitud con datos externos",
+      "add": "Añadir",
+      "return": "Volver",
+      "save": "Guardar",
+
+      "next": "Siguiente",
+      "previous": "Previo",
+
+      "record": "Ficha",
+      "edit": "Editar",
+      "report": "Informe",
+      "upload": "Subir",
+      "delete": "Eliminar",
+
+      "associate": "Asociar",
+      "disassociate": "Desasociar",
+      "confirm": "Confirmar",
+      "close": "Cerrar",
+      "cancel": "Cancelar",
+      "see": "Ver",
+      "bulk": "Importar",
+
+      "export-request-data": "Exportar datos",
+      "download-individual-report": "Descargar informe individuo",
+      "download-couple-report": "Descargar informe pareja",
+      "download-one-donor-report": "Descargar informe donante",
+
+      "configure-individual-report": "Configurar informe individuo",
+      "configure-couple-report": "Configurar informe pareja",
+      "configure-one-donor-report": "Configurar informe donante",
+
+      "match": "Match",
+      "download-report": "Informe"
+    },
+
+    "table-paginator": {
+      "first-page": "Primera página",
+      "last-page": "Última página",
+      "items-per-page": "Tamaño de página",
+      "next-page": "Siguiente página",
+      "previous-page": "Página previa"
+    },
+
+    "messages": {
+      "data-saved": "Se han guardado los datos",
+      "confirmation-dialog-accept": "Aceptar",
+      "confirmation-dialog-cancel": "Cancelar",
+      "loading-screen": "Cargando, por favor espere",
+      "search-term-empty": "Debe elegir un término de búsqueda"
+    },
+
+    "tool-tips": {
+      "change-boolean-field": "Pulsa para cambiar"
+    }
+  },
+
+  "main-menu": {
+    "analysis": "ANALISIS",
+    "match-requests": "Solicitudes de match",
+    "matching": "Matching",
+
+    "administrative": "GESTIÓN",
+    "groups": "Grupos",
+    "banks": "Bancos",
+    "requests": "Muestras",
+
+    "maintenance": "MANTENIMIENTO",
+    "genes": "Genes",
+    "mutations": "Mutaciones",
+    "cnvs": "CNVs",
+    "disease": "Enfermedades",
+
+    "templates": "Plantillas",
+    "rules": "Reglas de match"
+  },
+
+  "studies-screen": {
+    "inner-title": "ESTUDIOS"
+  },
+
+  "match-screen": {
+    "inner-title": "MATCHING",
+
+    "inner-title-matching-request": "Muestra base",
+    "inner-title-matching-target": "Objetivo de match",
+    "inner-title-matching-data": "Datos de match",
+
+    "match-target-option-custom": "Match personalizado",
+    "match-target-option-partner": "Match de pareja",
+    "match-target-option-bank": "Match de banco",
+
+    "bulk-import-field": "Introducir códigos UR",
+
+    "results-column": "Resultados",
+
+    "fields": {
+      "request-first-name": "Nombre",
+      "request-last-name": "Apellidos",
+      "request-id-card": "NIF",
+      "request-birth": "Fecha de nacimiento",
+      "request-gender": "Sexo",
+      "request-country": "País",
+      "request-ethnicity": "Etnia"
+    },
+
+    "messages": {
+      "matching-first-step": "Por favor, elija la muestra base haciendo doble click en un elemento de la tabla",
+      "matching-second-step-custom": "Por favor, elija las muestras objetivo haciendo doble click en elementos de la tabla. Despues pulse el botón 'Match'",
+      "matching-second-step-bank": "Por favor, elija los bancos objetivo haciendo doble click en elementos de la tabla. Despues pulse el botón 'Match'",
+      "matching-no-partner": "La muestra no tiene pareja asociada",
+
+      "match-requested-title": "Solicitud de match",
+      "match-requested": "Se ha solicitado el match"
+    },
+
+    "buttons": {
+      "matching": "Realizar match"
+    }
+  },
+
+  "group-screen": {
+    "inner-title": "GRUPOS",
+
+    "code-column": "Código",
+    "name-column": "Nombre",
+    "company-code-column": "Código de centro",
+    "company-name-column": "Nombre de centro",
+
+    "permission-group-column": "Nombre de grupo",
+    "permission-type-column": "Permiso",
+    "permission-to-group-column": "Grupo referencia",
+
+    "new-group": "NUEVO GRUPO",
+    "edit-inner-title": "EDITAR GRUPO",
+    "record-inner-title": "FICHA DE GRUPO",
+    "edit-primary-data": "DATOS GRUPO",
+
+    "edit-secondary-permissions": "PERMISOS",
+
+    "edit-fields": {
+      "id": "Código",
+      "external-code": "Código externo",
+      "name": "Nombre",
+      "company-code": "Código de centro",
+      "company-name": "Nombre de centro",
+
+      "permission-group": "Nombre de grupo",
+      "permission-type": "Permiso",
+      "permission-to-group": "Nombre de grupo de referencia"
+    },
+
+    "search-fields": {
+      "group-name": "Nombre"
+    },
+
+    "messages": {
+      "permission-deletion-confirmation-title": "Confirmar eliminación",
+      "permission-deletion-confirmation": "¿Esta seguro de que desea eliminar el permiso?",
+      "permission-not-saved": "Ha ocurrido un problema. No se ha podido guardar el permiso",
+      "permission-already-exists": "El grupo ya tiene el permiso seleccionado, no se realizaron cambios",
+      "permission-deleted": "El permiso se ha eliminado",
+      "permission-added": "El permiso se ha añadido"
+    },
+
+    "tool-tips": {
+      "permission-to-group-field": "Identifica al grupo sobre el que se permitirá la acción que define el permiso"
+    }
+  },
+
+  "bank-screen": {
+    "inner-title": "BANCOS",
+
+    "status-column": "Estado",
+    "code-column": "Código",
+    "name-column": "Nombre",
+    "group-code-column": "Código de grupo",
+    "group-name-column": "Nombre de grupo",
+
+    "new-inner-title": "NUEVO BANCO",
+    "edit-inner-title": "EDITAR BANCO",
+    "record-inner-title": "FICHA DE BANCO",
+    "edit-primary-data": "DATOS BANCO",
+
+    "sections": {
+      "add-request": "ASOCIAR MUESTRAS",
+      "bank-requests": "MUESTRAS EN BANCO"
+    },
+
+    "edit-fields": {
+      "status": "Activo",
+      "code": "Código",
+      "name": "Nombre",
+      "description": "Descripción",
+      "group-name": "Nombre de grupo"
+    },
+
+    "search-fields": {
+      "bank-name": "Nombre",
+      "bank-code": "Código",
+      "bank-group-name": "Nombre de grupo"
+    },
+
+    "messages": {
+      "bank-confirmation-title": "Confirmar acción",
+      "bank-modification-confirmation": "¿Esta seguro de que desea modificar el banco?",
+
+      "bank-added": "El banco se ha añadido",
+      "bank-updated": "El banco se ha modificado",
+      "bank-not-saved": "Ha ocurrido un problema. No se ha podido guardar el banco",
+      "bank-not-deleted": "Ha ocurrido un problema. No se ha podido eliminar el banco",
+      "bank-deleted": "El banco se ha borrado",
+      "bank-deleting-question": "¿Esta seguro de que desea eliminar el banco?",
+
+      "bank-activated": "El banco se ha activado",
+      "bank-deactivated": "El banco se ha desactivado",
+      "bank-not-activated": "Ha ocurrido un problema. No se ha podido activar el banco",
+      "bank-not-deactivated": "Ha ocurrido un problema. No se ha podido desactivar el banco",
+
+      "bank-request-confirmation-title": "Confirmar acción",
+      "bank-request-deletion-confirmation": "¿Esta seguro de que desea desasociar la muestra?",
+
+      "bank-request-deleted": "La muestra se ha desasociado",
+      "bank-request-not-deleted": "Ha ocurrido un problema. No se ha podido desasociar la muestra",
+
+      "bank-request-added": "La muestra se ha asociado",
+      "bank-request-not-added": "Ha ocurrido un problema. No se ha podido asociar la muestra"
+    }
+  },
+
+  "request-screen": {
+    "inner-title": "MUESTRAS",
+
+    "new-request-external-data-title": "Nueva muestra con datos externos",
+
+    "ur-code-column": "Código Ur",
+    "code-column": "Código",
+    "nif-column": "NIF",
+    "type-individual-column": "Tipo",
+    "external-code-column": "Código externo",
+    "group-code-column": "Código de grupo",
+    "first-name-column": "Nombre",
+    "last-name-column": "Apellidos",
+    "female-column": "Sexo",
+    "ethnicity-column": "Etnia",
+    "country-column": "País",
+    "status-column": "Estado",
+    "blocked-column": "Bloqueo",
+    "active-column": "Activo",
+    "validated-column": "Validado",
+
+    "reception-date-column": "Fecha de recepción",
+    "start-date-column": "Fecha de inicio de estudio",
+    "end-date-column": "Fecha de fin de estudio",
+
+    "found-mutation-id-column": "Id",
+    "found-mutation-chromosome-column": "Cromosoma",
+    "found-mutation-gene-name-column": "Gen",
+    "found-mutation-exon-number-column": "Exon",
+    "found-mutation-intron-number-column": "Intron",
+    "found-mutation-hgvs-column": "Hgvs",
+    "found-mutation-mutation-type-column": "Tipo de mutacion",
+    "found-mutation-transcript-column": "Transcripcion",
+    "found-mutation-references-column": "Referencias",
+    "found-mutation-type-column": "Tipo",
+    "found-mutation-tag-column": "Tag",
+    "found-mutation-category-column": "Categoria",
+
+    "no-ngs-mutation-id-column": "Id",
+    "no-ngs-mutation-disease-name-column": "Enfermedad",
+    "no-ngs-mutation-omim-column": "Omim",
+    "no-ngs-mutation-chromosome-column": "Cromosoma",
+    "no-ngs-mutation-expansion-column": "Expansion",
+    "no-ngs-mutation-gene-name-column": "Gen",
+    "no-ngs-mutation-gene-region-column": "Región de gen",
+    "no-ngs-mutation-name-column": "Mutación",
+    "no-ngs-mutation-type-column": "Tipo de mutación",
+    "no-ngs-mutation-ref-sequence-column": "Secuencia de referencia",
+    "no-ngs-mutation-references-column": "Referencias",
+    "no-ngs-mutation-agg-column": "Agg",
+    "no-ngs-mutation-percentage-column": "Porcentaje",
+
+    "cnv-active-column": "Activa",
+    "cnv-positive-column": "Positivo",
+    "cnv-copy-number-column": "Número de copias",
+    "cnv-mean-coverage-column": "Cobertura media",
+    "cnv-log-ratio-column": "Ratio",
+    "cnv-tag-column": "Etiqueta",
+    "cnv-gene-name-column": "Nombre de gen",
+    "cnv-panel-version-column": "Versión de panel",
+    "cnv-location-column": "Localización",
+    "cnv-transcript-column": "Transcripción",
+    "cnv-exon-number-column": "Exon",
+    "cnv-chromosome-column": "Chromosoma",
+    "cnv-start-position-column": "Posicion de inicio",
+    "cnv-end-position-column": "Posicion de fin",
+
+    "risks-gene-name": "Gen",
+    "risks-residual-risk": "Riesgo residual",
+    "risks-ethnicity": "Etnia",
+    "risks-disease-omim": "Omim de enfermedad",
+    "risks-disease-translation": "Nombre de enfermedad",
+
+    "match-request-group-column": "Grupo",
+    "match-request-match-version-column": "Versión de match",
+    "match-request-launch-user-column": "Solicitado por usuario",
+    "match-request-request-date-column": "Fecha de solicitud",
+    "match-request-execution-date-column": "Fecha de ejecución",
+    "match-request-status-column": "Estado",
+
+    "record-inner-title": "FICHA DE MUESTRA",
+    "new-inner-title": "NUEVA MUESTRA",
+    "edit-inner-title": "EDITAR MUESTRA",
+    "edit-primary-data": "DATOS MUESTRA",
+    "edit-secondary-partner": "PAREJA",
+    "edit-secondary-assign-partner": "Asignar pareja",
+    "edit-secondary-genotype": "DATOS GENETICOS",
+
+    "sections": {
+      "main-data": "DATOS PRINCIPALES",
+      "partner-data": "PAREJA",
+
+      "found-mutations": "MUTACIONES ENCONTRADAS",
+      "cnvs": "CNVs",
+      "risks": "RIESGOS RESIDUALES",
+      "ngs-mutations": "MUTACIONES NGS",
+      "no-ngs-mutations": "MUTACIONES NO NGS",
+      "poly": "POLY T",
+      "cnv-metrics": "MÉTRICAS CNV",
+      "match-requests": "MATCH REQUESTS",
+      "reports": "CONFIGURAR INFORMES"
+    },
+
+    "edit-fields": {
+      "ur-code": "Código Ur",
+      "id-card": "NIF",
+      "first-name": "Nombre",
+      "last-name": "Apellidos",
+      "country": "País",
+      "ethnicity": "Etnia",
+      "birth-date": "Fecha de nacimiento",
+      "start-date": "Fecha de inicio de estudio",
+      "reception-date": "Fecha de recepción",
+      "end-date": "Fecha de fin de estudio",
+
+      "sex": "Sexo",
+      "sex-value-male": "Masculino",
+      "sex-value-female": "Femenino",
+
+      "type": "Tipo de individuo",
+      "type-single-person": "Individuo",
+      "type-couple": "Pareja",
+      "type-donor": "Donante",
+      "type-recipient": "Receptor",
+
+      "partner-search": "Código Ur",
+      "partner-first-name": "Nombre",
+      "partner-last-name": "Apellidos",
+
+      "no-ngs-disease-name": "Enfermedad",
+      "no-ngs-mutation": "Mutación",
+      "no-ngs-gene-name": "Gen",
+      "no-ngs-gene-region": "Región de gen",
+
+      "poly-t-max-depth": "Profundidad máxima",
+      "poly-t-mean-coverage": "Cobertura media",
+      "poly-t-reads": "Lecturas totales",
+      "poly-t-truncated": "Truncados",
+      "poly-t-tag": "Etiqueta",
+      "poly-t-haplotype": "Haplotype",
+
+      "haplotype": "Haplotipo",
+      "haplotype-frequency": "Frecuencia",
+      "haplotype-reads": "Lecturas",
+      "haplotype-t": "Número de T",
+      "haplotype-tg": "Número deTG",
+
+      "cnv-metric-n": "Valor N",
+      "cnv-metric-ncontrols": "Valor de control N",
+      "cnv-metric-min-r-squared": "Desviación mínima",
+      "cnv-metric-max-r-squared": "Desviación máxima",
+      "cnv-metric-mean-r-squared": "Desviación media",
+      "cnv-metric-cn-q1": "CN Q1",
+      "cnv-metric-cn-q3": "CN Q3",
+      "cnv-metric-cn-iqr": "CN IQR",
+      "cnv-metric-cn-snr": "CN SNR",
+      "cnv-metric-cn-median": "Mediana CN",
+      "cnv-metric-candidate-cnvs": "CNVs candidatas",
+      "cnv-metric-rejected": "Rechazada",
+
+      "match-request-groupCode": "Grupo solicitante",
+      "match-request-matchVersion": "Versión de match",
+      "match-request-launchUser": "Usuario solicitante",
+      "match-request-matchRequestDate": "Fecha de solicitud",
+      "match-request-matchExecutionDate": "Fecha de ejecución",
+      "match-request-state": "Estado",
+
+      "match-request-status-created": "Creado",
+      "match-request-status-ready": "Preparado para match",
+      "match-request-status-launched": "Lanzado",
+      "match-request-status-error": "Error",
+      "match-request-status-finished": "Acabado"
+    },
+
+    "search-fields": {
+      "request-ur-code": "Código Ur",
+      "request-ext-code": "Código externo",
+      "request-first-name": "Nombre",
+      "request-last-name": "Apellidos",
+      "request-bank": "Banco"
+    },
+
+    "messages": {
+      "request-confirmation-title": "Confirmar acción",
+      "request-modification-confirmation": "¿Esta seguro de que desea modificar la muestra?",
+
+      "request-no-ngs-deletion-confirmation": "¿Esta seguro de que desea eliminar la mutación?",
+
+      "request-added": "La muestra se ha añadido",
+      "request-not-saved": "Ha ocurrido un problema. No se ha podido guardar la muestra",
+      "request-deleting-title": "Confirmar acción",
+      "request-deleting-question": "¿Esta seguro de que desea eliminar la muestra?",
+
+      "partner-added": "Se ha asociado la pareja a la muestra",
+      "partner-not-added": "Ha ocurrido un problema. No se ha podido asociar la pareja",
+
+      "partner-removed": "Se ha desasociado la pareja de la muestra",
+      "partner-not-removed": "Ha ocurrido un problema. No se ha podido desasociar la pareja",
+
+      "request-activated": "La muestra se ha activado",
+      "request-deactivated": "La muestra se ha desactivado",
+      "request-not-activated": "Ha ocurrido un problema. No se ha podido activar la muestra",
+      "request-not-deactivated": "Ha ocurrido un problema. No se ha podido desactivar la muestra",
+
+      "request-blocked": "La muestra se ha bloqueado",
+      "request-not-blocked": "Ha ocurrido un problema. No se ha podido bloquear la muestra",
+
+      "request-unblocked": "La muestra se ha desbloqueado",
+      "request-not-unblocked": "Ha ocurrido un problema. No se ha podido desbloquear la muestra",
+
+      "request-validated": "Muestra validada",
+      "request-not-validated": "Ha ocurrido un problema. No se ha podido modificar la validación",
+
+      "request-unvalidated": "Muestra no validada",
+      "request-not-unvalidated": "Ha ocurrido un problema. No se ha podido modificar la validación",
+
+      "no-ngs-created": "Se ha añadido la mutación no NGS al estudio de genotipo de la muestra",
+      "no-ngs-deleted": "Se ha eliminado la mutación no NGS del estudio de genotipo de la muestra",
+
+      "no-match-request-report": "No se ha encontrado informe para el match",
+      "no-report": "No se ha encontrado informe"
+    },
+
+    "warnings": {
+      "haplotype-356": "Detectado haplotipo con valor de t: 3,5 o 6",
+      "cnv-metric-rejected": "Se ha rechazado el estudio de CNV",
+      "no-cnv-metric": "No existe métrica CNV",
+      "poly-t-metric": "No existe Poly t",
+
+      "no-partner": "No tiene asignada pareja",
+      "mutations-found": "encontradas",
+      "match-requests-found": "encontradas",
+      "haplotypes": "haplotipos",
+
+      "cnv-warning-full": "El análisis de variantes del número de copies (Copy Number Variation, CNV) no cumple con los valores de aceptación para obtener un resultado consistente. Para la presente muestra no será posible informar dichas variantes y las mismas se reportarán en la tabla 'Variantes no cubiertas' del informe. Las variantes no cubiertas se tendrán en cuenta en el cálculo del riesgo residual y en el estudio de idoneidad genética",
+      "coverage-warning-full": "La validación clínica y analítica del panel Preconception está basada en una cobertura neta final de 200X, un valor de rendimiento por debajo de este puede afectar a la sensibilidad y especificidad tanto de las variantes puntuales, como de los Indels y CNVs"
+    }
+  },
+
+  "gene-screen": {
+    "inner-title": "GENES",
+    "inner-title-mutations": "MUTACIONES",
+    "inner-title-diseases": "ENFERMEDADES",
+
+    "name-column": "Gen",
+    "alias-column": "Alias",
+    "hgncid-column": "HgncId",
+    "cromosome-column": "Cromosoma",
+    "edit-gene": "FICHA GEN",
+    "gene-data": "DATOS GEN",
+    "gene-name": "Nombre de gen",
+    "gene-final-name": "Nombre final",
+    "gene-identif-hgnc": "Identificador Hgnc",
+    "gene-panel": "Panel"
+  },
+
+  "mutation-screen": {
+    "inner-title": "MUTACIONES",
+
+    "accesion-column": "Accesion",
+    "gene-name-column": "Gen",
+    "hgvs-column": "Hgvs",
+    "hgmd-version-column": "Versión HGDM",
+    "cromosome-column": "Cromosoma",
+    "references-column": "Referencias",
+    "panel-version-column": "Versión de panel",
+    "db-type-column": "Tipo de base de datos",
+    "db-version-column": "Versión de base de datos",
+    "type-column": "Tipo",
+    "active-column": "Activo",
+    "start-pos-column": "Posición de inicio",
+    "end-pos-column": "Posición final",
+    "special-column": "Especial",
+    "show-column": "Mostrar",
+
+    "edit-inner-title": "EDITAR MUTACIÓN",
+    "edit-primary-data": "DATOS MUTACIÓN",
+    "mut-activate-message": "¿Esta seguro que desea activar / desactivar la mutacion seleccionada?"
+  },
+
+  "cnv-screen": {
+    "inner-title": "CNVs",
+    "edit-inner-title": "EDICIÓN CNV",
+    "edit-primary-data": "DATOS CNV",
+    "cnv-table": "CNVs",
+    "cnv-copy-number-column": "Número de copia",
+    "cnv-copy-mean-coverage": "Cobertura media",
+    "cnv-panel-version-column": "Versión de panel",
+    "cnv-chromosome-column": "Cromosoma",
+    "cnv-location-column": "Localización",
+    "cnv-transcript-column": "Transcripción",
+    "cnv-start-pos-column": "Posición de inicio",
+    "cnv-end-pos-column": "Posición final",
+    "cnv-actions-column": "Acciones",
+    "cnv-tag-column": "Etiqueta",
+    "cnv-log-ratio-column": "Log Ratio",
+    "cnv-comment-column": "Comentario",
+    "cnv-active-column": "Activo",
+    "cnv-gene-name-column": "Gen",
+    "cnv-exon-number-column": "Número de exón",
+    "cnv-positive-column": "Positivo",
+    "cnv-show-column": "Mostrar",
+    "cnv-activate-message": "¿Esta seguro que desea activar / desactivar el Cnv seleccionado?",
+    "cnv-type-column": "Tipo"
+  },
+
+  "disease-screen": {
+    "inner-title": "ENFERMEDADES",
+
+    "name-column": "Nombre",
+    "omim-column": "Omim",
+
+    "hereditary-column": "Patrón hereditario",
+
+    "edit-disease": "EDITAR ENFERMEDAD",
+    "record-disease": "FICHA DE ENFERMEDAD",
+    "disease-data": "DATOS ENFERMEDAD",
+    "translations": "TRADUCCIONES",
+    "select-language": "Seleccione idioma",
+    "new-language": "Nombre del nuevo idioma",
+
+    "messages": {
+      "language-exists": "El idioma seleccionado ya existe",
+      "language-empty": "Debe introducir el nombre del nuevo idioma"
+    }
+  },
+
+  "rule-screen": {
+    "inner-title": "REGLAS DE MATCH",
+
+    "new-inner-title": "NUEVA REGLA",
+    "edit-inner-title": "EDITAR REGLA",
+    "record-inner-title": "FICHA DE REGLA",
+    "edit-primary-data": "DATOS REGLA",
+
+    "condition-a-title": "GRUPO A DE CONDICIONES",
+    "condition-b-title": "GRUPO B DE CONDICIONES",
+    "action-title": "ACCIONES",
+
+    "coincidence-types": {
+      "title": "Deben coincidir",
+      "all": "Todas",
+      "any": "Alguna"
+    },
+
+    "name-column": "Nombre",
+
+    "dialog": {
+      "dialog-condition-a-options-title": "Tipo de condición A",
+      "dialog-condition-b-options-title": "Tipo de condición B",
+
+      "condition-carrier-gene": "Gen portador",
+      "condition-cnv": "CNVs",
+      "condition-contains": "Contiene",
+      "condition-no-ngs": "No NGS",
+      "condition-panel": "Panel",
+      "condition-empty-polyt": "Poly T vacía",
+      "condition-polyt": "Cola poly T contiene",
+      "condition-variant": "Variante",
+
+      "dialog-action-options-title": "Tipo de acción",
+
+      "action-not-matcheable": "No se puede hacer match",
+      "action-suitable-genes": "Genes apropiados",
+      "action-warning": "Advertencia",
+      "action-x-chromo": "Cromosoma X",
+      "action-x-chromo-no-ngs": "Cromosoma X no NGS",
+
+      "condition-fields": {
+        "uncovered": "No descubiertos",
+        "copies": "Número de copias",
+        "transcript": "Transcripción",
+        "positive": "Positiva",
+        "active": "Activa",
+        "target-genes-type": "Tipo de genes destino",
+        "opposite-genes-type": "Tipo de genes opuestos",
+        "condition-type": "Tipo de condición",
+        "gene-region": "Región de gen",
+        "mutation": "Mutación",
+        "panel": "Versión de panel",
+        "values": "Valores",
+        "hgvs": "Hgvs",
+        "gene-search": "Gen portador",
+        "uncovered-true": "Comprobar mutaciones no cubiertas",
+        "yes": "Si",
+        "no": "No"
+      },
+
+      "action-fields": {
+        "uncovered": "No descubiertos",
+        "rule-match-result-warning": "Advertencia en resultado de match",
+        "genes": "Listado de genes (Separados por comas)",
+        "hgvs": "Hgvs",
+        "gene-region": "Region de gen"
+      }
+    },
+
+    "condition-columns": {
+      "type": "Tipo",
+      "uncovered": "Comprobar no cubiertas",
+      "copies": "Copias",
+      "transcript": "Transcripción",
+      "positive": "Positiva",
+      "active": "Activa",
+      "target-genes-type": "Tipo de genes de base",
+      "opposite-genes-type": "Tipo de genes de opuesto",
+      "gene-region": "Región del gen",
+      "mutation": "Mutación",
+      "panel-version": "Versión del panel",
+      "values": "Valores",
+      "hgvs": "Hgvs",
+      "genes": "Genes"
+    },
+
+    "action-columns": {
+      "type": "Tipo",
+      "rule-warning": "Advertencia",
+      "uncovered": "No cubiertas",
+      "gene-region": "Región del gen",
+      "hgvs": "Hgvs"
+    },
+
+    "search-fields": {
+      "rule-name": "Nombre"
+    },
+
+    "messages": {
+      "rule-confirmation-title": "Confirmar acción",
+      "rule-deleting-question": "¿Está seguro de que quiere eliminar la regla?",
+      "condition-deleting-question": "¿Está seguro de que quiere eliminar la condición?",
+      "action-deleting-question": "¿Está seguro de que quiere eliminar la acción?",
+      "condition-deleted": "Se ha eliminado la condición",
+      "condition-not-saved": "No se ha podido modificar la condición",
+      "action-deleted": "Se ha eliminado la acción",
+      "action-not-saved": "No se ha podido modificar la acción"
+    }
+  },
+
+  "template-screen": {
+    "inner-title": "PLANTILLAS",
+
+    "name-column": "Nombre",
+    "version-column": "Versión",
+    "company-column": "Compañia",
+
+    "messages": {
+      "template-confirmation-title": "Confirmar acción",
+      "template-deleting-question": "¿Esta seguro de que desea eliminar la plantilla?",
+
+      "template-deleted": "La plantilla se ha eliminado",
+      "template-not-saved": "Ha ocurrido un error. No se ha podido modificar la plantilla"
+    }
+  },
+
+  "export-file": {
+    "titles": {
+      "relevant-mutation": "MUTACIONES RELEVANTES",
+      "found-mutation": "MUTACIONES ENCONTRADAS",
+      "cnv": "CNVS",
+      "residual-risk": "RIESGOS RESIDUALES",
+      "uncovered": "MUTACIONES NO CUBIERTAS",
+      "no-ngs": "MUTACIONES NO NGS",
+      "poly-t": "POLY T"
+    },
+
+    "disease-name": "Nombre enfermedad",
+    "chromosome": "Cromosoma",
+    "gene": "Gen",
+    "exon": "Exón",
+    "intron": "Intrón",
+    "category": "Categoría",
+    "hgvs": "Hgvs",
+    "tag": "Tag",
+    "mutation-type": "Tipo de mutación",
+    "transcript": "Transcripción",
+    "references": "Referencias",
+
+    "copy-number": "Número de copias",
+    "min-coverage": "Cobertura mínima",
+    "log-ratio": "Log ratio",
+    "observations": "Observaciones",
+    "start-position": "Posición incial",
+    "end-position": "Posición Final",
+    "positive": "Positivo",
+    "active": "Activo",
+
+    "omim": "Omim",
+    "gene-region": "Región Génica",
+    "mutation": "Mutación",
+    "ethnicity": "Etnia",
+    "carrier-rate": "Ratio de portador",
+    "residual-risk": "Riesgo Residual",
+
+    "frequency": "Frecuencia",
+    "read-number": "N lecturas",
+    "t-number": "Numero de T",
+    "tg-number": "Número de TG"
+  },
+
+  "TEMPLATES": {
+    "TEMPLATES": "Plantillas",
+    "TEMPLATE_CONFIG": "Configuración de plantilla",
+    "TEMPLATES_NAME": "Nombre de plantilla",
+    "TEMPLATES_REVISION": "Revisión",
+    "TEMPLATES_REPORT": "Informe",
+    "TEMPLATES_LANGUAGE": "Idioma",
+    "TEMPLATES_SAVE": "Guardar",
+    "TEMPLATES_RESET": "Borrar",
+    "GROUP_CODE": "Código de grupo",
+    "DIALOG": {
+      "EDIT": "Editar plantilla",
+      "NEW": "Nueva plantilla",
+      "LEFT_LOGO": "Logo izquierdo",
+      "RIGHT_LOGO": "Logo derecho",
+      "TEXT_LEFT": "Texto izquierdo",
+      "BACKGROUND": "Fondo"
+    },
+    "company-name": "Nombre de centro",
+    "company-address": "Dirección",
+    "company-phones": "Teléfonos",
+    "company-web": "Dirección electrónica",
+    "save-signature": "Guardar firma",
+
+    "individual-favourite-column": "Favorita individual",
+    "couple-favourite-column": "Favorita pareja",
+    "donor-favourite-column": "Favorita donante",
+
+    "individual-favourite-done": "Se ha establecido la plantilla como favorita para informes de individuo",
+    "couple-favourite-done": "Se ha establecido la plantilla como favorita para informes de pareja",
+    "donor-favourite-done": "Se ha establecido la plantilla como favorita para informes de donante"
+  },
+
+  "DATA_TABLE": {
+    "ACTIONS": "Acciones",
+    "NEW": "Nuevo"
+  },
+
+  "REPORTS": {
+    "SELECT_TEMPLATE": "Seleccionar plantilla",
+    "LANGUAGE": "Idioma",
+    "VARIANTS": "Variantes",
+    "UNCOVEREDS": "No cubiertas",
+    "PERSON_NAME": "Nombre",
+    "PERSON_ID_CARD": "NIF",
+    "PERSON_BIRTH_DATE": "Fecha de nacimiento",
+    "PERSON_COUNTRY": "País",
+    "PERSON_ETHNICITY": "Etnia",
+    "PERSON_SAMPLE_TYPE": "Tipo de muestra",
+    "PERSON_INDICATION": "Indicación",
+    "TITLE_INDIVIDUAL": "Informe individual",
+    "TITLE_COUPLE": "Informe de pareja",
+    "TITLE_ONE_DONOR": "Un donante",
+    "REQUESTOR_NAME": "Nombre de solicitante",
+    "DATA_ADD_VARIANT": "Añadir variantes",
+    "DATA_ADD_UNCOVERED": "Añadir no cubiertas",
+    "DATA_REGION": "Región",
+    "DATA_MUTATION_TYPE": "Tipo de mutación",
+    "DATA_ORDER": "Orden",
+    "DATA_REFERENCE": "Referencia",
+    "DATA_DISEASE_NAME": "Nombre de enfermedad",
+    "DATA_CHROMOSOME": "Cromosoma",
+    "DATA_GENE_NAME": "Nombre de gen",
+    "DATA_HGVS": "Hgvs",
+    "DATA_TRANSCRIPT": "Transcripción",
+    "DATA_DISEASE_DESCRIPTION": "Descripción de enfermedad",
+    "REQUESTOR_RECEIVER": "Receptor solicitante",
+    "REQUESTOR_HOSPITAL": "Hospital",
+    "REQUESTOR_DEPARTAMENT": "Departamento",
+    "REQUESTOR_EXTREF": "Ext Ref",
+    "REQUESTOR_URCODE": "Código Ur",
+    "REQUESTOR_ENTRANC_DATE": "Fecha de entrada",
+    "SHOW_EXT_CODE_TARGETS": "Mostrar muestras objetivo",
+    "CODE": "Código",
+    "URCODE": "Código UR",
+    "PANEL_VERSION": "Versión del panel",
+    "SHOW_EXT_CODE_SOURCE": "Mostrar origen",
+    "COMPATIBLE": "Compatible",
+    "YES": "Si",
+    "NO": "No",
+    "RESET": "Borrar",
+    "GENERATE": "Guardar",
+    "CANCEL": "Cancelar"
+  }
+}

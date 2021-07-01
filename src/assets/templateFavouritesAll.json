@@ -1,0 +1,63 @@
+{
+    "_embedded": {
+        "precon:templateFavourites": [
+            {
+                "reportName": "templateFavourite1",
+                "language": "es",
+                "groupCode": "group1",
+                "_links": {
+                    "self": {
+                        "href": "http://localhost:8080/api/templateFavourites/8"
+                    }
+                }
+            },
+            {
+                "reportName": "templateFavourite2",
+                "language": "en",
+                "groupCode": "group1",
+                "_links": {
+                    "self": {
+                        "href": "http://localhost:8080/api/templateFavourites/8"
+                    }
+                }
+            },
+            {
+                "reportName": "templateFavourite3",
+                "language": "en",
+                "groupCode": "group1",
+                "_links": {
+                    "self": {
+                        "href": "http://localhost:8080/api/templateFavourites/8"
+                    }
+                }
+            }
+        ]
+    },
+    "_links": {
+        "first": {
+            "href": "http://localhost:8080/api/templateFavourites?page=0&size=20"
+        },
+        "last": {
+            "href": "http://localhost:8080/api/templateFavourites?page=0&size=20"
+        },
+        "self": {
+            "href": "http://localhost:8080/api/templateFavourites?page=0&size=20"
+        },
+        "search": {
+            "href": "http://localhost:8080/api/templateFavourites/search"
+        },
+        "curies": [
+            {
+                "href": "http://localhost:8080/docs/index.html#{rel}",
+                "name": "precon",
+                "templated": true
+            }
+        ]
+    },
+    "page": {
+        "size": 20,
+        "totalElements": 1,
+        "totalPages": 1,
+        "number": 0
+    }
+}

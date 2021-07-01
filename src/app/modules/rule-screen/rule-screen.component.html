@@ -1,0 +1,335 @@
+<div [ngClass]="'screen-container'">
+    <app-header [ngClass]="'screen-header'"></app-header>
+
+    <div [ngClass]="'screen'">
+        <app-main-menu [ngClass]="'main-menu'"></app-main-menu>
+
+        <div [ngClass]="'main-list'">
+            <div [ngClass]="'main-list-title'"
+                 *ngIf="!showRecord">
+                <div [ngClass]="'list-tittle-value'">
+                    {{ "rule-screen.inner-title" | translate }}
+                </div>
+            </div>
+
+            <!-- LIST TABLE -->
+            <div [ngClass]="'spinner-container'" *ngIf="loading">
+                <div>{{ "common-elements.messages.loading-screen" | translate }}</div>
+                <div [ngClass]="'spinner'">
+                    <mat-spinner></mat-spinner>
+                </div>
+            </div>
+
+            <ng-container *ngIf="!loading">
+                <app-table
+                   *ngIf="!showRecord"
+                   [ngClass]="'main-container'"
+                   [tableData]="rules"
+                   [tableColumns]="ruleTableColumns"
+                   [isFilterable]="true"
+                   [isPageable]="true"
+                   [paginationSizes]="defaultPageSizes"
+                   [defaultPageSize]="pagination.currentPagSize"
+                   [numberOfElements]="pagination.totalElements"
+                   [currentPage]="pagination.currentPag"
+                   (eventPageChange)="pageChanged($event)"
+                   (searchAction)="textFiltered($event)"
+                   [searchFields]="searchFields"
+                   (editAction)="showRuleRecord($event)"
+                   (deleteAction)="deleteRule($event)"
+                   (newAction)="addRule()">
+                </app-table>
+            </ng-container>
+
+            <!-- EDIT FORM -->
+            <div *ngIf="showRecord || adding" [ngClass]="'main-edit'">
+
+                <div [ngClass]="'main-edit-title'">
+                    <ng-container *ngIf="adding">
+                        <div [ngClass]="'edit-title'">
+                            {{ "rule-screen.new-inner-title" | translate }}
+                        </div>
+                    </ng-container>
+
+                    <div [ngClass]="'edit-title'" *ngIf="unlockFields && !adding">
+                        {{ "rule-screen.edit-inner-title" | translate }}
+                    </div>
+
+                    <div [ngClass]="'edit-title'" *ngIf="!unlockFields && !adding">
+                        {{ "rule-screen.record-inner-title" | translate }}
+                    </div>
+
+                    <div [ngClass]="'edit-title-buttons'">
+                        <button [ngClass]="'function-button'" (click)="backButton()" mat-flat-button color="primary">
+                            {{ "common-elements.buttons.return" | translate }}
+                        </button>
+
+                        <ng-container *ngIf="unlockFields">
+                            <button [ngClass]="'function-button'" (click)="recordButton()" mat-flat-button color="primary">
+                                <mat-icon>assignment</mat-icon>
+                                {{ "common-elements.buttons.record" | translate }}
+                            </button>
+                        </ng-container>
+
+                        <ng-container *ngIf="!unlockFields">
+                            <button [ngClass]="'function-button'" (click)="editButton()" mat-flat-button color="primary">
+                                <mat-icon>create</mat-icon>
+                                {{ "common-elements.buttons.edit" | translate }}
+                            </button>
+                        </ng-container>
+
+                        <ng-container *ngIf="unlockFields">
+                            <button [ngClass]="'function-button'" (click)="saveRule()" mat-flat-button color="primary">
+                                {{ "common-elements.buttons.save" | translate }}
+                            </button>
+                        </ng-container>
+
+                        <ng-container *ngIf="!unlockFields">
+                            <button [ngClass]="'function-button'" mat-flat-button color="primary" disabled>
+                                {{ "common-elements.buttons.save" | translate }}
+                            </button>
+                        </ng-container>
+                    </div>
+                </div>
+
+                <div [ngClass]="'main-edit-data'">
+                    <div [ngClass]="'edit-data-primary'">
+                        <mat-card class="mat-elevation-z0">
+                            <div [ngClass]="'data-primary-title'">
+                                {{ "rule-screen.edit-primary-data" | translate }}
+                            </div>
+
+                            <div [ngClass]="'data-primary-fields'">
+                                <form class="request-data-form" [ngClass]="'data-primary-form'">
+                                    <div [ngClass]="'primary-first-column'">
+                                        <mat-form-field floatLabel="always" appearance="outline">
+                                            <mat-label>{{ "rule-screen.name-column" | translate }}</mat-label>
+                                            <label>
+                                                <ng-container *ngIf="unlockFields">
+                                                    <input [(ngModel)]="this.editingRule.name" name="name" matInput required>
+                                                </ng-container>
+                                                <ng-container *ngIf="!unlockFields">
+                                                    <input [(ngModel)]="this.editingRule.name" name="name" matInput disabled>
+                                                </ng-container>
+                                            </label>
+                                        </mat-form-field>
+                                    </div>
+                                </form>
+                            </div>
+                        </mat-card>
+
+                        <div>
+                            <mat-accordion>
+                                <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)">
+                                    <mat-expansion-panel-header>
+                                        <mat-panel-title [ngClass]="'panel-title'">
+                                            <span>{{ "rule-screen.condition-a-title" | translate }}</span>
+                                        </mat-panel-title>
+                                        <mat-panel-description [ngClass]="'panel-description'">
+                                            <div [ngClass]="'coincidence-selector'">
+                                                <span>{{ 'rule-screen.coincidence-types.title' | translate }}</span>
+                                                <mat-radio-group aria-labelledby="action-radio-label" [(ngModel)]="editingRule.conditionGroupACoincidence">
+                                                    <mat-radio-button [ngClass]="'radio-button'" *ngFor="let coincidenceOptionA of coincidenceOptions" [value]="coincidenceOptionA">
+                                                        <ng-container *ngIf="coincidenceOptionA === coincidenceAll">
+                                                            {{ "rule-screen.coincidence-types.all" | translate }}
+                                                        </ng-container>
+
+                                                        <ng-container *ngIf="coincidenceOptionA === coincidenceAny">
+                                                            {{ "rule-screen.coincidence-types.any" | translate }}
+                                                        </ng-container>
+                                                    </mat-radio-button>
+                                                </mat-radio-group>
+                                            </div>
+                                        </mat-panel-description>
+                                    </mat-expansion-panel-header>
+                                    <ng-container *ngIf="!unlockFields">
+                                        <app-table
+                                                [tableData]="editingConditionsA"
+                                                [tableColumns]="conditionTableColumns"
+                                                tableBackgroundColor="#FFFFFF">
+                                        </app-table>
+                                    </ng-container>
+                                    <ng-container *ngIf="unlockFields">
+                                        <app-table
+                                                [tableData]="editingConditionsA"
+                                                [tableColumns]="conditionTableColumns"
+                                                (deleteAction)="deleteCondition($event, this.GROUP_A)"
+                                                (newAction)="addConditionA()"
+                                                tableBackgroundColor="#FFFFFF">
+                                        </app-table>
+                                    </ng-container>
+                                </mat-expansion-panel>
+
+                                <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)">
+                                    <mat-expansion-panel-header>
+                                        <mat-panel-title>
+                                            <span>{{ "rule-screen.condition-b-title" | translate }}</span>
+                                        </mat-panel-title>
+                                        <mat-panel-description [ngClass]="'panel-description'">
+                                            <div [ngClass]="'coincidence-selector'">
+                                                <span>{{ 'rule-screen.coincidence-types.title' | translate }}</span>
+                                                <mat-radio-group aria-labelledby="action-radio-label" [(ngModel)]="editingRule.conditionGroupBCoincidence">
+                                                    <mat-radio-button [ngClass]="'radio-button'"
+                                                                      *ngFor="let coincidenceOptionB of coincidenceOptions"
+                                                                      [value]="coincidenceOptionB">
+                                                        <ng-container *ngIf="coincidenceOptionB === coincidenceAll">
+                                                            {{ "rule-screen.coincidence-types.all" | translate }}
+                                                        </ng-container>
+                                                        <ng-container *ngIf="coincidenceOptionB === coincidenceAny">
+                                                            {{ "rule-screen.coincidence-types.any" | translate }}
+                                                        </ng-container>
+                                                    </mat-radio-button>
+                                                </mat-radio-group>
+                                            </div>
+                                        </mat-panel-description>
+                                    </mat-expansion-panel-header>
+                                    <ng-container *ngIf="!unlockFields">
+                                        <app-table
+                                            [tableData]="editingConditionsB"
+                                            [tableColumns]="conditionTableColumns"
+                                            tableBackgroundColor="#FFFFFF">
+                                        </app-table>
+                                    </ng-container>
+                                    <ng-container *ngIf="unlockFields">
+                                        <app-table
+                                            [tableData]="editingConditionsB"
+                                            [tableColumns]="conditionTableColumns"
+                                            (deleteAction)="deleteCondition($event, this.GROUP_B)"
+                                            (newAction)="addConditionB()"
+                                            tableBackgroundColor="#FFFFFF">
+                                        </app-table>
+                                    </ng-container>
+                                </mat-expansion-panel>
+
+                                <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)">
+                                    <mat-expansion-panel-header>
+                                        <mat-panel-title>
+                                            <span>{{ "rule-screen.action-title" | translate }}</span>
+                                        </mat-panel-title>
+                                    </mat-expansion-panel-header>
+                                    <ng-container *ngIf="!unlockFields">
+                                        <app-table
+                                                [tableData]="editingActions"
+                                                [tableColumns]="actionTableColumns"
+                                                tableBackgroundColor="#FFFFFF">
+                                        </app-table>
+                                    </ng-container>
+                                    <ng-container *ngIf="unlockFields">
+                                        <app-table
+                                                [tableData]="editingActions"
+                                                [tableColumns]="actionTableColumns"
+                                                (deleteAction)="deleteAction($event)"
+                                                (newAction)="addAction()"
+                                                tableBackgroundColor="#FFFFFF">
+                                        </app-table>
+                                    </ng-container>
+                                </mat-expansion-panel>
+                            </mat-accordion>
+                        </div>
+
+
+
+
+
+
+<!--                        <div [ngClass]="'rule-edit-data-secondary'">-->
+<!--                            &lt;!&ndash; CONDITION A TABLE &ndash;&gt;-->
+<!--&lt;!&ndash;                            <mat-card class="mat-elevation-z0" [ngClass]="'condition-a-table'">&ndash;&gt;-->
+<!--&lt;!&ndash;                                <div [ngClass]="'title-coincidence'">&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <div [ngClass]="'data-primary-title'">&ndash;&gt;-->
+<!--&lt;!&ndash;                                        {{ "rule-screen.condition-a-title" | translate }}&ndash;&gt;-->
+<!--&lt;!&ndash;                                    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <ng-container *ngIf="!unlockFields">&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <app-table&ndash;&gt;-->
+<!--&lt;!&ndash;                                            [tableData]="editingConditionsA"&ndash;&gt;-->
+<!--&lt;!&ndash;                                            [tableColumns]="conditionTableColumns"&ndash;&gt;-->
+<!--&lt;!&ndash;                                            tableBackgroundColor="#FFFFFF">&ndash;&gt;-->
+<!--&lt;!&ndash;                                    </app-table>&ndash;&gt;-->
+<!--&lt;!&ndash;                                </ng-container>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <ng-container *ngIf="unlockFields">&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <app-table&ndash;&gt;-->
+<!--&lt;!&ndash;                                            [tableData]="editingConditionsA"&ndash;&gt;-->
+<!--&lt;!&ndash;                                            [tableColumns]="conditionTableColumns"&ndash;&gt;-->
+<!--&lt;!&ndash;                                            (editAction)="editConditionA($event)"&ndash;&gt;-->
+<!--&lt;!&ndash;                                            (deleteAction)="deleteConditionA($event)"&ndash;&gt;-->
+<!--&lt;!&ndash;                                            (newAction)="addConditionA()"&ndash;&gt;-->
+<!--&lt;!&ndash;                                            tableBackgroundColor="#FFFFFF">&ndash;&gt;-->
+<!--&lt;!&ndash;                                    </app-table>&ndash;&gt;-->
+<!--&lt;!&ndash;                                </ng-container>&ndash;&gt;-->
+<!--&lt;!&ndash;                            </mat-card>&ndash;&gt;-->
+
+<!--                            <mat-card class="mat-elevation-z0" [ngClass]="'condition-b-table'">-->
+<!--                                <div [ngClass]="'title-coincidence'">-->
+<!--                                    <div [ngClass]="'data-primary-title'">-->
+<!--                                        {{ "rule-screen.condition-b-title" | translate }}-->
+<!--                                    </div>-->
+<!--                                    <div [ngClass]="'coincidence-selector'">-->
+<!--                                        <mat-radio-group [ngClass]="'radio-list'" aria-labelledby="action-radio-label"-->
+<!--                                                         [(ngModel)]="editingRule.conditionGroupBCoincidence">-->
+<!--                                            <mat-radio-button [ngClass]="'radio-button'"-->
+<!--                                                              *ngFor="let coincidenceOptionB of coincidenceOptions"-->
+<!--                                                              [value]="coincidenceOptionB">-->
+<!--                                                <ng-container *ngIf="coincidenceOptionB === coincidenceAll">-->
+<!--                                                    {{ "rule-screen.coincidence-types.all" | translate }}-->
+<!--                                                </ng-container>-->
+
+<!--                                                <ng-container *ngIf="coincidenceOptionB === coincidenceAny">-->
+<!--                                                    {{ "rule-screen.coincidence-types.any" | translate }}-->
+<!--                                                </ng-container>-->
+<!--                                            </mat-radio-button>-->
+<!--                                        </mat-radio-group>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+
+<!--                                <ng-container *ngIf="!unlockFields">-->
+<!--                                    <app-table-->
+<!--                                            [tableData]="editingConditionsB"-->
+<!--                                            [tableColumns]="conditionTableColumns"-->
+<!--                                            tableBackgroundColor="#FFFFFF">-->
+<!--                                    </app-table>-->
+<!--                                </ng-container>-->
+<!--                                <ng-container *ngIf="unlockFields">-->
+<!--                                    <app-table-->
+<!--                                            [tableData]="editingConditionsB"-->
+<!--                                            [tableColumns]="conditionTableColumns"-->
+<!--                                            (editAction)="editConditionB($event)"-->
+<!--                                            (deleteAction)="deleteConditionB($event)"-->
+<!--                                            (newAction)="addConditionB()"-->
+<!--                                            tableBackgroundColor="#FFFFFF">-->
+<!--                                    </app-table>-->
+<!--                                </ng-container>-->
+
+<!--                            </mat-card>-->
+
+<!--                            <mat-card class="mat-elevation-z0" [ngClass]="'action-table'">-->
+<!--                                <div [ngClass]="'data-primary-title'">{{ "rule-screen.action-title" | translate }}</div>-->
+<!--                                <ng-container *ngIf="!unlockFields">-->
+<!--                                    <app-table-->
+<!--                                            [tableData]="editingActions"-->
+<!--                                            [tableColumns]="actionTableColumns"-->
+<!--                                            tableBackgroundColor="#FFFFFF">-->
+<!--                                    </app-table>-->
+<!--                                </ng-container>-->
+<!--                                <ng-container *ngIf="unlockFields">-->
+<!--                                    <app-table-->
+<!--                                            [tableData]="editingActions"-->
+<!--                                            [tableColumns]="actionTableColumns"-->
+<!--                                            (editAction)="editAction($event)"-->
+<!--                                            (deleteAction)="deleteAction($event)"-->
+<!--                                            (newAction)="addAction()"-->
+<!--                                            tableBackgroundColor="#FFFFFF">-->
+<!--                                    </app-table>-->
+<!--                                </ng-container>-->
+<!--                            </mat-card>-->
+
+<!--                        </div>-->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <app-footer [ngClass]="'screen-footer'"></app-footer>
+</div>

@@ -1,0 +1,800 @@
+<div [ngClass]="'screen-container'">
+    <app-header [ngClass]="'screen-header'"></app-header>
+
+    <div [ngClass]="'screen'">
+        <app-main-menu [ngClass]="'main-menu'"></app-main-menu>
+
+        <div [ngClass]="'main-list'">
+
+            <div [ngClass]="'main-list-title'" *ngIf="!showRecord">
+                <div [ngClass]="'list-tittle-value'">
+                    {{ "request-screen.inner-title" | translate }}
+                </div>
+            </div>
+
+            <!-- LIST TABLE -->
+            <div [ngClass]="'spinner-container'" *ngIf="loading">
+                <div>{{ "common-elements.messages.loading-screen" | translate }}</div>
+                <div [ngClass]="'spinner'">
+                    <mat-spinner></mat-spinner>
+                </div>
+            </div>
+
+            <ng-container *ngIf="!loading">
+                <app-table
+                    *ngIf="!showRecord"
+                    [ngClass]="'main-container'"
+                    [tableData]="requests"
+                    [tableColumns]="tableColumns"
+                    [isFilterable]="true"
+                    [isPageable]="true"
+                    [defaultPageSize]="pageSize"
+                    [paginationSizes]="defaultPageSizes"
+                    [numberOfElements]="pagination.totalElements"
+                    [currentPage]="pagination.currentPag"
+                    [tableName]="'request-screen-table'"
+                    (eventPageChange)="pageChanged($event)"
+                    (editAction)="editRequest($event)"
+                    (newAction)="addRequest()"
+                    (booleanFieldAction)="toggleTableField($event)"
+                    (searchAction)="textFiltered($event)"
+                    [searchFields]="searchFields"
+                    (sort)="sortRequests($event)">
+                </app-table>
+            </ng-container>
+
+            <div *ngIf="showRecord" [ngClass]="'main-edit'">
+
+                <div [ngClass]="'main-edit-title'">
+                    <ng-container *ngIf="unlockFields">
+                        <div [ngClass]="'edit-title'">
+                            {{ "request-screen.edit-inner-title" | translate }}
+                        </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="!unlockFields && adding">
+                        <div [ngClass]="'edit-title'">
+                            {{ "request-screen.new-inner-title" | translate }}
+                        </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="!unlockFields && !adding">
+                        <div [ngClass]="'edit-title'">
+                            {{ "request-screen.record-inner-title" | translate }}
+                        </div>
+                    </ng-container>
+
+                    <div [ngClass]="'edit-title-buttons'">
+                        <button [ngClass]="'function-button'" (click)="backButton()" mat-flat-button color="primary">
+                            {{ "common-elements.buttons.return" | translate }}
+                        </button>
+
+                        <ng-container *ngIf="!unlockFields">
+                            <button [ngClass]="'function-button'" (click)="editButton()" mat-flat-button color="primary">
+                                <mat-icon>create</mat-icon>
+                                {{ "common-elements.buttons.edit" | translate }}
+                            </button>
+                        </ng-container>
+
+                        <ng-container *ngIf="unlockFields">
+                            <button [ngClass]="'function-button'" (click)="recordButton()" mat-flat-button color="primary">
+                                <mat-icon>assignment</mat-icon>
+                                {{ "common-elements.buttons.record" | translate }}
+                            </button>
+                        </ng-container>
+
+                        <button [ngClass]="'function-button-large'" (click)="downloadIndividualReport(this.editingRequest)" mat-flat-button color="primary">
+                            {{ "common-elements.buttons.download-individual-report" | translate }}
+                        </button>
+
+                        <ng-container *ngIf="partnerRequest !== undefined">
+                            <button [ngClass]="'function-button-large'" (click)="downloadCoupleReport(this.editingRequest)" mat-flat-button color="primary">
+                                {{ "common-elements.buttons.download-couple-report" | translate }}
+                            </button>
+                        </ng-container>
+
+                        <ng-container *ngIf="partnerRequest === undefined">
+                            <button [ngClass]="'function-button-large'" mat-flat-button color="primary" disabled>
+                                {{ "common-elements.buttons.download-couple-report" | translate }}
+                            </button>
+                        </ng-container>
+
+                        <button [ngClass]="'function-button-long'" (click)="exportData(this.editingRequest)" mat-flat-button color="primary">
+                            {{ "common-elements.buttons.export-request-data" | translate }}
+                        </button>
+
+                        <ng-container *ngIf="!unlockFields">
+                            <button [ngClass]="'function-button'" (click)="saveRequest(this.editingRequest)" mat-flat-button color="primary" disabled>
+                                {{ "common-elements.buttons.save" | translate }}
+                            </button>
+                        </ng-container>
+
+                        <ng-container *ngIf="unlockFields">
+                            <button [ngClass]="'function-button'" (click)="saveRequest(this.editingRequest)" mat-flat-button color="primary">
+                                {{ "common-elements.buttons.save" | translate }}
+                            </button>
+                        </ng-container>
+                    </div>
+                </div>
+
+                <div>
+                    <mat-accordion multi="true">
+                        <!-- REQUEST DATA -->
+                        <mat-expansion-panel expanded="true">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title [ngClass]="'panel-title'">
+                                    <span>{{ "request-screen.sections.main-data" | translate }}</span>
+                                </mat-panel-title>
+                                <mat-panel-description [ngClass]="'panel-description'"></mat-panel-description>
+                            </mat-expansion-panel-header>
+                                <div [ngClass]="'data-primary-fields'">
+                                    <form class="request-data-form" [ngClass]="'data-primary-form'">
+                                        <div [ngClass]="'primary-first-column'">
+
+                                            <mat-form-field floatLabel="always" appearance="outline">
+                                                <mat-label>{{ "request-screen.edit-fields.ur-code" | translate }}</mat-label>
+                                                <label>
+                                                    <ng-container *ngIf="unlockFields">
+                                                        <input [(ngModel)]="editingRequest.urCode" name="urCode" matInput>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="!unlockFields">
+                                                        <input [(ngModel)]="editingRequest.urCode" name="urCode" matInput disabled>
+                                                    </ng-container>
+                                                </label>
+                                            </mat-form-field>
+
+                                            <mat-form-field floatLabel="always" appearance="outline">
+                                                <mat-label>{{ "request-screen.edit-fields.id-card" | translate }}</mat-label>
+                                                <label>
+                                                    <ng-container *ngIf="unlockFields">
+                                                        <input [(ngModel)]="editingRequest.idCard" name="idCard" matInput>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="!unlockFields">
+                                                        <input [(ngModel)]="editingRequest.idCard" name="idCard" matInput disabled>
+                                                    </ng-container>
+                                                </label>
+                                            </mat-form-field>
+
+                                            <mat-form-field floatLabel="always" appearance="outline">
+                                                <mat-label>{{ "request-screen.edit-fields.country" | translate }}</mat-label>
+                                                <label>
+                                                    <input type="text" name="requestCountry"
+                                                           [formControl]="countryControl"
+                                                           [matAutocomplete]="autoCountry"
+                                                           matInput>
+                                                </label>
+                                                <mat-autocomplete #autoCountry="matAutocomplete" [displayWith]="displayCountryList">
+                                                    <mat-option *ngFor="let country of countriesFiltered | async" [value]="country">
+                                                        {{country.viewTranslation}}
+                                                    </mat-option>
+                                                </mat-autocomplete>
+                                            </mat-form-field>
+
+                                            <mat-form-field floatLabel="always" appearance="outline">
+                                                <mat-label>{{ "request-screen.edit-fields.ethnicity" | translate }}</mat-label>
+                                                <label>
+                                                    <input type="text" name="requestEthnicity"
+                                                           [formControl]="ethnicityControl"
+                                                           [matAutocomplete]="autoEthnicity"
+                                                           matInput>
+                                                </label>
+                                                <mat-autocomplete #autoEthnicity="matAutocomplete" [displayWith]="displayEthnicityList">
+                                                    <mat-option *ngFor="let ethnicity of ethnicitiesFiltered | async" [value]="ethnicity">
+                                                        {{ethnicity.viewTranslation}}
+                                                    </mat-option>
+                                                </mat-autocomplete>
+                                            </mat-form-field>
+                                        </div>
+
+                                        <div [ngClass]="'primary-second-column'">
+
+                                            <mat-form-field floatLabel="always" appearance="outline">
+                                                <mat-label>{{ "request-screen.edit-fields.first-name" | translate }}</mat-label>
+                                                <label>
+                                                    <ng-container *ngIf="unlockFields">
+                                                        <input [(ngModel)]="editingRequest.firstName" name="firstName" matInput>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="!unlockFields">
+                                                        <input [(ngModel)]="editingRequest.firstName" name="firstName" matInput disabled>
+                                                    </ng-container>
+                                                </label>
+                                            </mat-form-field>
+
+                                            <mat-form-field floatLabel="always" appearance="outline">
+                                                <mat-label>{{ "request-screen.edit-fields.last-name" | translate }}</mat-label>
+                                                <label>
+                                                    <ng-container *ngIf="unlockFields">
+                                                        <input [(ngModel)]="editingRequest.lastName" name="lastName" matInput>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="!unlockFields">
+                                                        <input [(ngModel)]="editingRequest.lastName" name="lastName" matInput disabled>
+                                                    </ng-container>
+                                                </label>
+                                            </mat-form-field>
+
+                                            <mat-form-field floatLabel="always" appearance="outline">
+                                                <mat-label>{{ "request-screen.edit-fields.type" | translate }}</mat-label>
+                                                <mat-select (selectionChange)="toggleIndividualType($event)" [formControl]="individualTypeFormControl">
+                                                    <mat-option *ngFor="let individualType of individualTypes" [value]="individualType">
+                                                        <span *ngIf="individualType === editingRequest.typeIndividualSinglePerson">{{ "request-screen.edit-fields.type-single-person" | translate }}</span>
+                                                        <span *ngIf="individualType === editingRequest.typeIndividualCouple">{{ "request-screen.edit-fields.type-couple" | translate }}</span>
+                                                        <span *ngIf="individualType === editingRequest.typeIndividualDonor">{{ "request-screen.edit-fields.type-donor" | translate }}</span>
+                                                        <span *ngIf="individualType === editingRequest.typeIndividualRecipient">{{ "request-screen.edit-fields.type-recipient" | translate }}</span>
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+
+                                            <mat-form-field floatLabel="always" appearance="outline">
+                                                <mat-label>{{ "request-screen.edit-fields.sex" | translate }}</mat-label>
+                                                <ng-container *ngIf="unlockFields">
+                                                    <mat-select [(ngModel)]="this.editingRequest.female" name="sex">
+                                                        <mat-option [value]="false">{{ "request-screen.edit-fields.sex-value-male" | translate }}</mat-option>
+                                                        <mat-option [value]="true">{{ "request-screen.edit-fields.sex-value-female" | translate }}</mat-option>
+                                                    </mat-select>
+                                                </ng-container>
+
+                                                <ng-container *ngIf="!unlockFields">
+                                                    <mat-select [(ngModel)]="this.editingRequest.female" name="sex" disabled>
+                                                        <mat-option [value]="false">{{ "request-screen.edit-fields.sex-value-male" | translate }}</mat-option>
+                                                        <mat-option [value]="true">{{ "request-screen.edit-fields.sex-value-female" | translate }}</mat-option>
+                                                    </mat-select>
+                                                </ng-container>
+
+                                            </mat-form-field>
+
+                                        </div>
+
+                                        <div [ngClass]="'primary-third-column'">
+
+                                            <mat-form-field floatLabel="always" appearance="outline">
+                                                <mat-label>{{ "request-screen.edit-fields.birth-date" | translate }}</mat-label>
+                                                <label>
+                                                    <input matInput [matDatepicker]="pickerBirth" [formControl]="birthdayControl" name="birthday">
+                                                </label>
+                                                <mat-datepicker-toggle matSuffix [for]="pickerBirth"></mat-datepicker-toggle>
+                                                <mat-datepicker #pickerBirth></mat-datepicker>
+                                            </mat-form-field>
+
+                                            <mat-form-field floatLabel="always" appearance="outline">
+                                                <mat-label>{{ "request-screen.edit-fields.start-date" | translate }}</mat-label>
+                                                <label>
+                                                    <input matInput [matDatepicker]="pickerStart" [formControl]="startDateControl" name="startDate">
+                                                </label>
+                                                <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+                                                <mat-datepicker #pickerStart></mat-datepicker>
+                                            </mat-form-field>
+
+                                            <mat-form-field floatLabel="always" appearance="outline">
+                                                <mat-label>{{ "request-screen.edit-fields.end-date" | translate }}</mat-label>
+                                                <label>
+                                                    <input matInput [matDatepicker]="pickerEnd" [formControl]="endDateControl" name="endDate">
+                                                </label>
+                                                <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+                                                <mat-datepicker #pickerEnd></mat-datepicker>
+                                            </mat-form-field>
+
+                                        </div>
+                                    </form>
+                                </div>
+                        </mat-expansion-panel>
+
+                        <!-- PARTNER DATA -->
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title [ngClass]="'panel-title'">
+                                    <span>{{ "request-screen.sections.partner-data" | translate }}</span>
+                                    <ng-container *ngIf="this.partnerRequest === undefined">
+                                        &nbsp;&nbsp;&nbsp;&nbsp;({{ "request-screen.warnings.no-partner" | translate}})
+                                    </ng-container>
+                                </mat-panel-title>
+                                <mat-panel-description [ngClass]="'panel-description'"></mat-panel-description>
+                            </mat-expansion-panel-header>
+
+                            <ng-container *ngIf="partnerRequest !== undefined">
+                                <div [ngClass]="'secondary-fields'">
+                                    <div [ngClass]="'secondary-first-column'">
+                                        <mat-form-field floatLabel="always" appearance="outline">
+                                            <mat-label>{{ "request-screen.ur-code-column" | translate }}</mat-label>
+                                            <label>
+                                                <input [(ngModel)]="this.partnerRequest.urCode" name="partnerUrCode" matInput disabled>
+                                            </label>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div [ngClass]="'secondary-second-column'">
+                                        <mat-form-field floatLabel="always" appearance="outline">
+                                            <mat-label>{{ "request-screen.edit-fields.partner-first-name" | translate }}</mat-label>
+                                            <label>
+                                                <input [(ngModel)]="this.partnerRequest.firstName" name="partnerFirstName" matInput disabled>
+                                            </label>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div [ngClass]="'secondary-third-column'">
+                                        <mat-form-field floatLabel="always" appearance="outline">
+                                            <mat-label>{{ "request-screen.edit-fields.partner-last-name" | translate }}</mat-label>
+                                            <label>
+                                                <input [(ngModel)]="this.partnerRequest.lastName" name="partnerLastName" matInput disabled>
+                                            </label>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div *ngIf="partnerRequest !== undefined" [ngClass]="'secondary-fourth-column'">
+                                        <ng-container *ngIf="unlockFields">
+                                            <button [ngClass]="'function-button-partner'"
+                                                    (click)="removePartner()"
+                                                    color="warn"
+                                                    mat-flat-button>
+                                                {{ "common-elements.buttons.disassociate" | translate }}
+                                            </button>
+                                        </ng-container>
+
+                                        <ng-container *ngIf="!unlockFields">
+                                            <button [ngClass]="'function-button-partner'"
+                                                    (click)="removePartner()"
+                                                    color="warn"
+                                                    mat-flat-button disabled>
+                                                {{ "common-elements.buttons.disassociate" | translate }}
+                                            </button>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                            </ng-container>
+
+                            <ng-container [ngClass]="'inner-table'">
+                                <app-table *ngIf="partnerRequest === undefined"
+                                    [ngClass]="'main-container'"
+                                    [tableData]="requestsPartner"
+                                    [tableColumns]="tableColumns"
+                                    [isFilterable]="true"
+                                    [isPageable]="true"
+                                    [defaultPageSize]="pageSize"
+                                    [paginationSizes]="defaultPageSizes"
+                                    [numberOfElements]="paginationPartnerRequests.totalElements"
+                                    [currentPage]="paginationPartnerRequests.currentPag"
+                                    [tableName]="'partner-request-screen-table'"
+                                    (eventPageChange)="pageChangedPartnerRequest($event)"
+                                    (editAction)="selectPartner($event)"
+                                    [editActionButtonText]="'common-elements.buttons.associate'"
+                                    (searchAction)="textFilteredPartnerRequest($event)"
+                                    [searchFields]="searchFields"
+                                    tableBackgroundColor="#FFFFFF">
+                                </app-table>
+                            </ng-container>
+
+                        </mat-expansion-panel>
+
+                        <!-- MATCH DATA -->
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title [ngClass]="'panel-title'">
+                                    <span>{{ "request-screen.sections.match-requests" | translate }}</span>
+                                    <ng-container *ngIf="matchRequests !== undefined">
+                                        &nbsp;&nbsp;&nbsp;&nbsp;( {{ matchRequests.length }}&nbsp;{{ "request-screen.warnings.match-requests-found" | translate }})
+                                    </ng-container>
+                                </mat-panel-title>
+                                <mat-panel-description [ngClass]="'panel-description'"></mat-panel-description>
+                            </mat-expansion-panel-header>
+                            <!-- -->
+                            <div [ngClass]="'tab-inner-table'">
+                                <ng-container *ngIf="matchRequests !== undefined">
+                                    <app-table
+                                            [ngClass]="'main-secondary-container'"
+                                            [tableData]="matchRequests"
+                                            [tableColumns]="matchRequestColumns"
+                                            [tableName]="'request-match-request-table'"
+                                            [ngStyle]="{'background-color': '#FFFFFF'}"
+
+                                            (uploadAction)="generateOneDonorReport(editingRequest)"
+                                            [uploadActionButtonText]="'common-elements.buttons.download-report'"
+
+                                            tableBackgroundColor="#FFFFFF">
+                                    </app-table>
+                                </ng-container>
+                            </div>
+                        </mat-expansion-panel>
+
+                        <!-- NGS MUTATION -->
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title [ngClass]="'panel-title'">
+                                    <span>{{ "request-screen.sections.ngs-mutations" | translate }}</span>
+                                    <ng-container *ngIf="this.genotype.foundMutations !== undefined">
+                                        &nbsp;&nbsp;&nbsp;&nbsp;( {{ genotype.foundMutations.length }}&nbsp;{{ "request-screen.warnings.mutations-found" | translate }} )
+                                    </ng-container>
+                                </mat-panel-title>
+                                <mat-panel-description [ngClass]="'panel-description'">
+                                </mat-panel-description>
+
+                            </mat-expansion-panel-header>
+                            <div [ngClass]="'tab-inner-fields'">
+                            </div>
+                            <!-- Found mutations table -->
+                            <div [ngClass]="'tab-inner-table'">
+                                <app-table
+                                    [ngClass]="'main-secondary-container'"
+                                    [ngStyle]="{'background-color': '#FFFFFF'}"
+                                    [tableData]="genotype.foundMutations"
+                                    [isSortable]="true"
+                                    [tableColumns]="foundMutationColumns"
+                                    [tableName]="'request-ngs-mutation-table'"
+                                    tableBackgroundColor="#FFFFFF">
+                                </app-table>
+                            </div>
+                        </mat-expansion-panel>
+
+                        <!-- NO NGS MUTATION -->
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title [ngClass]="'panel-title'">
+                                    <span>{{ "request-screen.sections.no-ngs-mutations" | translate }}</span>
+                                    <ng-container *ngIf="this.genotype.noNgsMutations !== undefined">
+                                        &nbsp;&nbsp;&nbsp;&nbsp;({{genotype.noNgsMutations.length}}&nbsp;{{ "request-screen.warnings.mutations-found" | translate}})
+                                    </ng-container>
+                                </mat-panel-title>
+                                <mat-panel-description [ngClass]="'panel-description'"></mat-panel-description>
+                            </mat-expansion-panel-header>
+                            <div [ngClass]="'tab-inner-fields'">
+                                <div [ngClass]="'primary-first-column'">
+
+                                    <mat-form-field floatLabel="always" appearance="outline">
+                                        <mat-label>{{ "request-screen.edit-fields.no-ngs-disease-name" | translate }}</mat-label>
+                                        <label>
+                                            <input type="text" name="diseaseInNoNgs"
+                                                   [formControl]="noNgsDiseaseFormControl"
+                                                   [matAutocomplete]="autoNoNgsDisease"
+                                                   matInput>
+                                            <mat-spinner *ngIf="noNgsDiseaseFormSpinner" [ngClass]="'field-spinner'" [diameter]="20"></mat-spinner>
+                                        </label>
+                                        <mat-autocomplete #autoNoNgsDisease="matAutocomplete" [displayWith]="displayNoNgsDisease">
+                                            <mat-option *ngFor="let disease of diseasesFiltered | async" [value]="disease">
+                                                {{disease.omim}}
+                                            </mat-option>
+                                        </mat-autocomplete>
+                                    </mat-form-field>
+
+                                    <mat-form-field floatLabel="always" appearance="outline">
+                                        <mat-label>{{ "request-screen.edit-fields.no-ngs-mutation" | translate }}</mat-label>
+                                        <label>
+                                            <input type="text" name="mutationInNoNgs"
+                                                   [formControl]="noNgsMutationFormControl"
+                                                   [matAutocomplete]="autoNoNgsMutation"
+                                                   matInput>
+                                            <mat-spinner *ngIf="noNgsMutationFormSpinner" [ngClass]="'field-spinner'" [diameter]="20"></mat-spinner>
+                                        </label>
+                                        <mat-autocomplete #autoNoNgsMutation="matAutocomplete" [displayWith]="displayNoNgsMutation">
+                                            <mat-option *ngFor="let mutation of mutationsFiltered | async" [value]="mutation">
+                                                {{mutation.accession}}
+                                            </mat-option>
+                                        </mat-autocomplete>
+                                    </mat-form-field>
+                                </div>
+
+                                <div [ngClass]="'primary-second-column'">
+                                    <mat-form-field floatLabel="always" appearance="outline">
+                                        <mat-label>{{ "request-screen.edit-fields.no-ngs-gene-name" | translate }}</mat-label>
+                                        <label>
+                                            <input type="text" name="geneInNoNgs"
+                                                   [formControl]="noNgsGeneFormControl"
+                                                   [matAutocomplete]="autoNoNgsGene"
+                                                   matInput>
+                                            <mat-spinner *ngIf="noNgsGeneFormSpinner" [ngClass]="'field-spinner'" [diameter]="20"></mat-spinner>
+                                        </label>
+                                        <mat-autocomplete #autoNoNgsGene="matAutocomplete" [displayWith]="displayNoNgsGene">
+                                            <mat-option *ngFor="let gene of genesFiltered | async" [value]="gene">
+                                                {{gene.geneName}}
+                                            </mat-option>
+                                        </mat-autocomplete>
+                                    </mat-form-field>
+
+                                    <mat-form-field floatLabel="always" appearance="outline">
+                                        <mat-label>{{ "request-screen.edit-fields.no-ngs-gene-region" | translate }}</mat-label>
+                                        <label>
+                                            <input [(ngModel)]="editingNoNgsMutation.geneRegion" name="noNgsGeneRegion" matInput>
+                                        </label>
+                                    </mat-form-field>
+                                </div>
+
+                                <div [ngClass]="'primary-third-column'">
+                                    <ng-container *ngIf="unlockFields">
+                                        <button [ngClass]="'function-button'" (click)="addNoNgsMutation()" color="primary" mat-flat-button>
+                                            <mat-icon>add</mat-icon>{{ "common-elements.buttons.add" | translate }}
+                                        </button>
+                                    </ng-container>
+
+                                    <ng-container *ngIf="!unlockFields">
+                                        <button [ngClass]="'function-button'" color="primary" mat-flat-button disabled>
+                                            <mat-icon>add</mat-icon>{{ "common-elements.buttons.add" | translate }}
+                                        </button>
+                                    </ng-container>
+                                </div>
+                            </div>
+                            <div [ngClass]="'tab-inner-table'">
+                                <!-- No NGS mutation table -->
+                                <ng-container *ngIf="!unlockFields">
+                                    <app-table
+                                            [ngClass]="'main-secondary-container'"
+                                            [ngStyle]="{'background-color': '#FFFFFF'}"
+                                            [tableData]="genotype.noNgsMutations"
+                                            [isSortable]="true"
+                                            [tableColumns]="noNgsMutationColumns"
+                                            [tableName]="'request-no-ngs-mutation-table'"
+                                            tableBackgroundColor="#FFFFFF">
+                                    </app-table>
+                                </ng-container>
+
+                                <ng-container *ngIf="unlockFields">
+                                    <app-table
+                                           [ngClass]="'main-secondary-container'"
+                                           [ngStyle]="{'background-color': '#FFFFFF'}"
+                                           [tableData]="genotype.noNgsMutations"
+                                           [isSortable]="true"
+                                           [tableColumns]="noNgsMutationColumns"
+                                           [tableName]="'request-no-ngs-mutation-table'"
+                                           (deleteAction)="deleteNoNgsMutation($event)"
+                                           tableBackgroundColor="#FFFFFF">
+                                    </app-table>
+                                </ng-container>
+                            </div>
+                        </mat-expansion-panel>
+
+                        <!-- CNV -->
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title [ngClass]="'panel-title'">
+                                    <span>{{ "request-screen.sections.cnvs" | translate }}</span>
+                                    <ng-container *ngIf="this.genotype.cnvs !== undefined">
+                                        &nbsp;&nbsp;&nbsp;&nbsp;({{genotype.cnvs.length}}&nbsp;{{ "request-screen.warnings.mutations-found" | translate}})
+                                    </ng-container>
+                                </mat-panel-title>
+                                <mat-panel-description [ngClass]="'panel-description'"></mat-panel-description>
+                            </mat-expansion-panel-header>
+
+                            <ng-container>
+                                <app-table
+                                        [ngClass]="'main-secondary-container'"
+                                        [ngStyle]="{'background-color': '#FFFFFF'}"
+                                        [tableData]="genotype.cnvs"
+                                        [isSortable]="true"
+                                        [tableColumns]="cnvColumns"
+                                        [tableName]="'request-cnv-table'"
+                                        tableBackgroundColor="#FFFFFF">
+                                </app-table>
+                            </ng-container>
+
+                        </mat-expansion-panel>
+
+                        <!-- CNV METRICS -->
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title [ngClass]="'panel-title'">
+                                    <span>{{ "request-screen.sections.cnv-metrics" | translate }}</span>
+                                    <ng-container *ngIf="genotype.cnvMetrics === null">
+                                        &nbsp;&nbsp;&nbsp;&nbsp;({{ "request-screen.warnings.no-cnv-metric" | translate }})
+                                    </ng-container>
+                                    <ng-container *ngIf="genotype.cnvMetrics !== null">
+                                        <ng-container *ngIf="genotype.cnvMetrics.rejected">
+                                            &nbsp;&nbsp;&nbsp;&nbsp;<span [ngClass]="'warning'">{{ "request-screen.warnings.cnv-metric-rejected" | translate }}</span>
+                                        </ng-container>
+                                    </ng-container>
+                                </mat-panel-title>
+                                <mat-panel-description [ngClass]="'panel-description'">
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
+                            <ng-container *ngIf="genotype.cnvMetrics !== null">
+                                <form class="request-data-form" [ngClass]="'data-primary-form'">
+                                    <div [ngClass]="'primary-first-column'">
+                                        <mat-form-field floatLabel="always" appearance="outline">
+                                            <mat-label>{{ "request-screen.edit-fields.cnv-metric-ncontrols" | translate }}</mat-label>
+                                            <label>
+                                                <input [(ngModel)]="genotype.cnvMetrics.ncontrols" name="cnvMetricNControl" matInput disabled>
+                                            </label>
+                                        </mat-form-field>
+
+
+<!--                                        <mat-form-field floatLabel="always" appearance="outline">-->
+<!--                                            <mat-label>{{ "request-screen.edit-fields.cnv-metric-n" | translate }}</mat-label>-->
+<!--                                            <label>-->
+<!--                                                <input [(ngModel)]="genotype.cnvMetrics.n" name="cnvMetricN" matInput disabled>-->
+<!--                                            </label>-->
+<!--                                        </mat-form-field>-->
+
+<!--                                        <mat-form-field floatLabel="always" appearance="outline">-->
+<!--                                            <mat-label>{{ "request-screen.edit-fields.cnv-metric-min-r-squared" | translate }}</mat-label>-->
+<!--                                            <label>-->
+<!--                                                <input [(ngModel)]="genotype.cnvMetrics.minRsquared" name="minRsquared" matInput disabled>-->
+<!--                                            </label>-->
+<!--                                        </mat-form-field>-->
+
+<!--                                        <mat-form-field floatLabel="always" appearance="outline">-->
+<!--                                            <mat-label>{{ "request-screen.edit-fields.cnv-metric-cn-q1" | translate }}</mat-label>-->
+<!--                                            <label>-->
+<!--                                                <input [(ngModel)]="genotype.cnvMetrics.cnQ1" name="cnQ1" matInput disabled>-->
+<!--                                            </label>-->
+<!--                                        </mat-form-field>-->
+
+<!--                                        <mat-form-field floatLabel="always" appearance="outline">-->
+<!--                                            <mat-label>{{ "request-screen.edit-fields.cnv-metric-cn-snr" | translate }}</mat-label>-->
+<!--                                            <label>-->
+<!--                                                <input [(ngModel)]="genotype.cnvMetrics.cnSnr" name="cnSnr" matInput disabled>-->
+<!--                                            </label>-->
+<!--                                        </mat-form-field>-->
+
+                                    </div>
+                                    <div [ngClass]="'primary-second-column'">
+                                        <mat-form-field floatLabel="always" appearance="outline">
+                                            <mat-label>{{ "request-screen.edit-fields.cnv-metric-cn-iqr" | translate }}</mat-label>
+                                            <label>
+                                                <input [(ngModel)]="genotype.cnvMetrics.cnIqr" name="cnIqr" matInput disabled>
+                                            </label>
+                                        </mat-form-field>
+
+<!--                                        <mat-form-field floatLabel="always" appearance="outline">-->
+<!--                                            <mat-label>{{ "request-screen.edit-fields.cnv-metric-max-r-squared" | translate }}</mat-label>-->
+<!--                                            <label>-->
+<!--                                                <input [(ngModel)]="genotype.cnvMetrics.maxRsquared" name="maxRsquared" matInput disabled>-->
+<!--                                            </label>-->
+<!--                                        </mat-form-field>-->
+
+<!--                                        <mat-form-field floatLabel="always" appearance="outline">-->
+<!--                                            <mat-label>{{ "request-screen.edit-fields.cnv-metric-cn-q3" | translate }}</mat-label>-->
+<!--                                            <label>-->
+<!--                                                <input [(ngModel)]="genotype.cnvMetrics.cnQ3" name="cnQ3" matInput disabled>-->
+<!--                                            </label>-->
+<!--                                        </mat-form-field>-->
+
+<!--                                        <mat-form-field floatLabel="always" appearance="outline">-->
+<!--                                            <mat-label>{{ "request-screen.edit-fields.cnv-metric-cn-median" | translate }}</mat-label>-->
+<!--                                            <label>-->
+<!--                                                <input [(ngModel)]="genotype.cnvMetrics.cnMedian" name="cnMedian" matInput disabled>-->
+<!--                                            </label>-->
+<!--                                        </mat-form-field>-->
+                                    </div>
+
+                                    <div [ngClass]="'primary-third-column'">
+                                        <mat-form-field floatLabel="always" appearance="outline">
+                                            <mat-label>{{ "request-screen.edit-fields.cnv-metric-rejected" | translate }}</mat-label>
+                                            <label>
+                                                <input [(ngModel)]="genotype.cnvMetrics.rejected" name="rejected" matInput disabled>
+                                            </label>
+                                        </mat-form-field>
+
+<!--                                        <mat-form-field floatLabel="always" appearance="outline">-->
+<!--                                            <mat-label>{{ "request-screen.edit-fields.cnv-metric-mean-r-squared" | translate }}</mat-label>-->
+<!--                                            <label>-->
+<!--                                                <input [(ngModel)]="genotype.cnvMetrics.meanRsquared" name="meanRsquared" matInput disabled>-->
+<!--                                            </label>-->
+<!--                                        </mat-form-field>-->
+
+
+
+<!--                                        <mat-form-field floatLabel="always" appearance="outline">-->
+<!--                                            <mat-label>{{ "request-screen.edit-fields.cnv-metric-candidate-cnvs" | translate }}</mat-label>-->
+<!--                                            <label>-->
+<!--                                                <input [(ngModel)]="genotype.cnvMetrics.candidateCnvs" name="candidateCnvs" matInput disabled>-->
+<!--                                            </label>-->
+<!--                                        </mat-form-field>-->
+                                    </div>
+                                </form>
+                            </ng-container>
+                        </mat-expansion-panel>
+
+                        <!-- POLY T -->
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title [ngClass]="'panel-title'">
+                                    <ng-container *ngIf="genotype.polyTTract === null">
+                                        <span>{{ "request-screen.sections.poly" | translate }}</span>&nbsp;&nbsp;&nbsp;&nbsp;({{ "request-screen.warnings.poly-t-metric" | translate }})
+                                    </ng-container>
+                                    <ng-container *ngIf="genotype.polyTTract !== null">
+                                        <span>{{ "request-screen.sections.poly" | translate }}</span>
+                                    </ng-container>
+
+                                    <ng-container *ngIf="genotype.polyTTract !== undefined && genotype.polyTTract !== null">
+                                        <ng-container *ngIf="genotype.polyTTract.haplotypes !== undefined && genotype.polyTTract.haplotypes !== null">
+                                            &nbsp;&nbsp;&nbsp;&nbsp;({{ genotype.polyTTract.haplotypes.length }}&nbsp;{{ "request-screen.warnings.haplotypes" | translate }})
+                                        </ng-container>
+                                    </ng-container>
+                                </mat-panel-title>
+                                <mat-panel-description [ngClass]="'panel-description'">
+<!--                                    <div [ngClass]="'warning'">-->
+<!--                                        Esto es un ejemplo de advertencia-->
+<!--                                    </div>-->
+<!--                                    <ng-container *ngIf="genotype.polyTTract === null">-->
+<!--                                        {{ "request-screen.warnings.poly-t-metric" | translate }}-->
+<!--                                    </ng-container>-->
+<!--                                    <ng-container *ngIf="haplotypeWarning !== null">-->
+<!--                                        <ng-container *ngIf="haplotypeWarning">-->
+<!--                                            <span>{{ "request-screen.warnings.haplotype-356" | translate }}</span>-->
+<!--                                        </ng-container>-->
+<!--                                    </ng-container>-->
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
+                            <ng-container *ngIf="genotype.polyTTract !== null">
+                                <form class="request-data-form" [ngClass]="'data-primary-form'">
+                                    <ng-container *ngFor="let haplotype of genotype.polyTTract.haplotypes">
+                                        <div> {{ "request-screen.edit-fields.haplotype" | translate }} </div>
+                                        <div [ngClass]="'primary-first-column'">
+                                            <mat-form-field floatLabel="always" appearance="outline">
+                                                <mat-label>{{ "request-screen.edit-fields.haplotype-frequency" | translate }}</mat-label>
+                                                <label>
+                                                    <input [(ngModel)]="haplotype.frequency" name="haplotypeFrequency" matInput disabled>
+                                                </label>
+                                            </mat-form-field>
+
+                                            <mat-form-field floatLabel="always" appearance="outline">
+                                                <mat-label>{{ "request-screen.edit-fields.haplotype-t" | translate }}</mat-label>
+                                                <label>
+                                                    <input [(ngModel)]="haplotype.numT" name="haplotypeT" matInput disabled>
+                                                </label>
+                                            </mat-form-field>
+                                        </div>
+
+                                        <div [ngClass]="'primary-second-column'">
+                                            <mat-form-field floatLabel="always" appearance="outline">
+                                                <mat-label>{{ "request-screen.edit-fields.haplotype-tg" | translate }}</mat-label>
+                                                <label>
+                                                    <input [(ngModel)]="haplotype.numTG" name="haplotypeTG" matInput disabled>
+                                                </label>
+                                            </mat-form-field>
+
+                                            <mat-form-field floatLabel="always" appearance="outline">
+                                                <mat-label>{{ "request-screen.edit-fields.poly-t-max-depth" | translate }}</mat-label>
+                                                <label>
+                                                    <input [(ngModel)]="genotype.polyTTract.maxDepth" name="maxDepth" matInput disabled>
+                                                </label>
+                                            </mat-form-field>
+                                        </div>
+
+                                        <div [ngClass]="'primary-third-column'">
+
+                                        </div>
+                                    </ng-container>
+                                </form>
+                            </ng-container>
+                        </mat-expansion-panel>
+
+                        <!-- REPORTS -->
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title [ngClass]="'panel-title'">
+                                    <ng-container>
+                                        <span>{{ "request-screen.sections.reports" | translate }}</span>
+                                    </ng-container>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <ng-container>
+                                <form class="request-data-form" [ngClass]="'data-primary-form'">
+                                    <div [ngClass]="'report-container'">
+                                        <button [ngClass]="'function-button-large'" (click)="generateIndividualReport(this.editingRequest)" mat-flat-button color="primary">
+                                            {{ "common-elements.buttons.configure-individual-report" | translate }}
+                                        </button>
+
+                                        <button [ngClass]="'function-button-large'" (click)="generateOneDonorReport(this.editingRequest)" mat-flat-button color="primary">
+                                            {{ "common-elements.buttons.configure-one-donor-report" | translate }}
+                                        </button>
+
+                                        <ng-container *ngIf="partnerRequest !== undefined">
+                                            <button [ngClass]="'function-button-large'" (click)="generateCoupleReport(this.editingRequest)" mat-flat-button color="primary">
+                                                {{ "common-elements.buttons.configure-couple-report" | translate }}
+                                            </button>
+                                        </ng-container>
+
+                                        <ng-container *ngIf="partnerRequest === undefined">
+                                            <button [ngClass]="'function-button-large'" mat-flat-button color="primary" disabled>
+                                                {{ "common-elements.buttons.configure-couple-report" | translate }}
+                                            </button>
+                                        </ng-container>
+                                    </div>
+                                </form>
+                            </ng-container>
+                        </mat-expansion-panel>
+
+                    </mat-accordion>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <app-footer [ngClass]="'screen-footer'"></app-footer>
+</div>

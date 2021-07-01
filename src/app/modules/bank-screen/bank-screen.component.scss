@@ -1,0 +1,16 @@
+.checkbox-active {
+  width: 100%;
+  max-height: 50%;
+
+  display:flex;
+  flex-grow: 1;
+  flex-shrink: 1;
+  text-align: center;
+  align-items: center;
+
+  //background-color: #495f8a;
+}
+
+.accordion {
+  overflow-y: scroll;
+}

@@ -1,0 +1,158 @@
+<div [ngClass]="'screen-container'">
+    <app-header [ngClass]="'screen-header'"></app-header>
+
+    <div [ngClass]="'screen'">
+        <app-main-menu [ngClass]="'main-menu'"></app-main-menu>
+
+        <div [ngClass]="'main-list'">
+
+            <div [ngClass]="'main-list-title'"
+                 *ngIf="!editing">
+                <div [ngClass]="'list-tittle-value'">
+                    {{ "gene-screen.inner-title" | translate }}
+                </div>
+            </div>
+
+            <div [ngClass]="'spinner-container'" *ngIf="loading">
+                <div>{{ "common-elements.messages.loading-screen" | translate }}</div>
+                <div [ngClass]="'spinner'">
+                    <mat-spinner></mat-spinner>
+                </div>
+            </div>
+
+            <!-- LIST TABLE -->
+            <ng-container *ngIf="!loading">
+                <app-table *ngIf="!editing"
+                   [ngClass]="'main-container'"
+                   [tableData]="genes"
+                   [tableColumns]="tableColumns"
+                   [isFilterable]="true"
+                   [isPageable]="true"
+                   [paginationSizes]="defaultPageSizes"
+                   [defaultPageSize]="pagination.currentPagSize"
+                   [numberOfElements]="pagination.totalElements"
+                   [currentPage]="pagination.currentPag"
+                   (eventPageChange)="pageChanged($event)"
+                   (sort)="sortGenes($event)"
+                   (searchAction)="textFiltered($event)"
+                   [searchFields]="searchFields"
+                   [editActionIcon]="'text_snippet'"
+                   (editAction)="editGene($event)">
+                </app-table>
+            </ng-container>
+
+            <!-- EDIT FORM -->
+            <div *ngIf="editing" [ngClass]="'main-edit'">
+
+                <div [ngClass]="'main-edit-title'">
+                    <div [ngClass]="'edit-title'">
+                        {{ "gene-screen.edit-gene" | translate }}
+                    </div>
+
+                    <div [ngClass]="'edit-title-buttons'">
+                        <button [ngClass]="'function-button'" (click)="backButton()" mat-flat-button color="primary">
+                            {{ "common-elements.buttons.return" | translate }}
+                        </button>
+                    </div>
+                </div>
+
+                <div [ngClass]="'main-edit-data'">
+                    <div [ngClass]="'edit-data-primary'">
+                        <mat-card class="mat-elevation-z0">
+                            <div [ngClass]="'data-primary-title'">
+                                {{ "gene-screen.gene-data" | translate }}
+                            </div>
+
+                            <div [ngClass]="'data-primary-fields'">
+
+                                <form class="request-data-form" [ngClass]="'data-primary-form'">
+                                    <div [ngClass]="'primary-first-column'">
+
+                                        <mat-form-field floatLabel="always" appearance="outline">
+                                            <mat-label>{{ "gene-screen.gene-name" | translate }}</mat-label>
+                                            <label>
+                                                <input [(ngModel)]="editingGene.geneName" name="geneName" matInput readonly>
+                                            </label>
+                                        </mat-form-field>
+
+                                       <mat-form-field floatLabel="always" appearance="outline">
+                                           <mat-label>{{ "gene-screen.cromosome-column" | translate }}</mat-label>
+                                           <label>
+                                               <input value="{{editingGene.chromosome}}" name="chromosome" matInput readonly>
+                                           </label>
+                                       </mat-form-field>
+
+                                    </div>
+
+                                    <div [ngClass]="'primary-second-column'">
+
+                                        <mat-form-field floatLabel="always" appearance="outline">
+                                            <mat-label>{{ "gene-screen.gene-final-name" | translate }}</mat-label>
+                                            <label>
+                                                <input [(ngModel)]="this.editingGene.finalName" name="finalName" matInput readonly>
+                                            </label>
+                                        </mat-form-field>
+
+                                        <div [ngClass]="['checkbox-align-left']">
+                                           <label>
+                                               <mat-checkbox [checked]="this.editingGene.panel" disabled>{{ "gene-screen.gene-panel" | translate }}</mat-checkbox>
+                                           </label>
+                                        </div>
+
+                                    </div>
+
+                                    <div [ngClass]="'primary-third-column'">
+                                        <mat-form-field floatLabel="always" appearance="outline">
+                                            <mat-label>{{ "gene-screen.gene-identif-hgnc" | translate }}</mat-label>
+                                            <label>
+                                                <input [(ngModel)]="this.editingGene.hgncId" name="hgncId" matInput readonly>
+                                            </label>
+                                        </mat-form-field>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </mat-card>
+
+                        <mat-card class="mat-elevation-z0 mat-card-mutation-secondary">
+                            <div [ngClass]="'data-primary-title'" i18n>
+                                {{ "gene-screen.inner-title-mutations" | translate }}
+                            </div>
+
+                            <app-table
+                               #mutationTable
+                               [ngClass]="'main-container'"
+                               [tableData]="geneMutations"
+                               [tableColumns]="mutationTableColumns"
+                               [isPageable]="true"
+                               [paginationSizes]="defaultPageSizes"
+                               [defaultPageSize]="mutationPagination.currentPagSize"
+                               [numberOfElements]="mutationPagination.totalElements"
+                               [currentPage]="mutationPagination.currentPag"
+                               (eventPageChange)="pageChangedMutations($event)"
+                               [ngStyle]="{'background-color': '#FFFFFF'}"
+                               tableBackgroundColor="#FFFFFF">
+                            </app-table>
+                        </mat-card>
+
+<!--                        <mat-card class="mat-elevation-z0 mat-card-disease-secondary">-->
+<!--                            <div [ngClass]="'data-primary-title'" i18n>-->
+<!--                                {{ "gene-screen.inner-title-mutations" | translate }}-->
+<!--                            </div>-->
+<!--                            <app-table *ngIf="editing"-->
+<!--                                       #diseaseTable-->
+<!--                                       [ngClass]="'main-container'"-->
+<!--                                       [tableData]="geneDiseases"-->
+<!--                                       [tableColumns]="diseaseTableColumns"-->
+<!--                                       tableBackgroundColor="#FFFFFF">-->
+<!--                            </app-table>-->
+<!--                        </mat-card>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <app-footer [ngClass]="'screen-footer'"></app-footer>
+</div>

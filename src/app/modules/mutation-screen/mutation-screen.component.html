@@ -1,0 +1,225 @@
+<div [ngClass]="'screen-container'">
+    <app-header [ngClass]="'screen-header'"></app-header>
+
+    <div [ngClass]="'screen'">
+        <app-main-menu [ngClass]="'main-menu'"></app-main-menu>
+
+        <div [ngClass]="'main-list'">
+
+            <div [ngClass]="'main-list-title'"
+                 *ngIf="!editing">
+                <div [ngClass]="'list-tittle-value'">
+                    {{ "mutation-screen.inner-title" | translate }}
+                </div>
+            </div>
+
+            <div [ngClass]="'spinner-container'" *ngIf="loading">
+                <div>{{ "common-elements.messages.loading-screen" | translate }}</div>
+                <div [ngClass]="'spinner'">
+                    <mat-spinner></mat-spinner>
+                </div>
+            </div>
+
+            <!-- LIST TABLE -->
+            <ng-container *ngIf="!loading">
+                <app-table *ngIf="!editing"
+                    #mutationTable
+                    [ngClass]="'main-container'"
+                    [tableData]="mutations"
+                    [tableColumns]="tableColumns"
+                    [isFilterable]="true"
+                    [isPageable]="true"
+                    [paginationSizes]="defaultPageSizes"
+                    (editAction)="editMutation($event)"
+                    [defaultPageSize]="pagination.currentPagSize"
+                    [numberOfElements]="pagination.totalElements"
+                    [currentPage]="pagination.currentPag"
+                    (eventPageChange)="pageChanged($event)"
+                    (searchAction)="textFiltered($event)"
+                    [searchFields]="searchFields"
+                    [editActionIcon]="'text_snippet'"
+                    (booleanFieldAction)="openDialog($event)"
+                    (sort)="sortMutations($event)">
+                </app-table>
+            </ng-container>
+
+            <!-- EDIT FORM -->
+            <div *ngIf="editing" [ngClass]="'main-edit'">
+
+                <div [ngClass]="'main-edit-title'">
+                    <div [ngClass]="'edit-title'">
+                        {{ "mutation-screen.edit-inner-title" | translate }}
+                    </div>
+
+                    <div [ngClass]="'edit-title-buttons'">
+                        <button [ngClass]="'function-button'" (click)="backButton()" mat-flat-button color="primary">
+                            {{ "common-elements.buttons.return" | translate }}
+                        </button>
+
+<!--                         <button [ngClass]="'function-button'" (click)="saveModelChanges(this.editingMutation)" mat-flat-button color="primary"> -->
+<!--                             {{ "common-elements.buttons.save" | translate }} -->
+<!--                         </button> -->
+                    </div>
+                </div>
+
+                <div [ngClass]="'main-edit-data'">
+                    <div [ngClass]="['edit-data-primary', 'edit-data-mutation-primary']">
+                        <mat-card class="mat-elevation-z0 mat-card-mutation-primary">
+                            <div [ngClass]="'data-primary-title'" i18n>
+                                {{ "mutation-screen.edit-primary-data" | translate }}
+                            </div>
+
+                            <div [ngClass]="'data-primary-fields'">
+
+                                <form class="request-data-form" [ngClass]="'data-primary-form'">
+
+                                    <div [ngClass]="'primary-first-column'">
+                                        <mat-form-field floatLabel="always" appearance="outline">
+                                            <mat-label>{{ "mutation-screen.accesion-column" | translate }}</mat-label>
+                                            <label>
+                                                <input [(ngModel)]="this.editingMutation.accession" name="accession" matInput readonly>
+                                            </label>
+                                        </mat-form-field>
+
+                                        <mat-form-field floatLabel="always" appearance="outline">
+                                            <mat-label>{{ "mutation-screen.hgvs-column" | translate }}</mat-label>
+                                            <label>
+                                                <input [(ngModel)]="this.editingMutation.hgvs" name="hgvs" matInput readonly>
+                                            </label>
+                                        </mat-form-field>
+                                        
+                                       <mat-form-field floatLabel="always" appearance="outline">
+                                           <mat-label>{{ "mutation-screen.start-pos-column" | translate }}</mat-label>
+                                           <label>
+                                               <input [(ngModel)]="this.editingMutation.startPos" name="startPos" matInput readonly>
+                                           </label>
+                                       </mat-form-field>
+                                       <mat-form-field floatLabel="always" appearance="outline">
+                                           <mat-label>{{ "mutation-screen.end-pos-column" | translate }}</mat-label>
+                                           <label>
+                                               <input [(ngModel)]="this.editingMutation.endPos" name="endPos" matInput readonly>
+                                           </label>
+                                       </mat-form-field>
+                                    </div>
+
+                                    <div [ngClass]="'primary-second-column'">
+                                        <mat-form-field floatLabel="always" appearance="outline">
+                                            <mat-label>{{ "mutation-screen.cromosome-column" | translate }}</mat-label>
+                                            <label>
+                                                <input [(ngModel)]="this.editingMutation.chromosome" name="chromosome" matInput readonly>
+                                            </label>
+                                        </mat-form-field>
+
+                                        <mat-form-field floatLabel="always" appearance="outline">
+                                            <mat-label>{{ "mutation-screen.references-column" | translate }}</mat-label>
+                                            <label>
+                                                <input [(ngModel)]="this.editingMutation.references" name="references" matInput readonly>
+                                            </label>
+                                        </mat-form-field>
+                                       <mat-form-field floatLabel="always" appearance="outline">
+                                           <mat-label>{{ "mutation-screen.type-column" | translate }}</mat-label>
+                                           <label>
+                                               <input [(ngModel)]="this.editingMutation.type" name="type" matInput readonly>
+                                           </label>
+                                       </mat-form-field>
+                                       <div [ngClass]="['checkbox-align-left']">
+                                            <label>
+                                                <mat-checkbox [checked]="this.editingMutation.active" disabled>{{ "mutation-screen.active-column" | translate }}</mat-checkbox>
+                                            </label>
+                                        </div>
+                                        <div [ngClass]="['checkbox-align-left']">
+                                            <label>
+                                                <mat-checkbox [checked]="this.editingMutation.show" disabled>{{ "mutation-screen.show-column" | translate }}</mat-checkbox>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div [ngClass]="'primary-third-column'">
+                                       <mat-form-field floatLabel="always" appearance="outline">
+                                           <mat-label>{{ "mutation-screen.db-type-column" | translate }}</mat-label>
+                                           <label>
+                                               <input [(ngModel)]="this.editingMutation.dbType" name="dbType" matInput readonly>
+                                           </label>
+                                       </mat-form-field>
+
+                                       <mat-form-field floatLabel="always" appearance="outline">
+                                           <mat-label>{{ "mutation-screen.db-version-column" | translate }}</mat-label>
+                                           <label>
+                                               <input [(ngModel)]="this.editingMutation.dbVersion" name="dbVersion" matInput readonly>
+                                           </label>
+                                       </mat-form-field>
+                                       <mat-form-field floatLabel="always" appearance="outline">
+                                           <mat-label>{{ "mutation-screen.panel-version-column" | translate }}</mat-label>
+                                           <label>
+                                               <input [(ngModel)]="this.editingMutation.panelVersion" name="panelVersion" matInput readonly>
+                                           </label>
+                                       </mat-form-field>
+                                        <div [ngClass]="['checkbox-align-left']">
+                                            <label>
+                                                <mat-checkbox [checked]="this.editingMutation.special" disabled>{{ "mutation-screen.special-column" | translate }}</mat-checkbox>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </mat-card>
+                        
+                        <mat-card class="mat-elevation-z0 mat-card-mutation-secondary">
+                            <div [ngClass]="'data-primary-title'" i18n>
+                                {{ "gene-screen.inner-title" | translate }}
+                            </div>
+                            <app-table *ngIf="editing"
+		                       #geneTable
+		                       [ngClass]="'main-container'"
+		                       [tableData]="editingMutationGenes"
+		                       [tableColumns]="tableColumnsGenes"
+                               tableBackgroundColor="#FFFFFF">
+		                    </app-table>
+<!--                             <div [ngClass]="['data-primary-fields', 'data-cnv-gene-fields']" *ngFor="let element of editingMutationGenes"> -->
+<!--                                 <div [ngClass]="['mutation-fields-column']"> -->
+<!--                                     <mat-form-field appearance="outline"> -->
+<!--                                          <mat-label>{{ "gene-screen.gene-name" | translate }}</mat-label> -->
+<!--                                        <label> -->
+<!--                                            <input [(ngModel)]="element.geneName" name="geneName" matInput readonly> -->
+<!--                                        </label> -->
+<!--                                     </mat-form-field> -->
+<!--                                     <mat-form-field appearance="outline"> -->
+<!--                                           <mat-label>{{ "gene-screen.gene-final-name" | translate }}</mat-label> -->
+<!--                                         <label> -->
+<!--                                             <input [(ngModel)]="element.finalName" name="finalName" matInput readonly> -->
+<!--                                         </label> -->
+<!--                                     </mat-form-field> -->
+<!--                                     <div [ngClass]="['checkbox-align-left']"> -->
+<!--                                         <label> -->
+<!--                                             <mat-checkbox [checked]="element.panel" disabled>{{ "gene-screen.gene-panel" | translate }}</mat-checkbox> -->
+<!--                                         </label> -->
+<!--                                     </div> -->
+<!--                                 </div> -->
+<!--                                 <div [ngClass]="['mutation-fields-column']"> -->
+<!--                                     <mat-form-field appearance="outline"> -->
+<!--                                           <mat-label>{{ "gene-screen.gene-identif-hgnc" | translate }}</mat-label> -->
+<!--                                         <label> -->
+<!--                                             <input [(ngModel)]="element.hgncId" name="hgncId" matInput readonly> -->
+<!--                                         </label> -->
+<!--                                     </mat-form-field> -->
+<!--                                     <mat-form-field appearance="outline"> -->
+<!--                                           <mat-label>{{ "gene-screen.cromosome-column" | translate }}</mat-label> -->
+<!--                                         <label> -->
+<!--                                             <input [(ngModel)]="element.chromosome" name="chromosome" matInput readonly> -->
+<!--                                         </label> -->
+<!--                                     </mat-form-field> -->
+                                    
+<!--                                 </div> -->
+<!--                             </div> -->
+                        </mat-card>
+                        
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <app-footer [ngClass]="'screen-footer'"></app-footer>
+</div>

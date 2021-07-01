@@ -1,0 +1,42 @@
+{
+  "_embedded": {
+    "precon:sampleTypes": [
+      {
+        "value": "Sangre periférica (EDTA)",
+        "_links": {
+          "self": {
+            "href": "http://localhost:8080/api/sampleTypes/report_individual_sample_type_periferic1"
+          }
+        }
+      },
+      {
+        "value": "ADN",
+        "_links": {
+          "self": {
+            "href": "http://localhost:8080/api/sampleTypes/report_individual_sample_type_periferic2"
+          }
+        }
+      },
+      {
+        "value": "Blood (EDTA)",
+        "_links": {
+          "self": {
+            "href": "http://localhost:8080/api/sampleTypes/report_individual_sample_type_periferic3"
+          }
+        }
+      }
+    ]
+  },
+  "_links": {
+    "self": {
+      "href": "http://localhost:8080/api/individual_report_statuses/accepted_sample_types"
+    },
+    "curies": [
+      {
+        "href": "http://localhost:8080/docs/index.html#{rel}",
+        "name": "precon",
+        "templated": true
+      }
+    ]
+  }
+}

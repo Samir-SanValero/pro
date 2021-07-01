@@ -1,0 +1,112 @@
+<div [ngClass]="'screen-container'">
+    <app-header [ngClass]="'screen-header'"></app-header>
+
+    <div [ngClass]="'screen'">
+        <app-main-menu [ngClass]="'main-menu'"></app-main-menu>
+
+        <div [ngClass]="'main-list'">
+
+            <div [ngClass]="'main-list-title'" *ngIf="!showRecord">
+                <div [ngClass]="'list-tittle-value'">
+                    {{ "template-screen.inner-title" | translate }}
+                </div>
+            </div>
+
+            <!-- LIST TABLE -->
+            <div [ngClass]="'spinner-container'" *ngIf="loading">
+                <div>{{ "common-elements.messages.loading-screen" | translate }}</div>
+                <div [ngClass]="'spinner'">
+                    <mat-spinner></mat-spinner>
+                </div>
+            </div>
+
+            <ng-container *ngIf="!loading">
+                <app-table
+                        *ngIf="!showRecord"
+                        [ngClass]="'main-container'"
+                        [tableData]="templates"
+                        [tableColumns]="tableColumns"
+                        [isPageable]="true"
+                        [paginationSizes]="defaultPageSizes"
+                        [defaultPageSize]="pagination.currentPagSize"
+                        [numberOfElements]="pagination.totalElements"
+                        [currentPage]="pagination.currentPag"
+                        [tableName]="'template-screen-table'"
+                        (newAction)="newTemplate()"
+                        (eventPageChange)="pageChanged($event)"
+                        (editAction)="showRecordTemplate($event)"
+                        (deleteAction)="deleteTemplate($event)"
+                        (booleanFieldAction)="toggleTableField($event)">
+                </app-table>
+            </ng-container>
+
+            <!-- EDIT FORM -->
+            <div *ngIf="showRecord" [ngClass]="'main-edit'">
+
+                <div [ngClass]="'main-edit-title'">
+                    <div [ngClass]="'edit-title'" *ngIf="!unlockFields">
+                        {{ "group-screen.record-inner-title" | translate }}
+                    </div>
+                    <div [ngClass]="'edit-title'" *ngIf="unlockFields">
+                        {{ "group-screen.edit-inner-title" | translate }}
+                    </div>
+
+                    <div [ngClass]="'edit-title-buttons'">
+                        <button [ngClass]="'function-button'" (click)="backButton()" mat-flat-button color="primary">
+                            {{ "common-elements.buttons.return" | translate }}
+                        </button>
+
+                        <ng-container *ngIf="!unlockFields">
+                            <button [ngClass]="'function-button'" (click)="editButton()" mat-flat-button color="primary">
+                                <mat-icon>create</mat-icon>
+                                {{ "common-elements.buttons.edit" | translate }}
+                            </button>
+                        </ng-container>
+
+                        <ng-container *ngIf="unlockFields">
+                            <button [ngClass]="'function-button'" (click)="recordButton()" mat-flat-button color="primary">
+                                <mat-icon>assignment</mat-icon>
+                                {{ "common-elements.buttons.record" | translate }}
+                            </button>
+                        </ng-container>
+                    </div>
+                </div>
+
+<!--                <div [ngClass]="'main-edit-data'">-->
+<!--                    <div [ngClass]="'edit-data-primary'">-->
+<!--                        <mat-card class="mat-elevation-z0">-->
+<!--                            <div [ngClass]="'data-primary-title'">-->
+<!--                                {{ "group-screen.edit-primary-data" | translate }}-->
+<!--                            </div>-->
+
+<!--                            <div [ngClass]="'data-primary-fields'">-->
+<!--                                <form class="group-data-form" [ngClass]="'data-primary-form'">-->
+<!--                                    <div [ngClass]="'primary-first-column'">-->
+
+<!--                                    </div>-->
+
+<!--                                    <div [ngClass]="'primary-second-column'">-->
+
+<!--                                    </div>-->
+
+<!--                                    <div [ngClass]="'primary-third-column'">-->
+
+<!--                                    </div>-->
+<!--                                </form>-->
+<!--                            </div>-->
+<!--                        </mat-card>-->
+<!--                    </div>-->
+
+<!--                    <div [ngClass]="'edit-data-secondary'">-->
+<!--                        <div [ngClass]="'data-secondary-title'">-->
+<!--                            {{ "group-screen.edit-secondary-permissions" | translate }}-->
+<!--                        </div>-->
+
+<!--                    </div>-->
+<!--                </div>-->
+            </div>
+        </div>
+    </div>
+
+    <app-footer [ngClass]="'screen-footer'"></app-footer>
+</div>

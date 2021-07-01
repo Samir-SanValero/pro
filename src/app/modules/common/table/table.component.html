@@ -1,0 +1,224 @@
+<div [ngClass]="'table-container'" [ngStyle]="{'background-color': tableBackgroundColor}">
+
+    <!-- Filter -->
+    <div [ngClass]="'table-functions'" [ngStyle]="{'background-color': tableBackgroundColor}">
+        <div [ngClass]="'function-buttons'">
+            <button [ngClass]="'function-button'"
+                (click)="emitNewAction()"
+                color="primary"
+                mat-flat-button
+                *ngIf="this.newAction.observers.length > 0">
+
+                <ng-container *ngIf="newActionButtonText !== undefined">
+                    {{ newActionButtonText | translate }}
+                </ng-container>
+
+                <ng-container *ngIf="newActionButtonText === undefined">
+                    <mat-icon>add</mat-icon>
+                    {{ "common-elements.buttons.new" | translate }}
+                </ng-container>
+
+            </button>
+        </div>
+
+        <div *ngIf="searchFields !== undefined && searchFields.length > 0">
+            <mat-form-field floatLabel="always" appearance="outline">
+                <mat-label>{{ "common-elements.fields.field" | translate }}</mat-label>
+	            <mat-select [formControl]="searchFormControl" (selectionChange)="changeSearchSelector(searchFormControl.value)">
+	                <mat-option [value]="field | translate" *ngFor="let field of searchFields">{{ field | translate }}</mat-option>
+	            </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div [ngClass]="'table-search'" *ngIf="isFilterable && this.searchAction.observers.length === 0" [matColumnDef]="this.rowActionIcon">
+            <mat-form-field floatLabel="always" appearance="outline">
+                <mat-label>{{ "common-elements.fields.search" | translate }}</mat-label>
+                <label>
+                    <input matInput (keyup)="applyFilter($event)" [value]="searchText">
+                </label>
+            </mat-form-field>
+        </div>
+
+        <div [ngStyle]="{'margin-top': '10px'}" *ngIf="!isFilterable"></div>
+
+        <div [ngClass]="'table-search'" *ngIf="isFilterable && this.searchAction.observers.length !== 0" [matColumnDef]="this.rowActionIcon">
+            <mat-form-field floatLabel="always" appearance="outline">
+                <mat-label>{{ "common-elements.fields.search" | translate }}</mat-label>
+                <label>
+                    <input matInput (keyup)="emitSearchAction($event)" [value]="searchText">
+                </label>
+            </mat-form-field>
+        </div>
+
+        <div [ngClass]="'spinner'">
+            <ng-container *ngIf="loadingSearch">
+                <mat-spinner diameter="25"></mat-spinner>
+            </ng-container>
+        </div>
+
+        <!-- Pagination -->
+        <div [ngClass]="'table-paginator'">
+            <mat-paginator *ngIf="isPageable"
+               [pageSizeOptions]="paginationSizes"
+               [pageSize]="defaultPageSize"
+               (page)="pageChanged($event)"
+               [length]="numberOfElements"
+               [pageIndex]="currentPage"
+               [ngStyle]="{'background-color': tableBackgroundColor+ '!important' }"
+               showFirstLastButtons>
+            </mat-paginator>
+        </div>
+    </div>
+
+    <!-- Table -->
+    <div [ngClass]="'table-container'" [ngStyle]="{'background-color': tableBackgroundColor}">
+        <div [ngClass]="'table-overflow'">
+            <table
+                [ngClass]="'table'"
+                [dataSource]="tableDataSource"
+                (cdkDropListDropped)="moveColumn($event)"
+                (matSortChange)="sortTable($event)"
+                matSort mat-table cdkDropList
+                cdkDropListOrientation="horizontal">
+
+                <ng-container *ngFor="let tableColumn of tableColumns" [matColumnDef]="tableColumn.name">
+                    <ng-container *ngIf="tableColumn.dataKey === 'actions'">
+                        <th mat-header-cell *matHeaderCellDef [class.text-right]="tableColumn.position == 'right'"></th>
+                    </ng-container>
+
+                    <ng-container *ngIf="tableColumn.dataKey !== 'actions'">
+                        <!-- if sortable column header -->
+                        <ng-container *ngIf="tableColumn.isSortable; else notSortable">
+                            <th mat-header-cell cdkDrag *matHeaderCellDef [mat-sort-header]="tableColumn.name"
+                                [arrowPosition]="tableColumn.position === 'right' ? 'before' : 'after'">
+                                {{ tableColumn.name | translate }}
+                            </th>
+                        </ng-container>
+
+                        <!-- else not sortable -->
+                        <ng-template #notSortable>
+                            <th mat-header-cell cdkDrag *matHeaderCellDef [class.text-right]="tableColumn.position == 'right'">
+                                {{ tableColumn.name | translate }}
+                            </th>
+                        </ng-template>
+
+                        <!-- column data -->
+                        <ng-container *ngIf="tableColumn.dataKey !== 'actions'">
+                            <ng-container *ngIf="tableColumn.showBooleanIcon">
+                                <td mat-cell  [ngClass]="'cell-margin'"
+                                    (click)="emitBooleanFieldAction(tableColumn.dataKey, element)"
+                                    matTooltip="{{ 'common-elements.tool-tips.change-boolean-field' | translate }}"
+                                    [matTooltipPosition]="'left'"
+                                    *matCellDef="let element"
+                                    [class.text-right]="tableColumn.position == 'right'">
+
+                                    <div [ngClass]="'icon-container'" *ngIf="element.getTableProperty(tableColumn.dataKey) === 'true'">
+                                        <div [ngClass]="'status-icon-active'" *ngIf="tableColumn.showBooleanCustomIcon === undefined">
+
+                                        </div>
+                                        <div [ngClass]="'status-custom-icon-active'" *ngIf="tableColumn.showBooleanCustomIcon !== undefined">
+                                            <mat-icon>{{ tableColumn.showBooleanCustomIcon }}</mat-icon>
+                                        </div>
+                                    </div>
+
+                                    <div [ngClass]="'icon-container'" *ngIf="element.getTableProperty(tableColumn.dataKey) === 'false'">
+                                        <div [ngClass]="'status-icon-inactive'" *ngIf="tableColumn.showBooleanCustomIconFalse === undefined">
+
+                                        </div>
+                                        <div [ngClass]="'status-custom-icon-inactive'" *ngIf="tableColumn.showBooleanCustomIconFalse !== undefined">
+                                            <mat-icon>{{ tableColumn.showBooleanCustomIconFalse }}</mat-icon>
+                                        </div>
+                                    </div>
+
+                                </td>
+                            </ng-container>
+
+                            <ng-container *ngIf="!tableColumn.showBooleanIcon">
+                                <ng-container *ngIf="tableColumn.isDate">
+                                    <td mat-cell [ngClass]="'cell-margin'"
+                                        (dblclick)="emitRowClickAction(element)"
+                                        *matCellDef="let element"
+                                        [class.text-right]="tableColumn.position == 'right'">
+                                        {{ displayDate(element.getTableProperty(tableColumn.dataKey)) }}
+                                    </td>
+                                </ng-container>
+
+                                <ng-container *ngIf="!tableColumn.isDate">
+                                    <td mat-cell  [ngClass]="'cell-margin'"
+                                        (dblclick)="emitRowClickAction(element)"
+                                        *matCellDef="let element"
+                                        [class.text-right]="tableColumn.position == 'right'">
+                                        {{ element.getTableProperty(tableColumn.dataKey) }}
+                                    </td>
+                                </ng-container>
+                            </ng-container>
+                        </ng-container>
+                    </ng-container>
+
+                    <ng-container *ngIf="tableColumn.dataKey === 'actions'">
+                        <td mat-cell  [ngClass]="'cell-margin'"
+                            *matCellDef="let element"
+                            [class.text-right]="tableColumn.position == 'right'">
+                            <div [ngClass]="'button-column'">
+                                <button [ngClass]="'row-button'"
+                                        mat-flat-button
+                                        color="primary"
+                                        (click)="emitReportRowAction(element)"
+                                        *ngIf="this.reportAction.observers.length > 0">
+                                    {{ "common-elements.buttons.report" | translate }}
+                                </button>
+
+                                <button [ngClass]="'row-button'"
+                                        mat-flat-button
+                                        color="primary"
+                                        (click)="emitEditRowAction(element)"
+                                        *ngIf="this.editAction.observers.length > 0">
+                                    <ng-container *ngIf="editActionButtonText !== undefined">
+                                        {{ editActionButtonText | translate }}
+                                    </ng-container>
+
+                                    <ng-container *ngIf="editActionButtonText === undefined">
+                                        <mat-icon>assignment</mat-icon>
+                                        {{ "common-elements.buttons.record" | translate }}
+                                    </ng-container>
+                                </button>
+
+                                <button [ngClass]="'row-button'"
+                                        mat-flat-button
+                                        color="primary"
+                                        (click)="emitUploadRowAction(element)"
+                                        *ngIf="this.uploadAction.observers.length > 0">
+                                    <ng-container *ngIf="uploadActionButtonText !== undefined">
+                                        {{ uploadActionButtonText | translate }}
+                                    </ng-container>
+
+                                    <ng-container *ngIf="uploadActionButtonText === undefined">
+                                        <mat-icon>backup</mat-icon>
+                                        {{ "common-elements.buttons.upload" | translate }}
+                                    </ng-container>
+                                </button>
+
+                                <button [ngClass]="'row-button'"
+                                        mat-flat-button
+                                        color="warn"
+                                        (click)="emitDeleteRowAction(element)"
+                                        *ngIf="this.deleteAction.observers.length > 0">
+                                    <ng-container *ngIf="deleteActionButtonText !== undefined">
+                                        {{ deleteActionButtonText | translate }}
+                                    </ng-container>
+                                    <ng-container *ngIf="deleteActionButtonText === undefined">
+                                        {{ "common-elements.buttons.delete" | translate }}
+                                    </ng-container>
+                                </button>
+                            </div>
+                        </td>
+                    </ng-container>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; let even = even; columns: displayedColumns;" [ngClass]="{'row-dark': even}"></tr>
+            </table>
+        </div>
+    </div>
+
+</div>

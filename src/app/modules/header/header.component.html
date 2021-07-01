@@ -1,0 +1,28 @@
+<div [ngClass]="'header-container'">
+  <div [ngClass]="'header-logo'">
+    <img [ngClass]="'logo-image'" [alt]="'GeneSystems logo'" src="assets/geneSystems.svg">
+  </div>
+
+  <div [ngClass]="'header-application'">
+    Precon
+  </div>
+
+  <div [ngClass]="'header-user-container'">
+
+    <div [ngClass]="'header-user'">
+      <span>{{user.firstName}} {{user.lastName}}</span>
+
+      <div [ngClass]="'header-options-language'">
+        <mat-form-field appearance="legacy" [ngClass]="'language-select'">
+          <mat-select [ngClass]="'mat-select-white'" [(value)]="selectedLanguage" (selectionChange)="changeLanguage($event)">
+            <mat-option value="es">ES</mat-option>
+            <mat-option value="en">EN</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+

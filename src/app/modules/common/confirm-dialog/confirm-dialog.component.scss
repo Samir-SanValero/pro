@@ -1,0 +1,18 @@
+.dialog-button {
+  display: flex;
+  flex-direction: row;
+
+  justify-content: center;
+  align-items: center;
+
+  width: 80px;
+  height: 30px;
+}
+
+.mat-dialog-actions{
+  display: flex;
+  flex-direction: row;
+
+  justify-content: center;
+  align-items: center;
+}

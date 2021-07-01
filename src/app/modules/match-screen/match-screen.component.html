@@ -1,0 +1,340 @@
+<div [ngClass]="'screen-container'">
+    <app-header [ngClass]="'screen-header'"></app-header>
+
+    <div [ngClass]="'screen'">
+        <app-main-menu [ngClass]="'main-menu'"></app-main-menu>
+
+        <div [ngClass]="'main-list'">
+
+            <div [ngClass]="'main-list-title'" *ngIf="!editing">
+                <div [ngClass]="'list-tittle-value'">
+                    {{ "match-screen.inner-title" | translate }}
+                </div>
+
+                <ng-container *ngIf="!loading">
+                    <div [ngClass]="'edit-title-buttons'">
+<!--                        <button [ngClass]="'function-button'" (click)="backButton()" mat-flat-button color="primary">-->
+<!--                            {{ "common-elements.buttons.return" | translate }}-->
+<!--                        </button>-->
+
+                        <ng-container *ngIf="matchPrepared">
+                            <button [ngClass]="'function-button'" mat-flat-button (click)="completeMatch()" color="primary">
+                                {{ "common-elements.buttons.match" | translate }}
+                            </button>
+                        </ng-container>
+
+                        <ng-container *ngIf="!matchPrepared">
+                            <button [ngClass]="'function-button'" mat-flat-button color="primary" disabled>
+                                {{ "common-elements.buttons.match" | translate }}
+                            </button>
+                        </ng-container>
+                    </div>
+                </ng-container>
+            </div>
+
+            <div [ngClass]="'spinner-container'" *ngIf="loading">
+                <div>{{ "common-elements.messages.loading-screen" | translate }}</div>
+                <div [ngClass]="'spinner'">
+                    <mat-spinner></mat-spinner>
+                </div>
+            </div>
+
+            <ng-container *ngIf="!loading">
+                <!-- DO MATCH REQUEST -->
+                <div [ngClass]="'matching-container'">
+
+                    <div [ngClass]="'matching-guide-message-container'" *ngIf="matchTargetOption !== undefined">
+                        <div [ngClass]="'matching-guide-message'">
+                            <div *ngIf="matchingRequest === undefined">
+                                {{ "match-screen.messages.matching-first-step" | translate}}
+                            </div>
+                            <ng-container *ngIf="matchingRequest !== undefined">
+                                <div *ngIf="matchTargetOption === MATCH_TARGET_OPTION_CUSTOM">
+                                    {{ "match-screen.messages.matching-second-step-custom" | translate}}
+                                </div>
+                                <div *ngIf="matchTargetOption === MATCH_TARGET_OPTION_BANK">
+                                    {{ "match-screen.messages.matching-second-step-bank" | translate}}
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div>
+
+                    <div [ngClass]="'matching-elements-container'" *ngIf="matchTargetOption !== undefined">
+                        <div [ngClass]="'matching-elements'">
+                            <div [ngClass]="'matching-base-container'">
+                                {{ "match-screen.inner-title-matching-request" | translate }}:
+                                <ng-container *ngIf="matchingRequest !== undefined">
+                                    <mat-chip [removable]="true"
+                                              (removed)="removeSelectedBase()"
+                                              [ngClass]="'target-chip'">
+                                        {{ matchingRequest.idCard }} {{ matchingRequest.lastName }}, {{ matchingRequest.firstName }}
+                                        <mat-icon matChipRemove>cancel</mat-icon>
+                                    </mat-chip>
+                                </ng-container>
+                            </div>
+                            <div [ngClass]="'matching-target-container'">
+                                <ng-container [ngClass]="'matching-target'">
+                                    {{ "match-screen.inner-title-matching-target" | translate }}:
+                                    <ng-container *ngIf="matchTargetOption === MATCH_TARGET_OPTION_CUSTOM">
+                                        <mat-form-field>
+                                            <mat-chip-list>
+                                                <div [ngClass]="'target-chip-list'">
+                                                    <mat-chip *ngFor="let targetRequest of targetRequestList"
+                                                              [removable]="true"
+                                                              (removed)="removeSelectedRequest(targetRequest)"
+                                                              [ngClass]="'target-chip'">
+                                                        {{ targetRequest.idCard }}
+                                                        {{ targetRequest.lastName }},
+                                                        {{ targetRequest.firstName }}
+                                                        <mat-icon matChipRemove>cancel</mat-icon>
+                                                    </mat-chip>
+                                                </div>
+                                            </mat-chip-list>
+                                        </mat-form-field>
+                                    </ng-container>
+                                </ng-container>
+
+                                <ng-container *ngIf="matchTargetOption === MATCH_TARGET_OPTION_PARTNER">
+                                    <ng-container *ngIf="matchingPartner === undefined">{{ "match-screen.messages.matching-no-partner" | translate }}</ng-container>
+                                    <ng-container *ngIf="matchingPartner !== undefined">{{ matchingPartner.idCard }} {{ matchingPartner.lastName }}, {{ matchingPartner.firstName }}</ng-container>
+                                </ng-container>
+
+                                <ng-container *ngIf="matchTargetOption === MATCH_TARGET_OPTION_BANK">
+                                    <mat-chip-list>
+                                        <mat-chip *ngFor="let targetBank of targetBankList"
+                                                  [removable]="true"
+                                                  (removed)="removeSelectedBank(targetBank)"
+                                                  [ngClass]="'target-chip'">
+                                            {{ targetBank.name }}
+                                            <mat-icon matChipRemove>cancel</mat-icon>
+                                        </mat-chip>
+                                    </mat-chip-list>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div [ngClass]="'matching-target-table'" *ngIf="matchTargetOption !== undefined">
+                        <ng-container *ngIf="matchingRequest === undefined">
+                            <app-table
+                                    [ngClass]="'main-container'"
+                                    [tableData]="requests"
+                                    [tableColumns]="requestTableColumns"
+                                    [isFilterable]="true"
+                                    [isPageable]="true"
+                                    [defaultPageSize]="pageSize"
+                                    [paginationSizes]="defaultPageSizes"
+                                    [numberOfElements]="requestPagination.totalElements"
+                                    [currentPage]="requestPagination.currentPag"
+                                    [tableName]="'request-screen-table'"
+                                    (eventPageChange)="requestTablePageChanged($event)"
+                                    tableBackgroundColor="#FFFFFF"
+                                    (rowClickAction)="addBaseRequest($event)"
+                                    (sort)="sortRequests($event)">
+                                <!-- (booleanFieldAction)="toggleTableField($event)"-->
+                                <!-- (editAction)="editRequest($event)"-->
+                                <!-- (newAction)="addRequest()"-->
+                            </app-table>
+                        </ng-container>
+                        <ng-container *ngIf="matchingRequest !== undefined">
+                            <ng-container *ngIf="matchTargetOption === MATCH_TARGET_OPTION_CUSTOM">
+                                <app-table
+                                        [ngClass]="'main-container'"
+                                        [tableData]="requests"
+                                        [tableColumns]="requestTableColumns"
+                                        [isFilterable]="true"
+                                        [isPageable]="true"
+                                        [defaultPageSize]="pageSize"
+                                        [paginationSizes]="defaultPageSizes"
+                                        [numberOfElements]="requestPagination.totalElements"
+                                        [currentPage]="requestPagination.currentPag"
+                                        [tableName]="'request-screen-table'"
+                                        (eventPageChange)="requestTablePageChanged($event)"
+                                        (rowClickAction)="addTargetRequest($event)"
+                                        tableBackgroundColor="#FFFFFF"
+                                        (sort)="sortRequests($event)"
+                                        [newActionButtonText]="'common-elements.buttons.bulk'"
+                                        (newAction)="bulkRequestSelection()">
+                                    <!-- (booleanFieldAction)="toggleTableField($event)"-->
+                                    <!-- (editAction)="editRequest($event)"-->
+                                    <!-- (newAction)="addRequest()"-->
+                                </app-table>
+                            </ng-container>
+
+                            <ng-container *ngIf="matchTargetOption === MATCH_TARGET_OPTION_BANK">
+                                <app-table
+                                        [ngClass]="'main-container'"
+                                        [tableData]="banks"
+                                        [tableColumns]="bankTableColumns"
+                                        [isPageable]="true"
+                                        [paginationSizes]="defaultPageSizes"
+                                        [defaultPageSize]="bankPagination.currentPagSize"
+                                        [numberOfElements]="bankPagination.totalElements"
+                                        [currentPage]="bankPagination.currentPag"
+                                        (eventPageChange)="bankTablePageChanged($event)"
+                                        (rowClickAction)="addTargetBank($event)"
+                                        tableBackgroundColor="#FFFFFF"
+                                        (sort)="sortBanks($event)">
+                                </app-table>
+                            </ng-container>
+
+                        </ng-container>
+                    </div>
+                </div>
+
+
+<!--                <div [ngClass]="'matching-container'">-->
+<!--                    <div [ngClass]="'matching-target-container'">-->
+<!--                        <div [ngClass]="'matching-target-title data-primary-title'">-->
+<!--                            {{ "match-screen.inner-title-matching-target" | translate }}-->
+<!--                        </div>-->
+<!--                        <div [ngClass]="'matching-target-data'">-->
+<!--                            <mat-radio-group>-->
+<!--                                <mat-radio-button (click)="changeTarget(MATCH_TARGET_OPTION_CUSTOM)" value="1">{{ "match-screen.match-target-option-custom" | translate}}</mat-radio-button>-->
+<!--                                <mat-radio-button (click)="changeTarget(MATCH_TARGET_OPTION_PARTNER)" value="2">{{ "match-screen.match-target-option-partner" | translate}}</mat-radio-button>-->
+<!--                                <mat-radio-button (click)="changeTarget(MATCH_TARGET_OPTION_BANK)" value="3">{{ "match-screen.match-target-option-bank" | translate}}</mat-radio-button>-->
+<!--                            </mat-radio-group>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+<!--                    <div [ngClass]="'matching-request-container'">-->
+<!--                        <div [ngClass]="'matching-request-title data-primary-title'">-->
+<!--                            {{ "match-screen.inner-title-matching-request" | translate }}-->
+<!--                        </div>-->
+<!--                        <div [ngClass]="'matching-request-primary-info'">-->
+<!--                            <mat-form-field appearance="outline">-->
+<!--                                <mat-label>{{ "match-screen.fields.request-id-card" | translate }}</mat-label>-->
+<!--                                <label>-->
+<!--                                    <input [(ngModel)]="this.matchingRequest.idCard" name="idCard" matInput readonly>-->
+<!--                                </label>-->
+<!--                            </mat-form-field>-->
+
+<!--                            <mat-form-field appearance="outline">-->
+<!--                                <mat-label>{{ "match-screen.fields.request-first-name" | translate }}</mat-label>-->
+<!--                                <label>-->
+
+<!--                                    <input [(ngModel)]="this.matchingRequest.firstName" name="firstName" matInput readonly>-->
+<!--                                </label>-->
+<!--                            </mat-form-field>-->
+
+<!--                            <mat-form-field appearance="outline">-->
+<!--                                <mat-label>{{ "match-screen.fields.request-last-name" | translate }}</mat-label>-->
+<!--                                <label>-->
+<!--                                    <input [(ngModel)]="this.matchingRequest.lastName" name="lastName" matInput readonly>-->
+<!--                                </label>-->
+<!--                            </mat-form-field>-->
+
+<!--                            <mat-form-field appearance="outline">-->
+<!--                                <mat-label>{{ "match-screen.fields.request-gender" | translate }}</mat-label>-->
+<!--                                <label>-->
+<!--                                    <input [(ngModel)]="this.matchingRequest.female" name="code" matInput readonly>-->
+<!--                                </label>-->
+<!--                            </mat-form-field>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+<!--                    <div [ngClass]="'matching-data-container'">-->
+<!--                        <div [ngClass]="'matching-data-title data-primary-title'">-->
+<!--                            {{ "match-screen.inner-title-matching-data" | translate }}-->
+<!--                        </div>-->
+<!--                        <div [ngClass]="'matching-data-info'">-->
+<!--                            <ng-container *ngIf="matchTargetOption === MATCH_TARGET_OPTION_CUSTOM">-->
+<!--                                &lt;!&ndash; CUSTOM MATCH &ndash;&gt;-->
+<!--                                <div [ngClass]="'custom-match-selected'">-->
+<!--                                    <mat-chip-list>-->
+<!--                                        <mat-chip *ngFor="let targetRequest of targetRequestList"-->
+<!--                                                  [removable]="true"-->
+<!--                                                  (removed)="removeSelectedRequest(targetRequest)">-->
+<!--                                            {{ targetRequest.idCard }}:-->
+<!--                                            {{ targetRequest.lastName }}-->
+<!--                                            {{ targetRequest.firstName }}-->
+<!--                                            <mat-icon matChipRemove>cancel</mat-icon>-->
+<!--                                        </mat-chip>-->
+<!--                                    </mat-chip-list>-->
+<!--                                </div>-->
+
+<!--                                <div [ngClass]="'custom-match-request-table'">-->
+<!--                                    <app-table-->
+<!--                                        [ngClass]="'main-container'"-->
+<!--                                        [tableData]="requests"-->
+<!--                                        [tableColumns]="requestTableColumns"-->
+<!--                                        [isFilterable]="true"-->
+<!--                                        [isPageable]="true"-->
+<!--                                        [defaultPageSize]="pageSize"-->
+<!--                                        [paginationSizes]="defaultPageSizes"-->
+<!--                                        [numberOfElements]="requestPagination.totalElements"-->
+<!--                                        [currentPage]="requestPagination.currentPag"-->
+<!--                                        [tableName]="'request-screen-table'"-->
+<!--                                        (eventPageChange)="requestTablePageChanged($event)"-->
+<!--                                        tableBackgroundColor="#FFFFFF"-->
+<!--                                        (sort)="sortRequests($event)">-->
+<!--&lt;!&ndash;                                    (booleanFieldAction)="toggleTableField($event)"&ndash;&gt;-->
+<!--&lt;!&ndash;                                    (editAction)="editRequest($event)"&ndash;&gt;-->
+<!--&lt;!&ndash;                                    (newAction)="addRequest()"&ndash;&gt;-->
+<!--                                    </app-table>-->
+<!--                                </div>-->
+<!--                            </ng-container>-->
+
+<!--                            <div [ngClass]="'partner-match-container'"-->
+<!--                                 *ngIf="matchTargetOption === MATCH_TARGET_OPTION_PARTNER">-->
+<!--                                &lt;!&ndash; PARTNER MATCH &ndash;&gt;-->
+<!--                                <ng-container *ngIf="matchingPartner !== undefined">-->
+<!--                                    <mat-form-field appearance="outline">-->
+<!--                                        <mat-label>{{ "match-screen.fields.request-id-card" | translate }}</mat-label>-->
+<!--                                        <label>-->
+<!--                                            <input [(ngModel)]="this.matchingPartner.idCard" name="idCard" matInput readonly>-->
+<!--                                        </label>-->
+<!--                                    </mat-form-field>-->
+
+<!--                                    <mat-form-field appearance="outline">-->
+<!--                                        <mat-label>{{ "match-screen.fields.request-first-name" | translate }}</mat-label>-->
+<!--                                        <label>-->
+
+<!--                                            <input [(ngModel)]="this.matchingPartner.firstName" name="firstName" matInput readonly>-->
+<!--                                        </label>-->
+<!--                                    </mat-form-field>-->
+
+<!--                                    <mat-form-field appearance="outline">-->
+<!--                                        <mat-label>{{ "match-screen.fields.request-last-name" | translate }}</mat-label>-->
+<!--                                        <label>-->
+<!--                                            <input [(ngModel)]="this.matchingPartner.lastName" name="lastName" matInput readonly>-->
+<!--                                        </label>-->
+<!--                                    </mat-form-field>-->
+
+<!--                                    <mat-form-field appearance="outline">-->
+<!--                                        <mat-label>{{ "match-screen.fields.request-gender" | translate }}</mat-label>-->
+<!--                                        <label>-->
+<!--                                            <input [(ngModel)]="this.matchingRequest.female" name="code" matInput readonly>-->
+<!--                                        </label>-->
+<!--                                    </mat-form-field>-->
+<!--                                </ng-container>-->
+
+<!--                                <ng-container *ngIf="matchingPartner === undefined">-->
+
+<!--                                </ng-container>-->
+<!--                            </div>-->
+
+<!--                            <ng-container *ngIf="matchTargetOption === MATCH_TARGET_OPTION_BANK">-->
+<!--                                &lt;!&ndash; BANK MATCH &ndash;&gt;-->
+<!--                                BANK MATCH-->
+<!--                            </ng-container>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+<!--                    <div [ngClass]="'matching-button-container'">-->
+<!--                        <button [ngClass]="'function-button'" (click)="completeMatch()" mat-flat-button color="primary">-->
+<!--                            {{ "match-screen.buttons.matching" | translate }}-->
+<!--                        </button>-->
+<!--                        <ng-container *ngIf="processingMatching">-->
+<!--                            <mat-spinner [diameter]="20"></mat-spinner>-->
+<!--                        </ng-container>-->
+<!--                    </div>-->
+
+<!--                </div>-->
+            </ng-container>
+
+        </div>
+    </div>
+
+    <app-footer [ngClass]="'screen-footer'"></app-footer>
+</div>

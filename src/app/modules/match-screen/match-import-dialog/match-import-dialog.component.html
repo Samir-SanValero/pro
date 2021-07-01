@@ -1,0 +1,30 @@
+<div *ngIf="'main-container'">
+    <form>
+        <mat-form-field>
+            <mat-label>{{ 'match-screen.bulk-import-field' | translate }}</mat-label>
+            <textarea matInput [(ngModel)]="inputText" name="textarea"></textarea>
+        </mat-form-field>
+    </form>
+
+    <div [ngClass]="'buttons-container'">
+        <ng-container *ngIf="loading">
+            <div [ngClass]="'spinner'">
+                <mat-spinner diameter="25"></mat-spinner>
+            </div>
+
+            <button [ngClass]="'function-button'" mat-flat-button color="primary" disabled>
+                {{ "common-elements.buttons.add" | translate }}
+            </button>
+        </ng-container>
+
+        <ng-container *ngIf="!loading">
+            <button [ngClass]="'function-button'" (click)="acceptButton()" mat-flat-button color="primary">
+                {{ "common-elements.buttons.add" | translate }}
+            </button>
+        </ng-container>
+
+        <button [ngClass]="'function-button'" (click)="cancelButton()" mat-flat-button color="primary">
+            {{ "common-elements.buttons.cancel" | translate }}
+        </button>
+    </div>
+</div>

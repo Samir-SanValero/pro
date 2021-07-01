@@ -1,0 +1,333 @@
+<section fxLayout="row">
+    <section fxLayoutAlign="start center" fxFlex="50">
+        <h3 mat-dialog-title>
+            <span>{{ title | translate }} </span>
+        </h3>
+    </section>
+    <section fxLayoutAlign="end center" fxFlex="50">
+<!--        <button mat-dialog-close mat-mini-fab color="accent" class="close-btn">-->
+<!--            <mat-icon>close</mat-icon>-->
+<!--        </button>-->
+    </section>
+</section>
+
+<!-- Content -->
+<mat-dialog-content *ngIf="form">
+
+    <form [formGroup]="form" fxLayout="column">
+
+        <!-- Template and Language -->
+        <section fxLayoutAlign="center center">
+            <section fxLayout="column" fxFlex="50">
+                <!-- Template / Language -->
+                <section fxLayout="row" fxLayoutGap="10px">
+                    <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
+                        <mat-label>{{'REPORTS.SELECT_TEMPLATE'|translate}}</mat-label>
+                        <mat-select [(value)]="templateSelected"
+                            (selectionChange)="updateTemplateReport($event.value)">
+                            <mat-option *ngFor="let option of templates" [value]="option['_links']['self']['href']">
+                                {{option.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
+                        <mat-label>{{'REPORTS.LANGUAGE'|translate}}</mat-label>
+                        <mat-select [(value)]="languageSelected" (selectionChange)="updateLangReport($event.value)">
+                            <mat-option *ngFor="let option of languages" [value]="option['_links']['self']['href']">
+                                {{option.code}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </section>
+                <!-- Ur code / name -->
+                <section fxLayout="row" fxLayoutGap="10px" *ngIf="individualMode || oneDonorMode">
+                    <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
+                        <mat-label>{{'REPORTS.REQUESTOR_URCODE'|translate}}</mat-label>
+                        <input matInput formControlName="urCode">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
+                        <mat-label>{{'REPORTS.PERSON_NAME'|translate}}</mat-label>
+                        <input matInput formControlName="name">
+                    </mat-form-field>
+                </section>
+            </section>
+        </section>
+
+        <!-- Requestor -->
+        <section>
+            <section fxLayout="column" fxFlex="100">
+                <section fxLayout="row" fxLayoutGap="10px">
+                    <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
+                        <mat-label>{{'REPORTS.REQUESTOR_NAME'| translate}}</mat-label>
+                        <input matInput formControlName="requestorName">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
+                        <mat-label>{{'REPORTS.REQUESTOR_RECEIVER'| translate}}</mat-label>
+                        <input matInput formControlName="reportReceiver">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
+                        <mat-label>{{'REPORTS.REQUESTOR_HOSPITAL'| translate}}</mat-label>
+                        <input matInput formControlName="hospital">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
+                        <mat-label>{{'REPORTS.REQUESTOR_DEPARTAMENT'|translate}}</mat-label>
+                        <input matInput formControlName="department">
+                    </mat-form-field>
+                </section>
+
+                <section fxLayout="row" fxLayoutGap="10px">
+                    <mat-form-field appearance="outline" floatLabel="always" fxFlex="50" *ngIf="individualMode">
+                        <mat-label>{{'REPORTS.REQUESTOR_EXTREF'|translate}}</mat-label>
+                        <input matInput formControlName="extRef">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" floatLabel="always" fxFlex="50" *ngIf="individualMode">
+                        <mat-label>{{'REPORTS.REQUESTOR_URCODE'|translate}}</mat-label>
+                        <input matInput formControlName="urCode">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" floatLabel="always" fxFlex="50" *ngIf="individualMode">
+                        <mat-label>{{'REPORTS.REQUESTOR_ENTRANC_DATE'|translate}}</mat-label>
+                        <input matInput formControlName="entranceDate" readonly>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
+                        <mat-label>{{'REPORTS.PERSON_NAME'|translate}}</mat-label>
+                        <input matInput formControlName="name">
+                    </mat-form-field>
+                </section>
+            </section>
+        </section>
+
+        <!-- Individual | Donor -->
+        <section fxLayout="column" *ngIf="individualMode || oneDonorMode">
+            <section fxLayout="column" fxFlex="100">
+                <section fxLayout="row" fxLayoutGap="10px">
+                    <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
+                        <mat-label>{{'REPORTS.PERSON_ID_CARD'|translate}}</mat-label>
+                        <input matInput formControlName="idCard" readonly>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
+                        <mat-label>{{'REPORTS.PERSON_BIRTH_DATE'|translate}}</mat-label>
+                        <input matInput formControlName="birthDate" readonly>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
+                        <mat-label>{{'REPORTS.PERSON_COUNTRY'|translate}}</mat-label>
+                        <input matInput formControlName="country" readonly>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
+                        <mat-label>{{'REPORTS.PERSON_ETHNICITY'|translate}}</mat-label>
+                        <input matInput formControlName="ethnicity" readonly>
+                    </mat-form-field>
+                </section>
+
+                <section fxLayout="row" fxLayoutGap="10px">
+                    <mat-form-field appearance="outline" floatLabel="always" fxFlex="25">
+                        <mat-label>{{'REPORTS.PERSON_SAMPLE_TYPE'|translate}}</mat-label>
+                        <mat-select formControlName="sampleType">
+                            <mat-option *ngFor="let option of sampleTypes" [value]="option['_links']['self']['href']">
+                                {{option.value}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </section>
+
+            </section>
+            <section fxLayout="row" fxLayoutGap="10px" fxFlex="100" *ngIf="individualMode">
+                <mat-form-field appearance="outline" floatLabel="always" fxFlex="100">
+                    <mat-label>{{'REPORTS.PERSON_INDICATION'|translate}}</mat-label>
+                    <textarea matInput formControlName="indication"></textarea>
+                </mat-form-field>
+
+            </section>
+        </section>
+
+        <!-- Couple -->
+        <section fxLayout="row" *ngIf="coupleMode" fxLayoutGap="20px">
+
+            <!-- Woman -->
+            <section fxLayout="column" formGroupName="woman" fxFlex="50">
+                <section fxLayout="column" fxFlex="100">
+                    <section fxLayout="column" fxLayoutGap="20px">
+                        <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
+                            <mat-label>{{'REPORTS.PERSON_NAME'|translate}}</mat-label>
+                            <input matInput placeholder="{{'REPORTS.PERSON_NAME'|translate}}" formControlName="name">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
+                            <mat-label>{{'REPORTS.PERSON_ID_CARD'|translate}}</mat-label>
+                            <input matInput placeholder="{{'REPORTS.ID_CARD'|translate}}" formControlName="idCard">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
+                            <mat-label>{{'REPORTS.PERSON_BIRTH_DATE'|translate}}</mat-label>
+                            <input matInput placeholder="{{'REPORTS.PERSON_BIRTH_DATE'|translate}}"
+                                formControlName="birthDate">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
+                            <mat-label>{{'REPORTS.PERSON_COUNTRY'|translate}}</mat-label>
+                            <input matInput placeholder="{{'REPORTS.PERSON_COUNTRY'|translate}}"
+                                formControlName="country">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
+                            <mat-label>{{'REPORTS.PERSON_ETHNICITY'|translate}}</mat-label>
+                            <input matInput placeholder="{{'REPORTS.PERSON_ETHNICITY'|translate}}"
+                                formControlName="ethnicity">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
+                            <mat-label>{{'REPORTS.PERSON_SAMPLE_TYPE'|translate}}</mat-label>
+                            <mat-select formControlName="sampleType">
+                                <mat-option *ngFor="let option of sampleTypes" [value]="form.value.woman['sampleType']">
+                                    {{option.value}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </section>
+                </section>
+            </section>
+
+            <!-- Man -->
+            <section fxLayout="column" formGroupName="man" fxFlex="50">
+                <section fxLayout="column" fxFlex="100">
+                    <section fxLayout="column" fxLayoutGap="20px">
+                        <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
+                            <mat-label>{{'REPORTS.PERSON_NAME'|translate}}</mat-label>
+                            <input matInput placeholder="{{'REPORTS.PERSON_NAME'|translate}}" formControlName="name">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
+                            <mat-label>{{'REPORTS.PERSON_ID_CARD'|translate}}</mat-label>
+                            <input matInput placeholder="{{'REPORTS.ID_CARD'|translate}}" formControlName="idCard">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
+                            <mat-label>{{'REPORTS.PERSON_BIRTH_DATE'|translate}}</mat-label>
+                            <input matInput placeholder="{{'REPORTS.PERSON_BIRTH_DATE'|translate}}"
+                                formControlName="birthDate">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
+                            <mat-label>{{'REPORTS.PERSON_COUNTRY'|translate}}</mat-label>
+                            <input matInput placeholder="{{'REPORTS.PERSON_COUNTRY'|translate}}"
+                                formControlName="country">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
+                            <mat-label>{{'REPORTS.PERSON_ETHNICITY'|translate}}</mat-label>
+                            <input matInput placeholder="{{'REPORTS.PERSON_ETHNICITY'|translate}}"
+                                formControlName="ethnicity">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
+                            <mat-label>{{'REPORTS.PERSON_SAMPLE_TYPE'|translate}}</mat-label>
+                            <mat-select formControlName="sampleType">
+                                <mat-option *ngFor="let option of sampleTypes" [value]="form.value.man['sampleType']">
+                                    {{option.value}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </section>
+                </section>
+            </section>
+        </section>
+
+        <section fxLayout="row" fxFlex="100" fxLayoutAlign="center center" *ngIf="coupleMode">
+            <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
+                <mat-label>{{'REPORTS.COUPLE_RESULTS_RISK'|translate}}</mat-label>
+                <mat-select formControlName="resultsRiskResult">
+                    <mat-option *ngFor="let option of geneticRisks" [value]="form.value['resultsRiskResult']">
+                        {{option.value}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </section>
+
+        <section fxLayout="row" fxFlex="100" fxLayoutAlign="center center" *ngIf="coupleMode">
+            <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
+                <mat-label>{{'REPORTS.COUPLE_CLINIC_INTERPRETATION'|translate}}</mat-label>
+                <textarea matInput placeholder="{{'REPORTS.COUPLE_CLINIC_INTERPRETATION'|translate}}"></textarea>
+            </mat-form-field>
+        </section>
+
+        <!-- Show Donor options -->
+        <section *ngIf="oneDonorMode" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
+            <mat-checkbox formControlName="showExtCodeSource">{{'REPORTS.SHOW_EXT_CODE_SOURCE'|translate}}
+            </mat-checkbox>
+            <mat-checkbox formControlName="showExtCodeTargets">{{'REPORTS.SHOW_EXT_CODE_TARGETS'|translate}}
+            </mat-checkbox>
+        </section>
+
+        <!-- Show Donors - One Donor -->
+        <section *ngIf="oneDonorMode" class="donor-section">
+            <section fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="30px" class="donor-element"
+                *ngFor="let targetReport of oneDonor.matchResultData.matchTargetReports; let i = index">
+
+                <mat-checkbox [checked]="targetReport.selected" (change)="setTargetReportSelected($event.checked, i)">
+                </mat-checkbox>
+
+                <!-- Source Report -->
+                <section fxLayout="row">
+                    <div fxLayout="column">
+                        <div fxLayoutGap="5px">
+                            <span><strong>{{'REPORTS.CODE'|translate}}</strong> </span>
+                            <span> {{oneDonor.matchResultData.matchSourceReport.extCode}} </span>
+                        </div>
+                        <div fxLayoutGap="5px">
+                            <span><strong>{{'REPORTS.URCODE'|translate}}</strong> </span>
+                            <span> {{oneDonor.matchResultData.matchSourceReport.urCode}} </span>
+                        </div>
+                    </div>
+                    <div fxLayout="row" fxLayoutGap="5px">
+                        <span><strong>{{'REPORTS.PANEL_VERSION'|translate}}</strong> </span>
+                        <span> {{oneDonor.matchResultData.matchSourceReport.panelVersion}} </span>
+                    </div>
+                </section>
+
+                <!-- Target Report -->
+                <section fxLayout="row">
+
+                    <!-- Donor details -->
+                    <div fxLayout="row">
+                        <div fxLayout="column">
+                            <div fxLayout="row" fxLayoutGap="5px">
+                                <span><strong>{{'REPORTS.CODE'|translate}}</strong> </span>
+                                <span> {{targetReport.extCode}} </span>
+                            </div>
+                            <div fxLayout="row" fxLayoutGap="5px">
+                                <span><strong>{{'REPORTS.URCODE'|translate}}</strong> </span>
+                                <span> {{targetReport.urCode}} </span>
+                            </div>
+                        </div>
+                        <div fxLayout="row" fxLayoutGap="5px">
+                            <span><strong>{{'REPORTS.PANEL_VERSION'|translate}}</strong> </span>
+                            <span> {{targetReport.panelVersion}} </span>
+                        </div>
+                    </div>
+
+                    <!-- Donor compatible status -->
+                    <div>
+                        <div class="donor-compatible" [class.true]="targetReport.compatible">
+                            <span>{{'REPORTS.COMPATIBLE'|translate}}:</span>
+                            <span>
+                                <span *ngIf="targetReport.compatible"> {{'REPORTS.YES'|translate}} </span>
+                                <span *ngIf="!targetReport.compatible"> {{'REPORTS.NO'|translate}} </span>
+                            </span>
+                        </div>
+                    </div>
+                </section>
+
+            </section>
+        </section>
+    </form>
+
+</mat-dialog-content>
+
+<!-- Actions -->
+<mat-dialog-actions fxLayoutAlign="center center">
+    <button data-test="create" color="primary" mat-dialog-close mat-raised-button>
+        <span>{{'common-elements.buttons.return' | translate }}</span>
+    </button>
+    <button data-test="save" color="primary" (click)="generateReport(form.value)" mat-raised-button>
+        <span>{{'REPORTS.GENERATE' | translate }}</span>
+    </button>
+</mat-dialog-actions>

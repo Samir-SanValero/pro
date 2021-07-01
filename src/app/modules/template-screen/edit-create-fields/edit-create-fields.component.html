@@ -1,0 +1,27 @@
+<section fxLayout="row">
+    <section fxLayoutAlign="start center" fxFlex="50">
+        <h3 mat-dialog-title>{{fieldLabel}}
+        </h3>
+    </section>
+    <section fxLayoutAlign="end center" fxFlex="50">
+        <button mat-dialog-close mat-mini-fab color="accent" class="close-btn">
+            <mat-icon>close</mat-icon>
+        </button>
+    </section>
+</section>
+
+<!-- Content -->
+<mat-dialog-content>
+    <input type="file" (change)="setImage($event)">
+</mat-dialog-content>
+
+<!-- Actions -->
+<mat-dialog-actions>
+    <button mat-dialog-close color="primary" mat-raised-button>
+        <span>{{ "common-elements.buttons.return" | translate }}</span>
+    </button>
+
+    <button (click)="save()" color="primary" mat-raised-button [disabled]=" image == null">
+        <span>{{ "common-elements.buttons.save" | translate }}</span>
+    </button>
+</mat-dialog-actions>

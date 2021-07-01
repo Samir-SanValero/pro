@@ -1,0 +1,60 @@
+{
+    "requestorName" : "The requestor",
+    "reportReceiver" : "El solicitante",
+    "hospital" : "Hospital Virgen del consuelo",
+    "department" : "No referido",
+    "urCode" : "UR00000",
+    "extRef" : "GTN20",
+    "entranceDate" : "01/03/2021",
+    "name" : "Quevin Salasar",
+    "idCard" : "3423458T",
+    "birthDate" : "02/02/1981",
+    "country" : "Rumania",
+    "ethnicity" : "Gitanos",
+    "sampleType" : "Sangre periférica (EDTA)",
+    "indication" : "Persona con deseo reproductivo. El estudio genético va destinado a establecer el estatus de portador, o no, de las enfermedades hereditarias incluidas en el panel.",
+    "variantsData" : [ {
+      "diseaseName" : "Enfermedad de Stargardt 1",
+      "diseaseDescription" : "La degeneración macular es una enfermedad hereditaria del ojo, de la cual existen varias formas clínicas:\nla atrofia ataxia óptica infantil o tipo Behr 1; la degeneración presenil o del adulto de la mácula lútea de la retina o tipo\nBehr 2; la degeneración macular juvenil o enfermedad de Stargardt; y la degeneración macular senil o disciforme que\npuede asociar trastornos neurológicos y puede ser llamada erróneamente “acromatopsia” (ceguera para los colores).",
+      "chromosome" : "1",
+      "geneName" : "ABCA4",
+      "region" : "Exón 45",
+      "hgvs" : "c.6148G>C",
+      "mutationType" : "missense",
+      "transcript" : "NM_000350.2",
+      "order" : 0,
+      "reference" : "9054934&29555955&28157192&23940504&30190494&28224992&20335603&28492530&26593885&28341476&161031\n29 (c.6148G>C)"
+    } ],
+    "uncoveredData" : [ {
+      "diseaseName" : "Amaurosis congénita de leber 8",
+      "chromosome" : "1",
+      "geneName" : "CRB1",
+      "hgvs" : "c.1913C>T",
+      "transcript" : "NM_201253.2"
+    } ],
+    "_links" : {
+      "self" : {
+        "href" : "http://localhost:8080/api/individual_report_statuses/1"
+      },
+      "precon:language" : {
+        "href" : "http://localhost:8080/api/individual_report_statuses/1/language"
+      },
+      "precon:template" : {
+        "href" : "http://localhost:8080/api/individual_report_statuses/1/template"
+      },
+      "precon:download" : {
+        "href" : "http://localhost:8080/api/individual_report_statuses/1/report"
+      },
+      "precon:accepted-languages" : {
+        "href" : "http://localhost:8080/api/individual_report_statuses/accepted_languages"
+      },
+      "precon:accepted-sample-types" : {
+        "href" : "http://localhost:8080/api/individual_report_statuses/accepted_sample_types?language=es"
+      },
+      "curies" : [ {
+        "href" : "http://localhost:8080/docs/index.html#{rel}",
+        "name" : "precon",
+        "templated" : true
+      } ]
+    }
+  }

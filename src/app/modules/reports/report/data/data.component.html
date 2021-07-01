@@ -1,0 +1,72 @@
+<section fxLayout="row">
+    <section fxLayoutAlign="start center" fxFlex="50">
+        <h3 mat-dialog-title>
+            <span>{{ title | translate }} </span>
+        </h3>
+    </section>
+    <section fxLayoutAlign="end center " fxFlex="50">
+        <button mat-dialog-close mat-mini-fab color="accent" class="close-btn">
+            <mat-icon>close</mat-icon>
+        </button>
+    </section>
+</section>
+
+<!-- Content -->
+<mat-dialog-content *ngIf="form">
+    <form [formGroup]="form">
+        <section fxLayout="column">
+            <section #firstForm fxLayout="column" fxFlex="100">
+                <section fxLayout="column" fxLayoutGap="10px">
+                    <mat-form-field appearance="outline" fxFlex="100" floatLabel="always">
+                        <mat-label>{{'REPORTS.DATA_DISEASE_NAME' | translate}}</mat-label>
+                        <input matInput placeholder="{{'REPORTS.DATA_DISEASE_NAME' | translate}}"
+                            formControlName="diseaseName">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="100" floatLabel="always">
+                        <mat-label>{{'REPORTS.DATA_CHROMOSOME' | translate}}</mat-label>
+                        <input matInput placeholder="{{'REPORTS.DATA_CHROMOSOME' | translate}}" formControlName="chromosome">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="100" floatLabel="always">
+                        <mat-label>{{'REPORTS.DATA_GENE_NAME' | translate}}</mat-label>
+                        <input matInput placeholder="{{'REPORTS.DATA_GENE_NAME' | translate}}" formControlName="geneName">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="100" floatLabel="always">
+                        <mat-label>{{'REPORTS.DATA_HGVS' | translate}}</mat-label>
+                        <input matInput placeholder="{{'REPORTS.DATA_HGVS' | translate}}" formControlName="hgvs">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="100" floatLabel="always" *ngIf="isVariant">
+                        <mat-label>{{'REPORTS.DATA_MUTATION_TYPE' | translate}}</mat-label>
+                        <input matInput placeholder="{{'REPORTS.DATA_MUTATION_TYPE' | translate}}"
+                            formControlName="mutationType">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="100" floatLabel="always">
+                        <mat-label>{{'REPORTS.DATA_TRANSCRIPT' | translate}}</mat-label>
+                        <input matInput placeholder="{{'REPORTS.DATA_TRANSCRIPT' | translate}}"
+                            formControlName="transcript">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="100" floatLabel="always" *ngIf="isVariant">
+                        <mat-label>{{'REPORTS.DATA_REFERENCE' | translate}}</mat-label>
+                        <input matInput placeholder="{{'REPORTS.DATA_REFERENCE' | translate}}"
+                            formControlName="reference">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="100" floatLabel="always" *ngIf="isVariant">
+                        <mat-label>{{'REPORTS.DATA_REGION' | translate}}</mat-label>
+                        <input matInput placeholder="{{'REPORTS.DATA_REGION' | translate}}" formControlName="region">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="100" floatLabel="always" *ngIf="isVariant">
+                        <mat-label>{{'REPORTS.DATA_DISEASE_DESCRIPTION' | translate}}</mat-label>
+                        <textarea matInput placeholder="{{'REPORTS.DATA_DISEASE_DESCRIPTION' | translate}}"
+                            formControlName="diseaseDescription"></textarea>
+                    </mat-form-field>
+                </section>
+            </section>
+        </section>
+    </form>
+</mat-dialog-content>
+
+<!-- Actions -->
+<mat-dialog-actions fxLayoutAlign="center center">
+    <button (click)="save(form.value)" color="primary" mat-raised-button>
+        <span>{{'common-elements.buttons.add' | translate}}</span>
+    </button>
+</mat-dialog-actions>

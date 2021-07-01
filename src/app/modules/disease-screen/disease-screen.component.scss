@@ -1,0 +1,142 @@
+
+.primary-first-disease-column {
+  height:50%;
+}
+.edit-data-disease-secondary {
+  height:100%;
+  width:90%;
+  max-height: 100%;
+  margin-left:auto;
+  margin-right:auto;
+  flex-direction:column;
+  display:flex;
+}
+.data-secondary-disease-fields {
+  width:100%;
+  padding-top:0px;
+  align-items: center;
+  overflow:hidden;
+}
+.data-tertiary-disease-fields {
+  display:flex;
+  flex-direction: column;
+  width:100%;
+  padding-top:0px;
+  align-items: center;
+  overflow:hidden;
+}
+
+.edit-data-disease-primary {
+  width:90%;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.data-secondary-disease-title {
+  padding-left:0%;
+}
+
+.main-edit-disease-data {
+    overflow-y: scroll;
+}
+
+.data-primary-disease-form {
+  width: 95%;
+  margin-left: 5%;
+  margin-right: auto;
+  overflow-y: scroll;
+} 
+
+
+.container-edit-genes {
+  margin-top: 1%;
+}
+.container-edit-disease {
+  height:100%;
+  //width:100%;
+//  margin-left:auto;
+//  margin-right: auto;
+}
+.container-edit-translations {
+  margin-top: 1%;
+  height:100%;
+}
+.edit-data-disease-tertiary {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.select-language {
+  width:20%;
+  height:20%;
+}
+
+.add-language {
+    display:flex;
+    flex-direction:row;
+    width:30%;
+    margin-left:auto;
+    margin-right:5%;
+}
+
+.translations {
+  width:80%;
+  height:70%;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.data-primary-form {
+//  height: 100%;
+//  width: 100%;
+//  display: block;
+//  justify-content: center;
+//  overflow: hidden;
+}
+
+.field-name {
+  margin-top: 1%;
+  display: flex;
+  width: 95%;
+  flex-direction: row;
+  height:30%;
+}
+
+.field-description {
+  display:flex;
+  margin-top: 1%;
+  width:95%;
+  flex-direction: row;
+  height: 50%;
+}
+
+.data-first-row {
+  display:flex;
+  flex-direction: row;
+  width:100%;
+  height:30%;
+  //justify-content: center;
+  //align-items: center;
+  margin-left:5%;
+}
+.data-second-row {
+  display:flex;
+  flex-direction: column;
+  width:100%;
+  height:70%;
+  //justify-content: center;
+  //align-items: center;
+  //margin-top:5%;
+  margin-left:5%;
+}
+
+.txtarea-name {
+    width:100%;
+}
+
+.txtarea-desc {
+    width:100%;
+}
+
+

@@ -1,0 +1,141 @@
+<section fxLayout="row">
+
+    <section fxLayoutAlign="start center" fxFlex="50">
+        <h3 mat-dialog-title><span *ngIf="createMode || editMode">{{title |translate}}</span>
+            <span *ngIf="form.value.name != '' && !viewMode"> - {{form.value.name}} </span>
+            <span *ngIf="viewMode"> {{template.name}} </span>
+        </h3>
+    </section>
+<!--    <section fxLayoutAlign="end center " fxFlex="50">-->
+
+<!--    </section>-->
+
+</section>
+
+<!-- Content -->
+<mat-dialog-content *ngIf="form">
+
+    <form [formGroup]="form">
+
+        <!-- First Form -->
+        <section #firstForm>
+            <section fxLayout="row" fxLayoutGap="10px">
+                <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
+                    <mat-label>{{'TEMPLATES.GROUP_CODE' | translate}} ({{groupCode.lang}})</mat-label>
+                    <input matInput placeholder="Group Code"  formControlName="groupCode">
+                </mat-form-field>
+                <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
+                    <mat-label>{{'TEMPLATES.TEMPLATES_NAME' | translate}}</mat-label>
+                    <input matInput placeholder="{{'TEMPLATES.TEMPLATES_NAME'|translate}}" formControlName="name"
+                        required>
+                </mat-form-field>
+            </section>
+
+            <section fxLayout="row">
+                <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
+                    <mat-label>{{'TEMPLATES.TEMPLATES_REVISION'|translate}}</mat-label>
+                    <input matInput  formControlName="version">
+                </mat-form-field>
+            </section>
+        </section>
+
+        <!-- Second Form -->
+        <section #secondForm class="secondForm">
+
+            <div fxLayout="row" class="secondForm-section">
+
+                <!-- Left image-->
+                <div fxLayoutAlign="start center" fxFlex="50">
+                    <app-image-selector [image]="leftImage" fxFlex="60"
+                        title="{{'TEMPLATES.DIALOG.LEFT_LOGO'|translate}}" [fieldLabel]="'Select Left logo'"
+                        [position]="'left_image'" [isViewMode]="viewMode" (imageEmmit)="setImage($event)">
+                    </app-image-selector>
+                </div>
+
+                <!-- Right image-->
+                <div fxLayoutAlign="end center" fxFlex="50">
+                    <app-image-selector [image]="rightImage" fxFlex="60"
+                        title="{{'TEMPLATES.DIALOG.RIGHT_LOGO' | translate }}" [fieldLabel]="'Select Right logo'"
+                        position="right_image" [isViewMode]="viewMode" (imageEmmit)="setImage($event)">
+                    </app-image-selector>
+                </div>
+            </div>
+
+            <div fxLayout="row" class="secondForm-section">
+
+                <!-- Left text -->
+                <div fxFlex="100">
+                    <div fxLayoutAlign="center center" class="vertical-image" fxFlex="20">
+
+                        <app-image-selector [isVertical]="true" fxFlex="60" [image]="lateralImage"
+                            title="{{'TEMPLATES.DIALOG.TEXT_LEFT'|translate}}" [fieldLabel]="'Select lateral image'"
+                            position="lateral_image" [isViewMode]="viewMode" (imageEmmit)="setImage($event)">
+                        </app-image-selector>
+
+                    </div>
+
+                    <!-- Background and Signature -->
+                    <div class="body-section" fxFlex="80" fxLayout="column">
+
+                        <!-- Signature -->
+                        <app-signatures [templateUrl]="templateUrl" [isViewMode]="viewMode" [isEditTemplateMode]="editMode"
+                            [signatures]="signatures" (emittsignaturesToUpload)="setSignaturesToUpload($event)"
+                            (syncDataEmit)="syncData($event)">
+                        </app-signatures>
+
+                        <!-- Background -->
+                        <app-image-selector [image]="backgroundImage"
+                            title="{{'TEMPLATES.DIALOG.BACKGROUND'|translate}}" [fieldLabel]="'Select Background image'"
+                            position="background_image" [isViewMode]="viewMode" (imageEmmit)="setImage($event)">
+                        </app-image-selector>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </section>
+
+        <!-- Third Form -->
+        <section #thirdForm>
+            <section fxLayout="row" fxLayoutGap="10px">
+                <mat-form-field appearance="outline" fxFlex="50">
+                    <mat-label>{{ "TEMPLATES.company-name" | translate }}</mat-label>
+                    <input matInput placeholder="Company name" formControlName="companyName" required>
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="50">
+                    <mat-label>{{ "TEMPLATES.company-address" | translate }}</mat-label>
+                    <input matInput placeholder="Company address" formControlName="companyAddress">
+                </mat-form-field>
+            </section>
+            <section fxLayout="row" fxLayoutGap="10px">
+                <mat-form-field appearance="outline" fxFlex="50">
+                    <mat-label>{{ "TEMPLATES.company-phones" | translate }}</mat-label>
+                    <input matInput placeholder="Company phones" formControlName="companyPhones">
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="50">
+                    <mat-label>{{ "TEMPLATES.company-web" | translate }}</mat-label>
+                    <input matInput placeholder="Company electronic address" formControlName="companyElectronicAddress">
+                </mat-form-field>
+            </section>
+        </section>
+
+    </form>
+
+</mat-dialog-content>
+
+<!-- Actions -->
+<mat-dialog-actions>
+    <button mat-dialog-close color="primary" mat-raised-button>
+        <span>{{ "common-elements.buttons.return" | translate }}</span>
+    </button>
+
+    <button data-test="create" (click)="createTemplate(form.value)" *ngIf="createMode == true "
+        [disabled]="form.invalid" color="primary" mat-raised-button>
+        <span>{{ "common-elements.buttons.save" | translate }}</span>
+    </button>
+    <button data-test="save" (click)="updateTemplate(form.value)" *ngIf="editMode" color="primary" [disabled]="form.invalid"
+        mat-raised-button>
+        <span>{{ "common-elements.buttons.save" | translate }}</span>
+    </button>
+</mat-dialog-actions>

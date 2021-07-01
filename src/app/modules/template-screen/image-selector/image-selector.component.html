@@ -1,0 +1,18 @@
+<div class="image-selector-content" [class.vertical]="isVertical">
+    <div class="wrap">
+        <div class="image-selector title" *ngIf="backgroundImage == null && image == null"  fxLayoutAlign="center center">
+            <span>{{title}}</span>
+        </div>
+        <app-images class="image-container" *ngIf="backgroundImage || image" [url]="image" [file]="backgroundImage"></app-images>
+
+        <div *ngIf="!isViewMode" fxLayout="row" class="actions" fxLayoutGap="5px">
+
+            <button mat-mini-fab color="accent" (click)="openField()">
+                <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-mini-fab color="secondary" (click)="delete()" *ngIf="backgroundImage != null || image != null">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </div>
+    </div>
+</div>

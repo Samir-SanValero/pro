@@ -1,0 +1,170 @@
+<div [ngClass]="'container'">
+
+    <!-- FIRST STEP - REQUEST DATA -->
+    <div [ngClass]="'title'">{{ 'request-screen.new-request-external-data-title' | translate }}</div>
+    <div [ngClass]="'data-container'">
+        <ng-container *ngIf="showSecondForm === false">
+            <form [formGroup]="requestDataForm" [ngClass]="'data-primary-form'">
+                <mat-card>
+                    <mat-form-field floatLabel="always" appearance="outline">
+                        <mat-label>{{ "request-screen.edit-fields.first-name" | translate }}</mat-label>
+                        <label>
+                            <ng-container>
+                                <input id="firstName" type="text" formControlName="firstName" matInput required>
+                            </ng-container>
+                        </label>
+                    </mat-form-field>
+
+                    <mat-form-field floatLabel="always" appearance="outline">
+                        <mat-label>{{ "request-screen.edit-fields.last-name" | translate }}</mat-label>
+                        <label>
+                            <ng-container>
+                                <input id="lastName" type="text" formControlName="lastName" matInput required>
+                            </ng-container>
+                        </label>
+                    </mat-form-field>
+
+                    <mat-form-field floatLabel="always" appearance="outline">
+                        <mat-label>{{ "request-screen.edit-fields.id-card" | translate }}</mat-label>
+                        <label>
+                            <ng-container>
+                                <input id="idCard" type="text" formControlName="idCard" matInput required>
+                            </ng-container>
+                        </label>
+                    </mat-form-field>
+
+                    <mat-form-field floatLabel="always" appearance="outline">
+                        <mat-label>{{ "request-screen.edit-fields.ur-code" | translate }}</mat-label>
+                        <label>
+                            <ng-container>
+                                <input id="clientReference" type="text" formControlName="clientReference" matInput required>
+                            </ng-container>
+                        </label>
+                    </mat-form-field>
+
+                    <!-- TYPE -->
+                    <mat-form-field floatLabel="always" appearance="outline">
+                        <mat-label>{{ "request-screen.edit-fields.type" | translate }}</mat-label>
+                        <mat-select formControlName="requestType" required>
+                            <mat-option *ngFor="let individualType of requestTypes" [value]="individualType">
+                                <span *ngIf="individualType === request.typeIndividualSinglePerson">{{ "request-screen.edit-fields.type-single-person" | translate }}</span>
+                                <span *ngIf="individualType === request.typeIndividualCouple">{{ "request-screen.edit-fields.type-couple" | translate }}</span>
+                                <span *ngIf="individualType === request.typeIndividualDonor">{{ "request-screen.edit-fields.type-donor" | translate }}</span>
+                                <span *ngIf="individualType === request.typeIndividualRecipient">{{ "request-screen.edit-fields.type-recipient" | translate }}</span>
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <!-- SEX -->
+                    <mat-label>{{ "request-screen.female-column" | translate }}</mat-label>
+                    <mat-radio-group formControlName="gender" required>
+                        <mat-radio-button [value]=true color="primary">
+                            {{ "request-screen.edit-fields.sex-value-female" | translate }}
+                        </mat-radio-button>
+                        <mat-radio-button [value]=false color="primary">
+                            {{ "request-screen.edit-fields.sex-value-male" | translate }}
+                        </mat-radio-button>
+                    </mat-radio-group>
+
+                    <!-- BIRTH DAY -->
+<!--                    <mat-form-field floatLabel="always" appearance="outline">-->
+<!--                        <mat-label>{{ "request-screen.edit-fields.birth-date" | translate }}</mat-label>-->
+<!--                        <label>-->
+<!--                            <input [matDatepicker]="pickerBirth" formControlName="birthDay" name="birthday" matInput required>-->
+<!--                        </label>-->
+<!--                        <mat-datepicker-toggle matSuffix [for]="pickerBirth"></mat-datepicker-toggle>-->
+<!--                        <mat-datepicker #pickerBirth></mat-datepicker>-->
+<!--                    </mat-form-field>-->
+
+                    <!-- COUNTRY -->
+                    <mat-form-field floatLabel="always" appearance="outline">
+                        <mat-label>{{ "request-screen.edit-fields.country" | translate }}</mat-label>
+                        <mat-select formControlName="country">
+                            <mat-option *ngFor="let country of countries" [value]="country.viewTranslation">
+                                {{ country.viewTranslation }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <!-- ETHNICITY -->
+                    <mat-form-field floatLabel="always" appearance="outline">
+                        <mat-label>{{ "request-screen.edit-fields.ethnicity" | translate }}</mat-label>
+                        <mat-select formControlName="ethnicity" >
+                            <mat-option *ngFor="let ethnicity of ethnicities" [value]="ethnicity.viewTranslation">
+                                {{ ethnicity.viewTranslation }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </mat-card>
+            </form>
+        </ng-container>
+        <!-- SECOND STEP - GENE DATA -->
+        <ng-container *ngIf="showSecondForm === true">
+            <form [formGroup]="geneDataForm" [ngClass]="'data-primary-form'">
+                <mat-card>
+                    <mat-form-field floatLabel="always" appearance="outline">
+                        <mat-label>{{ "request-screen.edit-fields.ext-code" | translate }}</mat-label>
+                        <label>
+                            <ng-container>
+                                <input id="extCode" type="text" formControlName="extCode" matInput required>
+                            </ng-container>
+                        </label>
+                    </mat-form-field>
+
+                    <mat-form-field floatLabel="always" appearance="outline">
+                        <mat-label>{{ "request-screen.edit-fields.external-code" | translate }}</mat-label>
+                        <label>
+                            <ng-container>
+                                <input id="externalCode" type="text" formControlName="externalCode" matInput required>
+                            </ng-container>
+                        </label>
+                    </mat-form-field>
+
+                    <ng-container>
+                        <app-table
+                           [ngClass]="'main-container'"
+                           [tableData]="genes"
+                           [tableColumns]="geneTableColumns"
+                           [isFilterable]="true"
+                           [isPageable]="true"
+                           [paginationSizes]="geneDefaultPageSizes"
+                           [defaultPageSize]="genePagination.currentPagSize"
+                           [numberOfElements]="genePagination.totalElements"
+                           [currentPage]="genePagination.currentPag"
+                           (eventPageChange)="genePageChanged($event)"
+                           (sort)="sortGenes($event)"
+                           (searchAction)="geneTextFiltered($event)"
+                           [searchFields]="geneSearchFields">
+                        </app-table>
+                    </ng-container>
+
+                </mat-card>
+            </form>
+        </ng-container>
+    </div>
+    <div [ngClass]="'buttons-container'">
+        <!-- BUTTONS -->
+        <ng-container>
+            <button [ngClass]="'function-button'" (click)="cancel()" mat-flat-button color="primary">
+                {{ 'common-elements.buttons.cancel' | translate }}
+            </button>
+
+            <ng-container *ngIf="showSecondForm === false">
+                <button [ngClass]="'function-button'" (click)="next()" type="submit" [disabled]="!requestDataForm.valid" mat-flat-button color="primary">
+                    {{ 'common-elements.buttons.next' | translate }}
+                </button>
+            </ng-container>
+
+            <ng-container *ngIf="showSecondForm === true">
+                <button [ngClass]="'function-button'" (click)="previous()" type="submit" [disabled]="!requestDataForm.valid" mat-flat-button color="primary">
+                    {{ 'common-elements.buttons.previous' | translate }}
+                </button>
+
+                <button [ngClass]="'function-button'" (click)="save()" type="submit" [disabled]="!geneDataForm.valid" mat-flat-button color="primary">
+                    {{ 'common-elements.buttons.save' | translate }}
+                </button>
+            </ng-container>
+        </ng-container>
+    </div>
+
+</div>

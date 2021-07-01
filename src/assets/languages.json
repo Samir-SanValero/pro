@@ -1,0 +1,29 @@
+{
+    "_embedded" : {
+      "precon:languages" : [ {
+        "code" : "es",
+        "_links" : {
+          "self" : {
+            "href" : "http://localhost:8080/api/languages/es"
+          }
+        }
+      }, {
+        "code" : "en",
+        "_links" : {
+          "self" : {
+            "href" : "http://localhost:8080/api/languages/en"
+          }
+        }
+      } ]
+    },
+    "_links" : {
+      "self" : {
+        "href" : "http://localhost:8080/api/couple_match_report_statuses/accepted_languages"
+      },
+      "curies" : [ {
+        "href" : "http://localhost:8080/docs/index.html#{rel}",
+        "name" : "precon",
+        "templated" : true
+      } ]
+    }
+  }

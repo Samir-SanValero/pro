@@ -1,0 +1,53 @@
+{
+  "_embedded" : {
+    "precon:signatures" : [ {
+      "name" : "sign_1",
+      "rol" : "Technician",
+      "position" : 1,
+      "additionalInfo" : "additional info",
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/api/signatures/1"
+        },
+        "precon:image" : {
+          "href" : "http://localhost:8080/api/signatures/1/image"
+        }
+      }
+    }, {
+      "name" : "sign_2",
+      "rol" : "Doctor",
+      "position" : 2,
+      "additionalInfo" : null,
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/api/signatures/2"
+        },
+        "precon:image" : {
+          "href" : "http://localhost:8080/api/signatures/2/image"
+        }
+      }
+    } ]
+  },
+  "_links" : {
+    "first" : {
+      "href" : "http://localhost:8080/api/signatures/template/1?page=0&size=10"
+    },
+    "last" : {
+      "href" : "http://localhost:8080/api/signatures/template/1?page=0&size=10"
+    },
+    "self" : {
+      "href" : "http://localhost:8080/api/signatures/template/1?page=0&size=10"
+    },
+    "curies" : [ {
+      "href" : "http://localhost:8080/docs/index.html#{rel}",
+      "name" : "precon",
+      "templated" : true
+    } ]
+  },
+  "page" : {
+    "size" : 10,
+    "totalElements" : 2,
+    "totalPages" : 1,
+    "number" : 0
+  }
+}

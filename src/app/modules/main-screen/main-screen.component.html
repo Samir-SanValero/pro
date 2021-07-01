@@ -1,0 +1,35 @@
+<div [ngClass]="'main-screen-container'" *ngIf="!showLogin">
+  <app-header [ngClass]="'main-screen-header'"></app-header>
+
+  <div [ngClass]="'main-screen'">
+    <app-main-menu [ngClass]="'main-menu'"></app-main-menu>
+    <div [ngClass]="'main'">MAIN LOGO</div>
+  </div>
+
+  <app-footer [ngClass]="'main-screen-footer'"></app-footer>
+</div>
+
+<div [ngClass]="'login-container'" *ngIf="showLogin">
+  PRECON+
+
+  <mat-card class="mat-elevation-z0">
+    <mat-form-field appearance="outline" [ngClass]="'login-field'">
+      <mat-label>User</mat-label>
+      <label>
+        <input [(ngModel)]="this.loginEntity.username" name="username" matInput required>
+      </label>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" [ngClass]="'login-field'">
+      <mat-label>Password</mat-label>
+      <label>
+        <input [(ngModel)]="this.loginEntity.password" name="password" matInput required type="password">
+      </label>
+    </mat-form-field>
+
+    <button [ngClass]="'login-field'" (click)="login()" color="primary" mat-flat-button>
+      Login
+    </button>
+  </mat-card>
+</div>
+

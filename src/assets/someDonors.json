@@ -1,0 +1,54 @@
+{
+    "requestorName": "Test requestor",
+    "reportReceiver": "The petitioner",
+    "hospital": "test",
+    "urCode": "urCode60",
+    "showExtCodeSource": true,
+    "showExtCodeTargets": true,
+    "department": "Test department",
+    "matchResultData": {
+        "matchSourceReport": {
+            "extCode": "extCode61",
+            "urCode": "urCode60",
+            "panelVersion": 3.0
+        },
+        "matchTargetReports": [
+            {
+                "extCode": "extCode63",
+                "urCode": "urCode62",
+                "panelVersion": 1.0,
+                "compatible": false,
+                "selected": true
+            }
+        ],
+        "matchResultWarnings": []
+    },
+    "_links": {
+        "self": {
+            "href": "http://localhost:8080/api/some_donors_report_status/6"
+        },
+        "precon:language": {
+            "href": "http://localhost:8080/api/some_donors_report_status/16/language"
+        },
+        "precon:template": {
+            "href": "http://localhost:8080/api/some_donors_report_status/16/template"
+        },
+        "precon:download": {
+            "href": "http://localhost:8080/api/some_donors_report_status/16/report"
+        },
+        "precon:accepted-languages": {
+            "href": "http://localhost:8080/api/some_donors_report_status/accepted_languages"
+        },
+        "a:curies": {
+            "href": "http://localhost:8080/docs/index.html#{rel}",
+            "templated": true
+        },
+        "curies": [
+            {
+                "href": "http://localhosta{yey}",
+                "name": "a",
+                "templated": true
+            }
+        ]
+    }
+}

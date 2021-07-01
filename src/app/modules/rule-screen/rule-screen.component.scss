@@ -1,0 +1,103 @@
+.checkbox-active {
+  width: 100%;
+  max-height: 50%;
+
+  display:flex;
+  flex-grow: 1;
+  flex-shrink: 1;
+  text-align: center;
+  align-items: center;
+
+  //background-color: #495f8a;
+}
+
+.rule-edit-data-secondary {
+  width: 100%;
+  height: 80%;
+
+  gap: 1%;
+
+  display: flex;
+  flex-direction: column;
+
+  //background-color: #495f8a;
+
+  overflow-y: scroll;
+}
+
+.condition-a-table {
+  display: flex;
+  flex-direction: column;
+
+  overflow-y: auto;
+  //background-color: #495f8a;
+}
+
+.condition-b-table {
+  display: flex;
+  flex-direction: column;
+
+  overflow-y: auto;
+  //background-color: #006666;
+}
+
+.action-table {
+  display: flex;
+  flex-direction: column;
+
+  overflow-y: auto;
+  //background-color: #707070;
+}
+
+.table-container {
+  width: 90%;
+  height: 30%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  background-color: #ffffff;
+  padding-bottom: 2%;
+
+  overflow: auto;
+}
+
+.title-coincidence {
+  display: flex;
+  flex-direction: row;
+
+  height: 20%;
+  width: 100%;
+}
+
+.data-primary-title {
+  width: 15%;
+
+  display: flex;
+  flex-direction: row;
+
+  align-items: center;
+  padding-left: 2%;
+
+  font-weight: bold;
+
+  color: #a1a7a9;
+}
+
+.coincidence-selector {
+  height: 100%;
+  width: 30%;
+}
+
+.panel-title {
+}
+
+.panel-description {
+  display: flex;
+  flex-direction: row;
+}
+
+.radio-button {
+  margin-left: 15px;
+}

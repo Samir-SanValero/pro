@@ -1,0 +1,64 @@
+{
+    "requestorName": null,
+    "reportReceiver": "The petitioner",
+    "hospital": "test",
+    "urCode": "urCode44",
+    "showExtCodeSource": true,
+    "showExtCodeTargets": false,
+    "department": "Not provided",
+    "matchResultData": {
+        "matchSourceReport": {
+            "extCode": "extCode45",
+            "urCode": "urCode44",
+            "panelVersion": 1.0
+        },
+        "matchTargetReports": [
+            {
+                "extCode": "extCode47",
+                "urCode": "urCode46",
+                "panelVersion": 1.0,
+                "compatible": true,
+                "selected": false
+            },
+            {
+                "extCode": "extCode48",
+                "urCode": "urCode48",
+                "panelVersion": 1.0,
+                "compatible": true,
+                "selected": true
+            },
+            {
+                "extCode": "extCode49",
+                "urCode": "urCode49",
+                "panelVersion": 1.0,
+                "compatible": false,
+                "selected": false
+            }
+        ],
+        "matchResultWarnings": []
+    },
+    "_links": {
+        "self": {
+            "href": "http://localhost:8080/api/some_donors_report_status/5"
+        },
+        "precon:language": {
+            "href": "http://localhost:8080/api/some_donors_report_status/12/language"
+        },
+        "precon:template": {
+            "href": "http://localhost:8080/api/some_donors_report_status/12/template"
+        },
+        "precon:download": {
+            "href": "http://localhost:8080/api/some_donors_report_status/12/report"
+        },
+        "precon:accepted-languages": {
+            "href": "http://localhost:8080/api/some_donors_report_status/accepted_languages"
+        },
+        "curies": [
+            {
+                "href": "http://localhost:8080/docs/index.html#{rel}",
+                "name": "precon",
+                "templated": true
+            }
+        ]
+    }
+}

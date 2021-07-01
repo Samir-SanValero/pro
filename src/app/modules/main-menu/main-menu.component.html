@@ -1,0 +1,39 @@
+<div [ngClass]="'main-menu-container'">
+  <div [ngClass]="'main-menu-section-start'"></div>
+  <div [ngClass]="'main-menu-section'">
+    <div [ngClass]="'section-title'">{{ 'main-menu.analysis' | translate }}</div>
+
+<!--      <div [ngClass]="'section-option-disabled'">{{ 'main-menu.match-requests' | translate }}</div>-->
+<!--    <div [ngClass]="'section-option'" routerLinkActive="router-link-active" [routerLink]="'/match-requests'">{{'main-menu.match-requests' | translate}}</div>-->
+
+<!--      <div [ngClass]="'section-option-disabled'">{{ 'main-menu.matching' | translate }}</div>-->
+
+<!--    MATCH_TARGET_OPTION_CUSTOM = 'custom';-->
+<!--    MATCH_TARGET_OPTION_PARTNER = 'partner';-->
+<!--    MATCH_TARGET_OPTION_BANK = 'bank';-->
+
+    <div [ngClass]="'section-option'" routerLinkActive="router-link-active" [routerLink]="['/customMatch', 'custom']">{{'match-screen.match-target-option-custom' | translate}}</div>
+    <div [ngClass]="'section-option'" routerLinkActive="router-link-active" [routerLink]="['/partnerMatch', 'partner']">{{'match-screen.match-target-option-partner' | translate}}</div>
+    <div [ngClass]="'section-option'" routerLinkActive="router-link-active" [routerLink]="['/bankMatch', 'bank']">{{'match-screen.match-target-option-bank' | translate}}</div>
+
+  </div>
+
+  <div [ngClass]="'main-menu-section'">
+    <div [ngClass]="'section-title'">{{ 'main-menu.administrative' | translate }}</div>
+    <div [ngClass]="'section-option'" routerLinkActive="router-link-active" [routerLink]="'/group'">{{ 'main-menu.groups' | translate }}</div>
+    <div [ngClass]="'section-option'" routerLinkActive="router-link-active" [routerLink]="'/bank'">{{ 'main-menu.banks' | translate }}</div>
+    <div [ngClass]="'section-option'" routerLinkActive="router-link-active" [routerLink]="'/request'">{{ 'main-menu.requests' | translate }}</div>
+  </div>
+
+  <div [ngClass]="'main-menu-section'">
+    <div [ngClass]="'section-title'" i18n>{{ 'main-menu.maintenance' | translate }}</div>
+    <div [ngClass]="'section-option'" routerLinkActive="router-link-active" [routerLink]="'/gene'">{{ 'main-menu.genes' | translate }}</div>
+    <div [ngClass]="'section-option'" routerLinkActive="router-link-active" [routerLink]="'/mutation'">{{ 'main-menu.mutations' | translate }}</div>
+    <div [ngClass]="'section-option'" routerLinkActive="router-link-active" [routerLink]="'/cnv'">{{ 'main-menu.cnvs' | translate }}</div>
+    <div [ngClass]="'section-option'" routerLinkActive="router-link-active" [routerLink]="'/disease'">{{ 'main-menu.disease' | translate }}</div>
+    <div [ngClass]="'section-option'" routerLinkActive="router-link-active" [routerLink]="'/rule'">{{ 'main-menu.rules' | translate }}</div>
+
+<!--    <div [ngClass]="'section-option-disabled'">{{ 'main-menu.templates' | translate }}</div>-->
+    <div [ngClass]="'section-option'" routerLinkActive="router-link-active" [routerLink]="'/template'">{{ 'main-menu.templates' | translate }}</div>
+  </div>
+</div>

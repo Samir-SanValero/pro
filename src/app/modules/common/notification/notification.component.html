@@ -1,0 +1,8 @@
+<div [ngClass]="'notification-container'">
+    <div class="data">{{ data | translate }}</div>
+    <div class="dismiss">
+        <button mat-icon-button (click)="snackBarRef.dismiss()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+</div>

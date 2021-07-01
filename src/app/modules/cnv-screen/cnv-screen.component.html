@@ -1,0 +1,203 @@
+<div [ngClass]="'screen-container'">
+    <app-header [ngClass]="'screen-header'"></app-header>
+
+    <div [ngClass]="'screen'">
+        <app-main-menu [ngClass]="'main-menu'"></app-main-menu>
+
+        <div [ngClass]="'main-list'">
+        
+            <div [ngClass]="'main-list-title'"
+                 *ngIf="!editing">
+                <div [ngClass]="'list-tittle-value'">
+                    {{ "cnv-screen.inner-title" | translate }}
+                </div>
+            </div>
+
+            <div [ngClass]="'spinner-container'" *ngIf="loading">
+                <div>{{ "common-elements.messages.loading-screen" | translate }}</div>
+                <div [ngClass]="'spinner'">
+                    <mat-spinner></mat-spinner>
+                </div>
+            </div>
+
+            <ng-container *ngIf="!loading">
+                <app-table *ngIf="!editing"
+                       [ngClass]="'main-container'"
+                       [tableData]="cnvs"
+                       [tableColumns]="tableColumns"
+                       [isFilterable]="true"
+                       [isPageable]="true"
+                       [paginationSizes]="defaultPageSizes"
+                       (editAction)="editCnv($event)"
+                       [editActionIcon]="'text_snippet'"
+                       (booleanFieldAction)="openDialog($event)"
+                       (sort)="sortCnvs($event)"
+                       [defaultPageSize]="defaultPageSizes[0]"
+                       [numberOfElements]="pagination.totalElements"
+                       [currentPage]="pagination.currentPag"
+                       (searchAction)="textFiltered($event)"
+                       [searchFields]="searchFields"
+                       (eventPageChange)="pageChanged($event)">
+                <!--                        (editAction)="editMutation($event)" -->
+                <!--                        (booleanFieldAction)="toggleTableField($event)"> -->
+                <!--                        (newAction)="addMutation()" -->
+                <!--                [rowActionIcon]="'remove_shopping_cart'" -->
+                <!--                (sort)="sortData($event)" -->
+                <!--                (rowAction)="removeOrder($event)"> -->
+
+                </app-table>
+            </ng-container>
+            
+            <div *ngIf="editing" [ngClass]="'main-edit'">
+
+                <div [ngClass]="'main-edit-title'">
+                    <div [ngClass]="'edit-title'">
+                        {{ "cnv-screen.edit-inner-title" | translate }}
+                    </div>
+
+                    <div [ngClass]="'edit-title-buttons'">
+                        <button [ngClass]="'function-button'" (click)="backButton()" mat-flat-button color="primary">
+                            {{ "common-elements.buttons.return" | translate }}
+                        </button>
+                    </div>
+                </div>
+                    
+                    <div [ngClass]="'main-edit-data'">
+                        <div [ngClass]="['edit-data-primary', 'edit-data-cnv-primary']">
+                                <form class="request-data-form" [ngClass]="['data-primary-form', 'data-primary-cnv-form']">
+                            <mat-card class="mat-elevation-z0 mat-card-cnv-primary">
+                            <div [ngClass]="'data-primary-title'" i18n>
+                                {{ "cnv-screen.edit-primary-data" | translate }}
+                            </div>
+                            
+                            
+                            <div [ngClass]="['data-primary-fields', 'data-primary-cnv-fields']">
+
+
+                                    <div [ngClass]="'primary-first-column'">
+                                        <mat-form-field floatLabel="always" appearance="outline">
+                                            <mat-label>{{ "cnv-screen.cnv-copy-number-column" | translate }}</mat-label>
+                                            <label>
+                                                <input [(ngModel)]="this.editingCnv.copyNumber" name="copyNumber" matInput readonly>
+                                            </label>
+                                        </mat-form-field>
+
+                                        <mat-form-field floatLabel="always" appearance="outline">
+                                            <mat-label>{{ "cnv-screen.cnv-copy-mean-coverage" | translate }}</mat-label>
+                                            <label>
+                                                <input [(ngModel)]="this.editingCnv.meanCoverage" name="meanCoverage" matInput readonly>
+                                            </label>
+                                        </mat-form-field>
+                                        <mat-form-field floatLabel="always" appearance="outline">
+                                           <mat-label>{{ "cnv-screen.cnv-log-ratio-column" | translate }}</mat-label>
+                                           <label>
+                                               <input [(ngModel)]="this.editingCnv.logRatio" name="logRatio" matInput readonly>
+                                           </label>
+                                       </mat-form-field>
+                                       <mat-form-field floatLabel="always" appearance="outline">
+                                           <mat-label>{{ "cnv-screen.cnv-tag-column" | translate }}</mat-label>
+                                           <label>
+                                               <input [(ngModel)]="this.editingCnv.tag" name="tag" matInput readonly>
+                                           </label>
+                                       </mat-form-field>
+                                       <mat-form-field floatLabel="always" appearance="outline">
+                                           <mat-label>{{ "cnv-screen.cnv-comment-column" | translate }}</mat-label>
+                                           <label>
+                                               <input [(ngModel)]="this.editingCnv.comment" name="comment" matInput readonly>
+                                           </label>
+                                       </mat-form-field>
+                                    </div>
+
+
+                                    <div [ngClass]="'primary-second-column'">
+                                       <mat-form-field floatLabel="always" appearance="outline">
+                                           <mat-label>{{ "cnv-screen.cnv-gene-name-column" | translate }}</mat-label>
+                                           <label>
+                                               <input [(ngModel)]="this.editingCnv.geneName" name="geneName" matInput readonly>
+                                           </label>
+                                       </mat-form-field>
+                                       <mat-form-field floatLabel="always" appearance="outline">
+                                           <mat-label>{{ "cnv-screen.cnv-panel-version-column" | translate }}</mat-label>
+                                           <label>
+                                               <input [(ngModel)]="this.editingCnv.panelVersion" name="panelVersion" matInput readonly>
+                                           </label>
+                                       </mat-form-field>
+                                       <mat-form-field floatLabel="always" appearance="outline">
+                                           <mat-label>{{ "cnv-screen.cnv-location-column" | translate }}</mat-label>
+                                           <label>
+                                               <input [(ngModel)]="this.editingCnv.location" name="location" matInput readonly>
+                                           </label>
+                                       </mat-form-field>
+                                       <div [ngClass]="['checkbox-align-left']">
+                                           <label>
+                                               <mat-checkbox [checked]="this.editingCnv.positive" disabled>{{ "cnv-screen.cnv-positive-column" | translate }}</mat-checkbox>
+                                           </label>
+                                        </div>
+                                        <div [ngClass]="['checkbox-align-left']">
+                                           <label>
+                                               <mat-checkbox [checked]="this.editingCnv.active" disabled>{{ "cnv-screen.cnv-active-column" | translate }}</mat-checkbox>
+                                           </label>
+                                        </div>
+                                        <div [ngClass]="['checkbox-align-left']">
+                                           <label>
+                                               <mat-checkbox [checked]="this.editingCnv.show" disabled>{{ "cnv-screen.cnv-show-column" | translate }}</mat-checkbox>
+                                           </label>
+                                        </div>
+                                    </div>
+
+                                    <div [ngClass]="'primary-third-column'">
+                                       <mat-form-field floatLabel="always" appearance="outline">
+                                           <mat-label>{{ "cnv-screen.cnv-transcript-column" | translate }}</mat-label>
+                                           <label>
+                                               <input [(ngModel)]="this.editingCnv.transcript" name="transcript" matInput readonly>
+                                           </label>
+                                       </mat-form-field>
+
+                                       <mat-form-field floatLabel="always" appearance="outline">
+                                           <mat-label>{{ "cnv-screen.cnv-chromosome-column" | translate }}</mat-label>
+                                           <label>
+                                               <input [(ngModel)]="this.editingCnv.chromosome" name="chromosome" matInput readonly>
+                                           </label>
+                                       </mat-form-field>
+                                       <mat-form-field floatLabel="always" appearance="outline">
+                                           <mat-label>{{ "cnv-screen.cnv-start-pos-column" | translate }}</mat-label>
+                                           <label>
+                                               <input [(ngModel)]="this.editingCnv.startPos" name="startPos" matInput readonly>
+                                           </label>
+                                       </mat-form-field>
+                                       <mat-form-field floatLabel="always" appearance="outline">
+                                           <mat-label>{{ "cnv-screen.cnv-end-pos-column" | translate }}</mat-label>
+                                           <label>
+                                               <input [(ngModel)]="this.editingCnv.endPos" name="endPos" matInput readonly>
+                                           </label>
+                                       </mat-form-field>
+                                       <mat-form-field floatLabel="always" appearance="outline">
+                                           <mat-label>{{ "cnv-screen.cnv-exon-number-column" | translate }}</mat-label>
+                                           <label>
+                                               <input [(ngModel)]="this.editingCnv.exonNumber" name="exonNumber" matInput readonly>
+                                           </label>
+                                       </mat-form-field>
+                                    </div>
+                            </div>
+                            </mat-card>
+                            <mat-card class="mat-elevation-z0 mat-card-cnv-secondary" *ngIf="editingCnvGene !== null">
+                                <app-table *ngIf="editing"
+                               #geneTable
+                               [ngClass]="'main-container'"
+                               [tableData]="editingCnvGene"
+                               [tableColumns]="tableColumnsGenes"
+                               tableBackgroundColor="#FFFFFF">
+                            </app-table>
+                            </mat-card>
+                        </form>
+
+                    </div>
+
+                </div>
+              </div>
+
+        </div>
+    </div>
+
+    <app-footer [ngClass]="'screen-footer'"></app-footer>
+</div>

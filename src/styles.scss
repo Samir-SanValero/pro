@@ -1,0 +1,564 @@
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, 'Helvetica Neue', sans-serif; }
+
+@import '../../assets/scss/functions';
+@import '~@angular/material/theming';
+
+// You have to define one of those for every theme you offer
+.precon-theme {
+  @import 'themes/precon-theme';
+  @include angular-material-theme($precon-theme);
+  @include generate-theme-vars($precon-theme);
+}
+
+.screen-container {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  // TODO THEMING
+  background-color: #f2f2f2;
+}
+
+.screen-header {
+  width: 100%;
+  height: 5%;
+
+  display: flex;
+  flex-direction: row;
+}
+
+.screen {
+  width: 100%;
+  height: 92%;
+
+  display: flex;
+  flex-direction: row;
+}
+
+.main-menu {
+  width: auto;
+  height: 100%;
+  min-width: 150px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.main-container {
+  width: 100%;
+  height: 90%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.screen-footer {
+  width: 100%;
+  height: 3%;
+
+  display: flex;
+  flex-direction: row;
+}
+
+.main-list {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-list-title {
+  height: 8%;
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  background-color: #e7e7e7;
+}
+
+.list-tittle-value {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  font-weight: bold;
+
+  padding-left: 5%;
+}
+
+.table-container {
+  width: 90%;
+  height: auto;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  background-color: #ffffff;
+  padding-bottom: 2%;
+
+  overflow: auto;
+}
+
+.function-bar {
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-edit {
+  height: 100%;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.main-edit-title {
+  height: 8%;
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+
+  //TODO THEMING
+  background-color: #e7e7e7;
+}
+
+.edit-title {
+  height: 100%;
+  width: 80%;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  font-weight: bold;
+
+  padding-left: 5%;
+}
+
+.edit-title-buttons {
+  height: 100%;
+  width: 80%;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 2%;
+  padding-right: 5%;
+}
+
+.function-button {
+  display: flex;
+  flex-direction: row;
+
+  justify-content: center;
+  align-items: center;
+
+  width: 100px;
+  height: 50px;
+}
+
+.function-button-long {
+  display: flex;
+  flex-direction: row;
+
+  justify-content: center;
+  align-items: center;
+
+  width: 170px;
+  height: 50px;
+}
+
+.function-button-large {
+  padding: 5px 5px;
+
+  display: flex;
+  flex-direction: row;
+
+  justify-content: center;
+  align-items: center;
+
+  width: 240px;
+  height: 50px;
+}
+
+.loading-button-container {
+  display: flex;
+  flex-direction: row;
+
+  justify-content: center;
+  align-items: center;
+}
+
+.loading-button-spinner {
+  display: flex;
+  flex-direction: row;
+
+  justify-content: center;
+  align-items: center;
+
+  width: 20px;
+  height: 20px;
+}
+
+.main-edit-data {
+  width: 100%;
+  height: 92%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 1%;
+}
+
+.edit-data-primary {
+  height: auto;
+  width: 90%;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+}
+
+.data-primary-title {
+  height: 20%;
+  width: 98%;
+
+  display: flex;
+  flex-direction: row;
+
+  align-items: center;
+  padding-left: 2%;
+
+  font-weight: bold;
+
+  color: #a1a7a9;
+}
+
+.data-primary-fields {
+  height: 80%;
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+
+  justify-content: center;
+  align-items: center;
+
+  gap: 2%;
+
+  overflow: auto;
+}
+
+.data-primary-form {
+  height: 100%;
+  width: 90%;
+
+  display: flex;
+  flex-direction: row;
+
+  justify-content: center;
+
+  overflow: hidden;
+}
+
+.primary-first-column {
+  height: auto;
+  width: 30%;
+
+  display: flex;
+  flex-direction: column;
+  padding: 1%;
+  gap: 2%;
+
+  align-items: center;
+}
+
+.primary-second-column {
+  height: auto;
+  width: 30%;
+
+  display: flex;
+  flex-direction: column;
+  padding: 1%;
+  gap: 2%;
+
+  align-items: center;
+}
+
+.primary-third-column {
+  height: auto;
+  width: 30%;
+
+  display: flex;
+  flex-direction: column;
+  padding: 1%;
+  gap: 2%;
+
+  align-items: center;
+}
+
+.edit-data-secondary {
+  width: 90%;
+  height: 75%;
+  max-height: 75%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  //overflow: hidden;
+
+  background-color: #FFFFFF;
+}
+
+.data-secondary-title {
+  height: 20%;
+  width: 98%;
+
+  display: flex;
+  flex-direction: row;
+
+  align-items: center;
+  padding-left: 4%;
+
+  font-weight: bold;
+
+  color: #a1a7a9;
+}
+
+.data-secondary-fields {
+  height: 100%;
+  width: 90%;
+
+  display: flex;
+  flex-direction: column;
+
+  //justify-content: center;
+  //align-items: center;
+
+  padding-top: 1%;
+  gap: 2%;
+
+  overflow: auto;
+}
+
+.data-secondary-card {
+  width: 100%;
+
+  display: flex;
+
+  //justify-content: center;
+  //align-items: center;
+
+  overflow: auto;
+}
+
+.secondary-fields-function {
+  width: 100%;
+  height: 10%;
+
+  display: flex;
+  flex-direction: row;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 1%;
+}
+
+.secondary-fields-function-field {
+  width: 15%;
+  height: 50%;
+
+  display: flex;
+  flex-direction: row;
+
+  padding: 5%;
+
+  align-items: center;
+  justify-content: center;
+}
+
+.secondary-fields-function-button {
+  width: 15%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: row;
+
+  align-items: center;
+  justify-content: center;
+}
+
+.secondary-fields-table {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: row;
+
+  overflow: hidden;
+}
+
+.main-secondary-container {
+  width: 100%;
+  height: 85%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  background-color: #FFFFFF;
+}
+
+.secondary-first-column {
+  height: auto;
+  width: 25%;
+
+  display: flex;
+  flex-direction: column;
+  padding: 1%;
+
+  align-items: center;
+}
+
+.secondary-second-column {
+  height: auto;
+  width: 25%;
+
+  display: flex;
+  flex-direction: column;
+  padding: 1%;
+
+  align-items: center;
+}
+
+.secondary-third-column {
+  height: auto;
+  width: 25%;
+
+  display: flex;
+  flex-direction: column;
+  padding: 1%;
+
+  align-items: center;
+}
+
+.secondary-fourth-column {
+  height: auto;
+  width: 20%;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+}
+
+.edit-data-tertiary {
+  height: auto;
+  width: 90%;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+  overflow-y: scroll;
+  background: #f5f5f5;
+  box-shadow: inset 0 0 4px #707070;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 10px;
+}
+
+.precon-theme .mat-form-field-wrapper {
+  padding-bottom: 0;
+}
+
+.notification-class {
+  background-color: var(--primary-color);
+}
+
+.notification-class-warn {
+  background-color: var(--warn-color);
+}
+
+.mat-tooltip {
+  font-size: 16px !important;
+  background-color: var(--primary-color) !important;
+  border: solid 1px #f5f5f5 !important;
+
+  text-align: justify !important;
+  text-justify: inter-word !important;
+}
+
+.spinner-container {
+  height: calc(100vh - 20px);
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+}
+
+.spinner {
+  padding: 12px;
+}
+
+.cancel-button {
+  width: 40%;
+  float: left;
+  background-color: #14335c;
+  color: #f5f5f5;
+}
+
+.confirm-button {
+  width: 40%;
+  float: right;
+  background-color: #14335c;
+  color: #f5f5f5;
+}
+
+//.mat-form-field-appearance-fill.mat-form-field-disabled .mat-form-field-flex {
+//  background: rgba(255, 255, 255, 1);
+//}
+//
+//.mat-input-wrapper:disabled {
+//
+//
+//}
+
+.label-field-container {
+  display: flex;
+  flex-direction: row;
+}
+
+::ng-deep mat-paginator {
+  background-color: transparent;
+}
+
+.inner-table {
+  overflow-y: scroll;
+}

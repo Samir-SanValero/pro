@@ -1,0 +1,77 @@
+.main-container {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+}
+
+.container-rule-dialog {
+  width: 100%;
+  height: 80%;
+
+  display: flex;
+}
+
+.container-selector-form {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: row;
+}
+
+.container-selector {
+  width: 50%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.container-form {
+  width: 50%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.radio-list {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+
+  width: 30%;
+}
+
+.radio-button {
+  margin: 5px;
+}
+
+.buttons-container {
+  width: 100%;
+  height: 20%;
+
+  display: flex;
+  flex-direction: row;
+
+  gap: 1%;
+
+  justify-content: center;
+  align-items: center;
+}
+
+.search-field {
+  display: flex;
+  flex-direction: row;
+
+  gap: 1%;
+}
+
+.search-input {
+  width: 70%;
+}
+
+.search-button {
+  width: 30%;
+}

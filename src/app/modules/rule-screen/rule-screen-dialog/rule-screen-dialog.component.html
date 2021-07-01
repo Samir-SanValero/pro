@@ -1,0 +1,284 @@
+<!-- CONDITION -->
+<div *ngIf="'main-container'">
+    <div *ngIf="data.isCondition" [ngClass]="'container-rule-dialog'">
+        <div [ngClass]="'container-selector-form'">
+            <div [ngClass]="'container-selector'">
+                <label id="condition-radio-label">
+                    <ng-container *ngIf="data.isConditionA">
+                        {{ "rule-screen.dialog.dialog-condition-a-options-title" | translate }}
+                    </ng-container>
+                    <ng-container *ngIf="!data.isConditionA">
+                        {{ "rule-screen.dialog.dialog-condition-b-options-title" | translate }}
+                    </ng-container>
+                </label>
+                <mat-radio-group [ngClass]="'radio-list'" aria-labelledby="condition-radio-label" [(ngModel)]="selectedConditionType">
+                    <mat-radio-button [ngClass]="'radio-button'" *ngFor="let conditionOption of conditionOptions" [value]="conditionOption">
+                        <ng-container *ngIf="conditionOption === conditionCarrierGene">
+                            {{ "rule-screen.dialog.condition-carrier-gene" | translate }}
+                        </ng-container>
+
+                        <ng-container *ngIf="conditionOption === conditionCNV">
+                            {{ "rule-screen.dialog.condition-cnv" | translate }}
+                        </ng-container>
+
+                        <ng-container *ngIf="conditionOption === conditionContains">
+                            {{ "rule-screen.dialog.condition-contains" | translate }}
+                        </ng-container>
+
+                        <ng-container *ngIf="conditionOption === conditionNoNgs">
+                            {{ "rule-screen.dialog.condition-no-ngs" | translate }}
+                        </ng-container>
+
+                        <ng-container *ngIf="conditionOption === conditionPanel">
+                            {{ "rule-screen.dialog.condition-panel" | translate }}
+                        </ng-container>
+
+                        <ng-container *ngIf="conditionOption === conditionEmptyPolyT">
+                            {{ "rule-screen.dialog.condition-empty-polyt" | translate }}
+                        </ng-container>
+
+                        <ng-container *ngIf="conditionOption === conditionPolyT">
+                            {{ "rule-screen.dialog.condition-polyt" | translate }}
+                        </ng-container>
+
+                        <ng-container *ngIf="conditionOption === conditionVariant">
+                            {{ "rule-screen.dialog.condition-variant" | translate }}
+                        </ng-container>
+                    </mat-radio-button>
+                </mat-radio-group>
+            </div>
+
+            <div [ngClass]="'container-form'">
+                <ng-container *ngIf="selectedConditionType === conditionCarrierGene">
+                    <ng-container>
+                        <label>{{ "rule-screen.dialog.condition-fields.uncovered-true" | translate}}</label>
+                        <mat-radio-group name="uncoveredRadioCarrier" [(ngModel)]="this.data.conditionSelected.uncovered">
+                            <mat-radio-button [value]=true color="primary">{{ "rule-screen.dialog.condition-fields.yes" | translate}}</mat-radio-button>
+                            <br>
+                            <mat-radio-button [value]=false color="primary">{{ "rule-screen.dialog.condition-fields.no" | translate}}</mat-radio-button>
+                        </mat-radio-group>
+                    </ng-container>
+                </ng-container>
+
+                <ng-container *ngIf="selectedConditionType === conditionCNV">
+                    <mat-form-field floatLabel="always" appearance="outline">
+                        <mat-label>{{ "rule-screen.dialog.condition-fields.copies" | translate }}</mat-label>
+                        <label>
+                            <input [(ngModel)]="this.data.conditionSelected.copies" name="copies" matInput required>
+                        </label>
+                    </mat-form-field>
+
+                    <mat-form-field floatLabel="always" appearance="outline">
+                        <mat-label>{{ "rule-screen.dialog.condition-fields.transcript" | translate }}</mat-label>
+                        <label>
+                            <input [(ngModel)]="this.data.conditionSelected.transcript" name="transcript" matInput required>
+                        </label>
+                    </mat-form-field>
+
+                    <label>{{ "rule-screen.dialog.condition-fields.positive" | translate}}</label>
+                    <mat-radio-group name="positiveRadioCNV" [(ngModel)]="this.data.conditionSelected.positive">
+                        <mat-radio-button [value]=true color="primary">{{ "rule-screen.dialog.condition-fields.yes" | translate}}</mat-radio-button>
+                        <br>
+                        <mat-radio-button [value]=false color="primary">{{ "rule-screen.dialog.condition-fields.no" | translate}}</mat-radio-button>
+                    </mat-radio-group>
+
+                    <label>{{ "rule-screen.dialog.condition-fields.active" | translate}}</label>
+                    <mat-radio-group name="activeRadioCNV" [(ngModel)]="this.data.conditionSelected.active">
+                        <mat-radio-button [value]=true color="primary">{{ "rule-screen.dialog.condition-fields.yes" | translate}}</mat-radio-button>
+                        <br>
+                        <mat-radio-button [value]=false color="primary">{{ "rule-screen.dialog.condition-fields.no" | translate}}</mat-radio-button>
+                    </mat-radio-group>
+                </ng-container>
+
+                <ng-container *ngIf="selectedConditionType === conditionContains">
+                    <mat-form-field floatLabel="always" appearance="outline">
+                        <mat-label>{{ "rule-screen.dialog.condition-fields.target-genes-type" | translate }}</mat-label>
+                        <label>
+                            <input [(ngModel)]="this.data.conditionSelected.targetGenesType" name="targetGenesType" matInput required>
+                        </label>
+                    </mat-form-field>
+
+                    <mat-form-field floatLabel="always" appearance="outline">
+                        <mat-label>{{ "rule-screen.dialog.condition-fields.opposite-genes-type" | translate }}</mat-label>
+                        <label>
+                            <input [(ngModel)]="this.data.conditionSelected.oppositeGenesType" name="oppositeGenesType" matInput required>
+                        </label>
+                    </mat-form-field>
+
+                    <mat-form-field floatLabel="always" appearance="outline">
+                        <mat-label>{{ "rule-screen.dialog.condition-fields.condition-type" | translate }}</mat-label>
+                        <label>
+                            <input [(ngModel)]="this.data.conditionSelected.conditionType" name="conditionType" matInput required>
+                        </label>
+                    </mat-form-field>
+                </ng-container>
+
+                <ng-container *ngIf="selectedConditionType === conditionNoNgs">
+                    <mat-form-field floatLabel="always" appearance="outline">
+                        <mat-label>{{ "rule-screen.dialog.condition-fields.gene-region" | translate }}</mat-label>
+                        <label>
+                            <input [(ngModel)]="this.data.conditionSelected.geneRegion" name="geneRegion" matInput required>
+                        </label>
+                    </mat-form-field>
+
+                    <mat-form-field floatLabel="always" appearance="outline">
+                        <mat-label>{{ "rule-screen.dialog.condition-fields.mutation" | translate }}</mat-label>
+                        <label>
+                            <input [(ngModel)]="this.data.conditionSelected.mutation" name="mutation" matInput required>
+                        </label>
+                    </mat-form-field>
+                </ng-container>
+
+                <ng-container *ngIf="selectedConditionType === conditionPanel">
+                    <mat-form-field floatLabel="always" appearance="outline">
+                        <mat-label>{{ "rule-screen.dialog.condition-fields.panel" | translate }}</mat-label>
+                        <label>
+                            <input [(ngModel)]="this.data.conditionSelected.panelVersion" name="panelVersion" matInput required>
+                        </label>
+                    </mat-form-field>
+                </ng-container>
+
+                <ng-container *ngIf="selectedConditionType === conditionEmptyPolyT">
+                </ng-container>
+
+                <ng-container *ngIf="selectedConditionType === conditionPolyT">
+                    <mat-form-field floatLabel="always" appearance="outline">
+                        <mat-label>{{ "rule-screen.dialog.condition-fields.values" | translate }}</mat-label>
+                        <label>
+                            <input [(ngModel)]="this.data.conditionSelected.valuesView" name="mutation" matInput required>
+                        </label>
+                    </mat-form-field>
+                </ng-container>
+
+                <ng-container *ngIf="selectedConditionType === conditionVariant">
+                    <mat-form-field floatLabel="always" appearance="outline">
+                        <mat-label>{{ "rule-screen.dialog.condition-fields.hgvs" | translate }}</mat-label>
+                        <label>
+                            <input [(ngModel)]="this.data.conditionSelected.hgvs" name="hgvs" matInput required>
+                        </label>
+                    </mat-form-field>
+
+                    <label>{{ "rule-screen.dialog.condition-fields.uncovered" | translate}}</label>
+                    <mat-radio-group name="uncoveredRadioVariant" [(ngModel)]="this.data.conditionSelected.uncovered">
+                        <mat-radio-button [value]=true color="primary">{{ "rule-screen.dialog.condition-fields.yes" | translate}}</mat-radio-button>
+                        <br>
+                        <mat-radio-button [value]=false color="primary">{{ "rule-screen.dialog.condition-fields.no" | translate}}</mat-radio-button>
+                    </mat-radio-group>
+
+                    <label>{{ "rule-screen.dialog.condition-fields.active" | translate}}</label>
+                    <mat-radio-group name="activeRadioVariant" [(ngModel)]="this.data.conditionSelected.active">
+                        <mat-radio-button [value]=true color="primary">{{ "rule-screen.dialog.condition-fields.yes" | translate}}</mat-radio-button>
+                        <br>
+                        <mat-radio-button [value]=false color="primary">{{ "rule-screen.dialog.condition-fields.no" | translate}}</mat-radio-button>
+                    </mat-radio-group>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+
+    <!-- ACTION -->
+    <div *ngIf="!data.isCondition">
+        <div [ngClass]="'container-selector-form'">
+            <div [ngClass]="'container-selector'">
+                <label id="action-radio-label">{{ "rule-screen.dialog.dialog-action-options-title" | translate }}</label>
+                <mat-radio-group [ngClass]="'radio-list'" aria-labelledby="action-radio-label" [(ngModel)]="selectedActionType">
+                    <mat-radio-button [ngClass]="'radio-button'" *ngFor="let actionOption of actionOptions" [value]="actionOption">
+                        <ng-container *ngIf="actionOption === actionNotMatcheable">
+                            {{ "rule-screen.dialog.action-not-matcheable" | translate }}
+                        </ng-container>
+
+                        <ng-container *ngIf="actionOption === actionSuitableGenes">
+                            {{ "rule-screen.dialog.action-suitable-genes" | translate }}
+                        </ng-container>
+
+                        <ng-container *ngIf="actionOption === actionWarning">
+                            {{ "rule-screen.dialog.action-warning" | translate }}
+                        </ng-container>
+
+                        <ng-container *ngIf="actionOption === actionXChromo">
+                            {{ "rule-screen.dialog.action-x-chromo" | translate }}
+                        </ng-container>
+
+                        <ng-container *ngIf="actionOption === actionXChromoNoNGS">
+                            {{ "rule-screen.dialog.action-x-chromo-no-ngs" | translate }}
+                        </ng-container>
+                    </mat-radio-button>
+                </mat-radio-group>
+            </div>
+
+            <div [ngClass]="'container-form'">
+                <ng-container *ngIf="selectedActionType === actionNotMatcheable">
+                    <!--  -->
+                </ng-container>
+
+                <ng-container *ngIf="selectedActionType === actionSuitableGenes">
+                    <label>{{ "rule-screen.dialog.condition-fields.uncovered" | translate}}</label>
+                    <mat-radio-group name="uncoveredRadioSuitable" [(ngModel)]="this.data.actionSelected.uncovered">
+                        <mat-radio-button [value]=true color="primary">{{ "rule-screen.dialog.condition-fields.yes" | translate}}</mat-radio-button>
+                        <br>
+                        <mat-radio-button [value]=false color="primary">{{ "rule-screen.dialog.condition-fields.no" | translate}}</mat-radio-button>
+                    </mat-radio-group>
+
+                    <mat-form-field floatLabel="always" appearance="outline">
+                        <mat-label>{{ "rule-screen.dialog.action-fields.genes" | translate }}</mat-label>
+                        <label>
+                            <input [(ngModel)]="this.data.actionSelected.genesList" name="ruleMatchNoSuitableGenesList" matInput>
+                        </label>
+                    </mat-form-field>
+                </ng-container>
+
+                <ng-container *ngIf="selectedActionType === actionWarning">
+                    <mat-form-field floatLabel="always" appearance="outline">
+                        <mat-label>{{ "rule-screen.dialog.action-fields.rule-match-result-warning" | translate }}</mat-label>
+                        <label>
+                            <input [(ngModel)]="this.data.actionSelected.ruleMatchResultWarningView" name="ruleMatchResultWarningView" matInput required>
+                        </label>
+                    </mat-form-field>
+
+                    <mat-form-field floatLabel="always" appearance="outline">
+                        <mat-label>{{ "disease-screen.select-language" | translate }}</mat-label>
+                        <select matNativeControl [(ngModel)]="selectedLanguage" name='lang' #languageSelect>
+                            <option *ngFor="let language of this.languages let i = index"
+                                    [ngValue]="language">
+                                {{language}}
+                            </option>
+                        </select>
+                    </mat-form-field>
+                </ng-container>
+
+                <ng-container *ngIf="selectedActionType === actionXChromo">
+                    <mat-form-field floatLabel="always" appearance="outline">
+                        <mat-label>{{ "rule-screen.dialog.condition-fields.hgvs" | translate }}</mat-label>
+                        <label>
+                            <input [(ngModel)]="this.data.conditionSelected.hgvs" name="hgvs" matInput required>
+                        </label>
+                    </mat-form-field>
+
+                    <label>{{ "rule-screen.dialog.condition-fields.uncovered" | translate}}</label>
+                    <mat-radio-group name="uncoveredRadioXChromo" [(ngModel)]="this.data.actionSelected.uncovered">
+                        <mat-radio-button [value]=true color="primary">{{ "rule-screen.dialog.condition-fields.yes" | translate}}</mat-radio-button>
+                        <br>
+                        <mat-radio-button [value]=false color="primary">{{ "rule-screen.dialog.condition-fields.no" | translate}}</mat-radio-button>
+                    </mat-radio-group>
+                </ng-container>
+
+                <ng-container *ngIf="selectedActionType === actionXChromoNoNGS">
+                    <mat-form-field floatLabel="always" appearance="outline">
+                        <mat-label>{{ "rule-screen.dialog.action-fields.gene-region" | translate }}</mat-label>
+                        <label>
+                            <input [(ngModel)]="this.data.actionSelected.geneRegion" name="geneRegion" matInput required>
+                        </label>
+                    </mat-form-field>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+    <div [ngClass]="'buttons-container'">
+        <button [ngClass]="'function-button'" (click)="acceptButton()" mat-flat-button color="primary">
+            {{ "common-elements.buttons.add" | translate }}
+        </button>
+        <button [ngClass]="'function-button'" (click)="cancelButton()" mat-flat-button color="primary">
+            {{ "common-elements.buttons.cancel" | translate }}
+        </button>
+    </div>
+</div>

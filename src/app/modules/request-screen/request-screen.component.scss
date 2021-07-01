@@ -1,0 +1,162 @@
+.request-data-secondary-fields {
+  width: 90%;
+  height: 45%;
+
+  display: flex;
+  flex-direction: column;
+
+  //justify-content: center;
+  //align-items: center;
+
+  //padding-top: 1%;
+  gap: 2%;
+
+  overflow-y: auto;
+
+  //background-color: #495f8a;
+}
+
+.secondary-fields {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: row;
+}
+
+.card-secondary-fields {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.request-data-secondary-partner {
+  width: 90%;
+  height: 20%;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 1%;
+  overflow: auto;
+
+  //background-color: #006600;
+}
+
+.request-data-secondary-genotype {
+  width: 90%;
+  height: 50%;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 1%;
+  overflow: auto;
+
+  //background-color: #880000;
+}
+
+.tab-inner-fields {
+  display: flex;
+  flex-direction: row;
+
+  align-items: center;
+  justify-content: center;
+}
+
+.tab-inner-table {
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+
+  align-items: center;
+  justify-content: center;
+}
+
+.secondary-first-column {
+  height: auto;
+  width: 25%;
+
+  display: flex;
+  flex-direction: column;
+  padding: 1%;
+
+  align-items: center;
+}
+
+.secondary-second-column {
+  height: auto;
+  width: 25%;
+
+  display: flex;
+  flex-direction: column;
+  padding: 1%;
+
+  align-items: center;
+}
+
+.secondary-third-column {
+  height: auto;
+  width: 25%;
+
+  display: flex;
+  flex-direction: column;
+  padding: 1%;
+
+  align-items: center;
+}
+
+.secondary-fourth-column {
+  height: auto;
+  width: 20%;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+}
+
+.function-button-partner {
+  display: flex;
+  flex-direction: row;
+
+  justify-content: center;
+  align-items: center;
+
+  width: 100px;
+  height: 50px;
+
+  margin-top: 7%;
+}
+
+.field-spinner {
+  //display: flex;
+  //
+  //align-items: center;
+  //justify-content: center;
+  //
+  //float: left!important;
+  //width: 15px!important;
+  //height: 15px!important;
+  //margin: 5px 10px 0 0!important;
+  float: right!important;
+  margin-left: 8px!important;
+}
+
+.warning {
+  color: var(--warn-color);
+}
+
+.report-container {
+  display: flex;
+  flex-direction: row;
+
+  gap: 5%;
+}
+
+.report-column {
+  display: flex;
+  flex-direction: column;
+
+  gap: 5%;
+}

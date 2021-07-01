@@ -1,0 +1,84 @@
+{
+  "_embedded" : {
+    "precon:templateModelList" : [ {
+      "name" : "template1",
+      "version" : 0,
+      "companyName" : "company",
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/api/templates/44"
+        },
+        "precon:left-image" : {
+          "href" : "http://localhost:8080/api/templates/44/image/left_image"
+        },
+        "precon:right-image" : {
+          "href" : "http://localhost:8080/api/templates/44/image/right_image"
+        },
+        "precon:lateral-image" : {
+          "href" : "http://localhost:8080/api/templates/44/image/lateral_image"
+        },
+        "precon:background-image" : {
+          "href" : "http://localhost:8080/api/templates/44/image/background_image"
+        },
+        "precon:signatures" : {
+          "href" : "http://localhost:8080/api/signatures/template/44"
+        },
+        "precon:template-favourites" : {
+          "href" : "http://localhost:8080/api/templates/44/templateFavourites"
+        }
+      }
+    }, {
+      "name" : "template2",
+      "version" : 0,
+      "companyName" : "company",
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/api/templates/45"
+        },
+        "precon:left-image" : {
+          "href" : "http://localhost:8080/api/templates/45/image/left_image"
+        },
+        "precon:right-image" : {
+          "href" : "http://localhost:8080/api/templates/45/image/right_image"
+        },
+        "precon:lateral-image" : {
+          "href" : "http://localhost:8080/api/templates/45/image/lateral_image"
+        },
+        "precon:background-image" : {
+          "href" : "http://localhost:8080/api/templates/45/image/background_image"
+        },
+        "precon:signatures" : {
+          "href" : "http://localhost:8080/api/signatures/template/45"
+        },
+        "precon:template-favourites" : {
+          "href" : "http://localhost:8080/api/templates/45/templateFavourites"
+        }
+      }
+    } ]
+  },
+  "_links" : {
+    "first" : {
+      "href" : "http://localhost:8080/api/templates?page=0&size=20"
+    },
+    "last" : {
+      "href" : "http://localhost:8080/api/templates?page=0&size=20"
+    },
+    "self" : {
+      "href" : "http://localhost:8080/api/templates?page=0&size=20"
+    },
+    "search" : {
+      "href" : "http://localhost:8080/api/templates/search"
+    },
+    "curies" : [ {
+      "href" : "http://localhost:8080/docs/index.html#{rel}",
+      "name" : "precon",
+      "templated" : true
+    } ]
+  },
+  "page" : {
+    "size" : 20,
+    "totalElements" : 2,
+    "totalPages" : 1,
+    "number" : 0
+  }
+}

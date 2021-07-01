@@ -1,0 +1,34 @@
+{
+    "_embedded": {
+        "precon:geneticRisks": [
+            {
+                "value": "Pareja de bajo riesgo genético",
+                "_links": {
+                    "self": {
+                        "href": "http://localhost:8080/api/geneticRisks/report_matching_couple_genetic_risk_low"
+                    }
+                }
+            },
+            {
+                "value": "Pareja de alto riesgo genético",
+                "_links": {
+                    "self": {
+                        "href": "http://localhost:8080/api/geneticRisks/report_matching_couple_genetic_risk_high"
+                    }
+                }
+            }
+        ]
+    },
+    "_links": {
+        "self": {
+            "href": "http://localhost:8080/api/couple_match_report_statuses/accepted_genetic_risks"
+        },
+        "curies": [
+            {
+                "href": "http://localhost:8080/docs/index.html#{rel}",
+                "name": "precon",
+                "templated": true
+            }
+        ]
+    }
+}

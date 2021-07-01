@@ -1,0 +1,53 @@
+<section fxLayout="row">
+
+    <section fxLayoutAlign="start center" fxFlex="50">
+        <h3 mat-dialog-title>
+            {{fieldLabel}}
+        </h3>
+    </section>
+
+</section>
+<!-- Content -->
+<mat-dialog-content>
+    <!-- Signature image -->
+
+    <section>
+        <input type="file" (change)="setImage($event)">
+    </section>
+
+    <!-- Signature Form -->
+    <form [formGroup]="form">
+        <section fxLayout="column">
+
+            <mat-form-field appearance="outline" fxFlex="50">
+                <mat-label>Signature name</mat-label>
+                <input matInput placeholder="Signature name" formControlName="name" required>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" fxFlex="50">
+                <mat-label>Signature role</mat-label>
+                <input matInput placeholder="Signature role" formControlName="rol">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" fxFlex="50">
+                <mat-label>Additional Info</mat-label>
+                <input matInput placeholder="Additional Info" formControlName="additionalInfo">
+            </mat-form-field>
+        </section>
+    </form>
+
+</mat-dialog-content>
+<!-- Actions -->
+<mat-dialog-actions>
+    <button mat-dialog-close color="primary" mat-raised-button>
+        <span>{{ "common-elements.buttons.return" | translate }}</span>
+    </button>
+
+    <button (click)="save(form.value)" *ngIf="createMode == true" [disabled]="form.invalid || image == null"
+        color="primary" mat-raised-button>
+        <span>{{ "TEMPLATES.save-signature" | translate }}</span>
+    </button>
+    <button (click)="save(form.value)" *ngIf="isEditMode == true" color="primary" [disabled]="form.invalid || image == null" mat-raised-button>
+        <span>{{ "common-elements.buttons.save" | translate }}</span>
+    </button>
+</mat-dialog-actions>

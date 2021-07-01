@@ -1,0 +1,297 @@
+<div [ngClass]="'screen-container'">
+    <app-header [ngClass]="'screen-header'"></app-header>
+
+    <div [ngClass]="'screen'">
+        <app-main-menu [ngClass]="'main-menu'"></app-main-menu>
+
+        <div [ngClass]="'main-list'">
+            <div [ngClass]="'main-list-title'"
+                 *ngIf="!showRecord">
+                <div [ngClass]="'list-tittle-value'">
+                    {{ "bank-screen.inner-title" | translate }}
+                </div>
+            </div>
+
+            <!-- LIST TABLE -->
+            <div [ngClass]="'spinner-container'" *ngIf="loading">
+                <div>{{ "common-elements.messages.loading-screen" | translate }}</div>
+                <div [ngClass]="'spinner'">
+                    <mat-spinner></mat-spinner>
+                </div>
+            </div>
+
+            <ng-container *ngIf="!loading">
+                <app-table
+                   *ngIf="!showRecord"
+                   [ngClass]="'main-container'"
+                   [tableData]="banks"
+                   [tableColumns]="tableColumns"
+                   [isFilterable]="true"
+                   [isPageable]="true"
+                   [paginationSizes]="defaultPageSizes"
+                   [defaultPageSize]="pagination.currentPagSize"
+                   [numberOfElements]="pagination.totalElements"
+                   [currentPage]="pagination.currentPag"
+                   (newAction)="addBank()"
+                   (deleteAction)="deleteBank($event)"
+                   (booleanFieldAction)="toggleTableField($event)"
+                   (eventPageChange)="pageChanged($event)"
+                   (editAction)="editBank($event)"
+                   (searchAction)="textFiltered($event)"
+                   [searchFields]="searchFields"
+                   (sort)="sortBanks($event)">
+                </app-table>
+            </ng-container>
+
+            <!-- EDIT FORM -->
+            <div *ngIf="showRecord || adding" [ngClass]="'main-edit'">
+
+                <div [ngClass]="'main-edit-title'">
+                    <ng-container *ngIf="adding">
+                        <div [ngClass]="'edit-title'">
+                            {{ "bank-screen.new-inner-title" | translate }}
+                        </div>
+                    </ng-container>
+
+                    <div [ngClass]="'edit-title'" *ngIf="unlockFields && !adding">
+                        {{ "bank-screen.edit-inner-title" | translate }}
+                    </div>
+
+                    <div [ngClass]="'edit-title'" *ngIf="!unlockFields && !adding">
+                        {{ "bank-screen.record-inner-title" | translate }}
+                    </div>
+
+                    <div [ngClass]="'edit-title-buttons'">
+                        <button [ngClass]="'function-button'" (click)="backButton()" mat-flat-button color="primary">
+                            {{ "common-elements.buttons.return" | translate }}
+                        </button>
+
+                        <ng-container *ngIf="unlockFields">
+                            <button [ngClass]="'function-button'" (click)="recordButton()" mat-flat-button color="primary">
+                                <mat-icon>assignment</mat-icon>
+                                {{ "common-elements.buttons.record" | translate }}
+                            </button>
+                        </ng-container>
+
+                        <ng-container *ngIf="!unlockFields">
+                            <button [ngClass]="'function-button'" (click)="editButton()" mat-flat-button color="primary">
+                                <mat-icon>create</mat-icon>
+                                {{ "common-elements.buttons.edit" | translate }}
+                            </button>
+                        </ng-container>
+
+                        <ng-container *ngIf="unlockFields">
+                            <button [ngClass]="'function-button'" (click)="saveBank(this.editingBank)" mat-flat-button color="primary">
+                                {{ "common-elements.buttons.save" | translate }}
+                            </button>
+                        </ng-container>
+
+                        <ng-container *ngIf="!unlockFields">
+                            <button [ngClass]="'function-button'" mat-flat-button color="primary" disabled>
+                                {{ "common-elements.buttons.save" | translate }}
+                            </button>
+                        </ng-container>
+                    </div>
+                </div>
+
+                <div [ngClass]="'main-edit-data'">
+                    <div [ngClass]="'edit-data-primary'">
+                        <mat-card class="mat-elevation-z0">
+                            <div [ngClass]="'data-primary-title'">
+                                {{ "bank-screen.edit-primary-data" | translate }}
+                            </div>
+
+                            <div [ngClass]="'data-primary-fields'">
+                                <form class="request-data-form" [ngClass]="'data-primary-form'">
+                                    <div [ngClass]="'primary-first-column'">
+                                        <mat-form-field floatLabel="always" appearance="outline">
+                                            <mat-label>{{ "bank-screen.edit-fields.code" | translate }}</mat-label>
+                                            <label>
+                                                <ng-container *ngIf="unlockFields">
+                                                    <input [(ngModel)]="this.editingBank.code" name="code" matInput required>
+                                                </ng-container>
+                                                <ng-container *ngIf="!unlockFields">
+                                                    <input [(ngModel)]="this.editingBank.code" name="code" matInput disabled>
+                                                </ng-container>
+                                            </label>
+                                        </mat-form-field>
+
+                                        <mat-form-field floatLabel="always" appearance="outline">
+                                            <mat-label>{{ "bank-screen.edit-fields.name" | translate }}</mat-label>
+                                            <label>
+                                                <ng-container *ngIf="unlockFields">
+                                                    <input [(ngModel)]="this.editingBank.name" name="name" matInput required>
+                                                </ng-container>
+                                                <ng-container *ngIf="!unlockFields">
+                                                    <input [(ngModel)]="this.editingBank.name" name="name" matInput disabled>
+                                                </ng-container>
+                                            </label>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div [ngClass]="'primary-second-column'">
+                                        <mat-form-field floatLabel="always" appearance="outline">
+                                            <mat-label>{{ "bank-screen.edit-fields.description" | translate }}</mat-label>
+                                            <label>
+                                                <ng-container *ngIf="unlockFields">
+                                                    <input placeholder="'Banco de donantes / Dirección web'" [(ngModel)]="this.editingBank.description" name="description" matInput required>
+                                                </ng-container>
+                                                <ng-container *ngIf="!unlockFields">
+                                                    <input [(ngModel)]="this.editingBank.description" name="description" matInput disabled>
+                                                </ng-container>
+                                            </label>
+                                        </mat-form-field>
+
+                                        <mat-form-field floatLabel="always" appearance="outline">
+                                            <mat-label>{{ "bank-screen.edit-fields.group-name" | translate }}</mat-label>
+
+                                            <ng-container *ngIf="unlockFields">
+                                                <label>
+                                                    <input type="text" name="toGroupInPermission"
+                                                           [formControl]="groupFormControl"
+                                                           [matAutocomplete]="autoGroupType" matInput>
+                                                </label>
+                                                <mat-autocomplete #autoGroupType="matAutocomplete" [displayWith]="displayGroup">
+                                                    <mat-option *ngFor="let group of groupsFiltered | async" [value]="group">
+                                                        {{group.name}}
+                                                    </mat-option>
+                                                </mat-autocomplete>
+                                            </ng-container>
+
+                                            <ng-container *ngIf="!unlockFields">
+                                                <input type="text" name="toGroupInPermission"
+                                                       [formControl]="groupFormControl"
+                                                       [matAutocomplete]="autoGroupType" matInput
+                                                       [matAutocompleteDisabled]="!unlockFields" disabled>
+                                                <mat-autocomplete #autoGroupType="matAutocomplete" [displayWith]="displayGroup" disabled>
+                                                    <mat-option *ngFor="let group of groupsFiltered | async" [value]="group">
+                                                        {{group.name}}
+                                                    </mat-option>
+                                                </mat-autocomplete>
+                                            </ng-container>
+                                        </mat-form-field>
+
+                                    </div>
+
+                                    <div [ngClass]="'primary-third-column'">
+                                        <div [ngClass]="'checkbox-active'">
+                                            <mat-checkbox [(ngModel)]="this.editingBank.active" name="status" [disabled]="!unlockFields">
+                                                {{ "bank-screen.edit-fields.status" | translate }}
+                                            </mat-checkbox>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </mat-card>
+
+                        <mat-accordion [ngClass]="'accordion'">
+                            <mat-expansion-panel>
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title [ngClass]="'panel-title'">
+                                        <span>{{ "bank-screen.sections.bank-requests" | translate }}</span>
+                                    </mat-panel-title>
+                                    <mat-panel-description [ngClass]="'panel-description'">
+                                    </mat-panel-description>
+                                </mat-expansion-panel-header>
+                                <div>
+                                    <ng-container *ngIf="unlockFields">
+                                        <app-table
+                                                [ngClass]="'main-container'"
+                                                [tableData]="bankRequests"
+                                                [tableColumns]="requestsTableColumns"
+                                                [isPageable]="true"
+                                                [defaultPageSize]="pageSize"
+                                                [paginationSizes]="defaultPageSizes"
+                                                [numberOfElements]="bankRequestsPagination.totalElements"
+                                                [currentPage]="bankRequestsPagination.currentPag"
+                                                [tableName]="'request-screen-table'"
+                                                (eventPageChange)="bankRequestsPageChanged($event)"
+                                                (deleteAction)="removeRequestFromBank($event)"
+                                                [deleteActionButtonText]="'common-elements.buttons.disassociate'"
+                                                tableBackgroundColor="#FFFFFF"
+                                                [ngStyle]="{'background-color': '#FFFFFF'}">
+                                        </app-table>
+                                    </ng-container>
+
+                                    <ng-container *ngIf="!unlockFields">
+                                        <app-table
+                                                [ngClass]="'main-container'"
+                                                [tableData]="bankRequests"
+                                                [tableColumns]="requestsTableColumns"
+                                                [isPageable]="true"
+                                                [defaultPageSize]="pageSize"
+                                                [paginationSizes]="defaultPageSizes"
+                                                [numberOfElements]="bankRequestsPagination.totalElements"
+                                                [currentPage]="bankRequestsPagination.currentPag"
+                                                [tableName]="'request-screen-table'"
+                                                (eventPageChange)="bankRequestsPageChanged($event)"
+                                                [deleteActionButtonText]="'common-elements.buttons.disassociate'"
+                                                tableBackgroundColor="#FFFFFF"
+                                                [ngStyle]="{'background-color': '#FFFFFF'}">
+                                        </app-table>
+                                    </ng-container>
+                                </div>
+                            </mat-expansion-panel>
+
+                            <mat-expansion-panel>
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title [ngClass]="'panel-title'">
+                                        <span>{{ "bank-screen.sections.add-request" | translate }}</span>
+                                    </mat-panel-title>
+                                    <mat-panel-description [ngClass]="'panel-description'">
+                                    </mat-panel-description>
+                                </mat-expansion-panel-header>
+                                <div>
+                                    <ng-container *ngIf="unlockFields">
+                                        <app-table
+                                            [ngClass]="'main-container'"
+                                            [tableData]="allRequests"
+                                            [tableColumns]="requestsTableColumns"
+                                            [isPageable]="true"
+                                            [defaultPageSize]="pageSize"
+                                            [paginationSizes]="defaultPageSizes"
+                                            [numberOfElements]="allRequestsPagination.totalElements"
+                                            [currentPage]="allRequestsPagination.currentPag"
+                                            [tableName]="'request-screen-table'"
+                                            (eventPageChange)="allRequestsPageChanged($event)"
+                                            [isFilterable]="true"
+                                            (searchAction)="textFilteredAllRequests($event)"
+                                            [searchFields]="allRequestSearchFields"
+                                            [editActionButtonText]="'common-elements.buttons.associate'"
+                                            (editAction)="addRequestFromBank($event)"
+                                            tableBackgroundColor="#FFFFFF"
+                                            [ngStyle]="{'background-color': '#FFFFFF'}">
+                                        </app-table>
+                                    </ng-container>
+
+                                    <ng-container *ngIf="!unlockFields">
+                                        <app-table
+                                            [ngClass]="'main-container'"
+                                            [tableData]="allRequests"
+                                            [tableColumns]="requestsTableColumns"
+                                            [isPageable]="true"
+                                            [defaultPageSize]="pageSize"
+                                            [paginationSizes]="defaultPageSizes"
+                                            [numberOfElements]="allRequestsPagination.totalElements"
+                                            [currentPage]="allRequestsPagination.currentPag"
+                                            [tableName]="'request-screen-table'"
+                                            (eventPageChange)="allRequestsPageChanged($event)"
+                                            [isFilterable]="true"
+                                            (searchAction)="textFilteredAllRequests($event)"
+                                            [searchFields]="allRequestSearchFields"
+                                            tableBackgroundColor="#FFFFFF"
+                                            [ngStyle]="{'background-color': '#FFFFFF'}">
+                                        </app-table>
+                                    </ng-container>
+                                </div>
+                            </mat-expansion-panel>
+
+                        </mat-accordion>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <app-footer [ngClass]="'screen-footer'"></app-footer>
+</div>
